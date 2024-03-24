@@ -1,0 +1,33 @@
+{
+  "name": "dualnet",
+  "version": "1.0.0",
+  "description": "My full-stack application",
+  "scripts": {
+    "build": "npm run build --prefix FrontendDualnet",
+    "prestart": "npm run createTables && npm run populateTables",
+    "start": "node BackendDualnet/index.js",
+    "predev": "npm run createTables && npm run populateTables",
+    "dev": "nodemon BackendDualnet/index.js",
+    "testdb": "node BackendDualnet/config/Database.js",
+    "createTables": "node BackendDualnet/config/Dbsync.js",
+    "testPolling": "node BackendDualnet/services/TestPolling.js",
+    "fetchPairs": "node BackendDualnet/services/GateioServices.js",
+    "populateTables": "node -e 'const populateTables = require(\"./BackendDualnet/jobs/PopulateTables\"); populateTables();'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/yourrepository.git"
+  },
+  "author": "Samuel Mbugua",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yourusername/yourrepository/issues"
+  },
+  "homepage": "https://github.com/yourusername/yourrepository#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
