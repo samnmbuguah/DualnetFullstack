@@ -4,9 +4,9 @@
   "description": "My full-stack application",
   "scripts": {
     "build": "npm run build --prefix FrontendDualnet",
-    "prestart": "npm run createTables && npm run populateTables",
+    "prestart": "npm run build && npm run createTables && npm run populateTables",
     "start": "node BackendDualnet/index.js",
-    "predev": "npm run createTables && npm run populateTables",
+    "predev": "node build-if-changed.js && npm run createTables && npm run populateTables",
     "dev": "nodemon BackendDualnet/index.js",
     "testdb": "node BackendDualnet/config/Database.js",
     "createTables": "node BackendDualnet/config/Dbsync.js",
