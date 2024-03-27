@@ -6,11 +6,11 @@
     "build": "npm run build --prefix FrontendDualnet",
     "prestart": "npm run build && npm run createTables && npm run populateTables",
     "start": "node BackendDualnet/index.js",
-    "predev": "node build-if-changed.js && npm run createTables && npm run populateTables",
+    "predev": "npm run build --prefix FrontendDualnet && npm run createTables && npm run populateTables",
     "dev": "nodemon BackendDualnet/index.js",
     "testdb": "node BackendDualnet/config/Database.js",
     "createTables": "node BackendDualnet/config/Dbsync.js",
-    "testPolling": "mocha BackendDualnet/services/TestPolling.js",
+    "testSocket": "node BackendDualnet/services/TestSocket.js",
     "fetchPairs": "node BackendDualnet/services/GateioServices.js",
     "populateTables": "node -e 'const populateTables = require(\"./BackendDualnet/jobs/PopulateTables\"); populateTables();'"
   },
