@@ -10,7 +10,7 @@
     "dev": "nodemon BackendDualnet/index.js",
     "testdb": "node BackendDualnet/config/Database.js",
     "createTables": "node BackendDualnet/config/Dbsync.js",
-    "testPolling": "node BackendDualnet/services/TestPolling.js",
+    "testPolling": "mocha BackendDualnet/services/TestPolling.js",
     "fetchPairs": "node BackendDualnet/services/GateioServices.js",
     "populateTables": "node -e 'const populateTables = require(\"./BackendDualnet/jobs/PopulateTables\"); populateTables();'"
   },
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/yourusername/yourrepository#readme",
   "devDependencies": {
+    "mocha": "^10.4.0",
     "nodemon": "^3.1.0"
   },
   "dependencies": {
