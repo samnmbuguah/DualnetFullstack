@@ -6,7 +6,7 @@
     "build": "npm run build --prefix FrontendDualnet",
     "prestart": "npm run build && npm run createTables && npm run populateTables",
     "start": "node BackendDualnet/index.js",
-    "predev": "npm run build --prefix FrontendDualnet && npm run createTables && npm run populateTables",
+    "predev-disabled": "npm start --prefix FrontendDualnet && npm run createTables && npm run populateTables",    
     "dev": "nodemon BackendDualnet/index.js",
     "testdb": "node BackendDualnet/config/Database.js",
     "createTables": "node BackendDualnet/config/Dbsync.js",
