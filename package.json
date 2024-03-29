@@ -8,6 +8,7 @@
     "start": "node BackendDualnet/index.js",
     "predev-disabled": "npm start --prefix FrontendDualnet && npm run createTables && npm run populateTables",    
     "dev": "nodemon BackendDualnet/index.js",
+    "startReact": "npm start --prefix FrontendDualnet",
     "testdb": "node BackendDualnet/config/Database.js",
     "createTables": "node BackendDualnet/config/Dbsync.js",
     "testSocket": "node BackendDualnet/services/TestSocket.js",
