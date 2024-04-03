@@ -6,25 +6,35 @@
     "build": "npm run build --prefix FrontendDualnet",
     "prestart": "npm run build && npm run createTables && npm run populateTables",
     "start": "node BackendDualnet/index.js",
-    "predev-disabled": "npm start --prefix FrontendDualnet && npm run createTables && npm run populateTables",    
+    "predev-disabled": "npm start --prefix FrontendDualnet && npm run createTables && npm run populateTables",
     "dev": "nodemon BackendDualnet/index.js",
     "startReact": "npm start --prefix FrontendDualnet",
     "testdb": "node BackendDualnet/config/Database.js",
     "createTables": "node BackendDualnet/config/Dbsync.js",
     "testSocket": "node BackendDualnet/services/TestSocket.js",
     "fetchPairs": "node BackendDualnet/services/GateioServices.js",
-    "populateTables": "node -e 'const populateTables = require(\"./BackendDualnet/jobs/PopulateTables\"); populateTables();'"
+    "fetchBalances": "node BackendDualnet/services/fetchBalances.js",
+    "balanceAccounts": "node BackendDualnet/services/balanceAccounts.js",
+    "populateTables": "node -e 'const populateTables = require(\"./BackendDualnet/jobs/PopulateTables\"); populateTables();'",
+    "testTransfer": "node BackendDualnet/services/TestTransfer.js",
+    "getPosition": "node BackendDualnet/services/getPosition.js",
+    "getFees": "node BackendDualnet/services/getFees.js",
+    "trade": "node BackendDualnet/services/trade.js",
+    "closeTrades": "node BackendDualnet/services/closeTrades.js",
+    "fetchSpotBalance": "node BackendDualnet/services/fetchSpotBalance.js",
+    "setLeverage": "node BackendDualnet/services/setLeverage.js",
+    "getContract": "node BackendDualnet/services/getContract.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/yourrepository.git"
+    "url": "git+https://github.com/Soundmoney254/DualnetFullstack.git"
   },
   "author": "Samuel Mbugua",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yourusername/yourrepository/issues"
+    "url": "https://github.com/Soundmoney254/DualnetFullstack/issues"
   },
-  "homepage": "https://github.com/yourusername/yourrepository#readme",
+  "homepage": "https://github.com/Soundmoney254/DualnetFullstack#readme",
   "devDependencies": {
     "mocha": "^10.4.0",
     "nodemon": "^3.1.0"
