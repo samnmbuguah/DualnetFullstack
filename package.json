@@ -23,7 +23,10 @@
     "closeTrades": "node BackendDualnet/services/closeTrades.js",
     "fetchSpotBalance": "node BackendDualnet/services/fetchSpotBalance.js",
     "setLeverage": "node BackendDualnet/services/setLeverage.js",
-    "getContract": "node BackendDualnet/services/getContract.js"
+    "getContract": "node BackendDualnet/services/getContract.js",
+    "disableDualMode": "node BackendDualnet/services/disableDualMode.js",
+    "getFirstAsk": "node BackendDualnet/services/getFirstAsk.js",
+    "setCrossMargin": "node BackendDualnet/services/setCrossMargin.js"
   },
   "repository": {
     "type": "git",
