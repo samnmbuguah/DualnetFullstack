@@ -1,6 +1,0 @@
-# services:
-#   web:
-#     buildCommand: "cd FrontendDualnet && npm install && npm run build && cd ../BackendDualnet && npm install"
-#     runCommand: "cd BackendDualnet && npm start"
-#     httpPort: 3042
-#     staticPublishPath: "build"
