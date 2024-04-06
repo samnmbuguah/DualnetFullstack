@@ -26,7 +26,8 @@
     "getContract": "node BackendDualnet/services/getContract.js",
     "disableDualMode": "node BackendDualnet/services/disableDualMode.js",
     "getFirstAsk": "node BackendDualnet/services/getFirstAsk.js",
-    "setCrossMargin": "node BackendDualnet/services/setCrossMargin.js"
+    "setCrossMargin": "node BackendDualnet/services/setCrossMargin.js",
+    "getApiCredentials": "node BackendDualnet/services/getApiCredentials.js"
   },
   "repository": {
     "type": "git",
