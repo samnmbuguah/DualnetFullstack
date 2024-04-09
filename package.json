@@ -27,7 +27,11 @@
     "disableDualMode": "node BackendDualnet/services/disableDualMode.js",
     "getFirstAsk": "node BackendDualnet/services/getFirstAsk.js",
     "setCrossMargin": "node BackendDualnet/services/setCrossMargin.js",
-    "getApiCredentials": "node BackendDualnet/services/getApiCredentials.js"
+    "getApiCredentials": "node BackendDualnet/services/getApiCredentials.js",
+    "fetchAllOpenPositions": "node BackendDualnet/services/fetchAllOpenPositions.js",
+    "listFuturesOrderBook": "node BackendDualnet/services/listFuturesOrderbook.js",
+    "listSpotOrderBook": "node BackendDualnet/services/listSpotOrderBook.js",
+    "fundingRateFilter":  "node BackendDualnet/services/fundingRateFilter.js"
   },
   "repository": {
     "type": "git",
