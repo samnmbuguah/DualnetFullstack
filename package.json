@@ -29,9 +29,9 @@
     "setCrossMargin": "node BackendDualnet/services/setCrossMargin.js",
     "getApiCredentials": "node BackendDualnet/services/getApiCredentials.js",
     "fetchAllOpenPositions": "node BackendDualnet/services/fetchAllOpenPositions.js",
-    "listFuturesOrderBook": "node BackendDualnet/services/listFuturesOrderbook.js",
+    "listFuturesOrderBook": "node BackendDualnet/services/listFuturesOrderBook.js",
     "listSpotOrderBook": "node BackendDualnet/services/listSpotOrderBook.js",
-    "fundingRateFilter":  "node BackendDualnet/services/fundingRateFilter.js"
+    "fundingRateFilter": "node BackendDualnet/services/fundingRateFilter.js"
   },
   "repository": {
     "type": "git",
