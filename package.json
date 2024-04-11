@@ -32,8 +32,10 @@
     "listFuturesOrderBook": "node BackendDualnet/services/listFuturesOrderBook.js",
     "listSpotOrderBook": "node BackendDualnet/services/listSpotOrderBook.js",
     "fundingRateFilter": "node BackendDualnet/services/fundingRateFilter.js",
-    "checkTrades": "node BackendDualnet/services/checkTrades.js"
-    },
+    "checkTrades": "node BackendDualnet/services/checkTrades.js",
+    "getCurrentSpotPrice": "node BackendDualnet/services/getCurrentSpotPrice.js",
+    "closeByProfit": "node BackendDualnet/services/closeByProfit.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Soundmoney254/DualnetFullstack.git"
