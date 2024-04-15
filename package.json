@@ -34,7 +34,8 @@
     "fundingRateFilter": "node BackendDualnet/services/fundingRateFilter.js",
     "checkTrades": "node BackendDualnet/services/checkTrades.js",
     "getCurrentSpotPrice": "node BackendDualnet/services/getCurrentSpotPrice.js",
-    "closeByProfit": "node BackendDualnet/services/closeByProfit.js"
+    "closeByProfit": "node BackendDualnet/services/closeByProfit.js",
+    "getFundingRate": "node BackendDualnet/services/getFundingRate.js"
   },
   "repository": {
     "type": "git",
