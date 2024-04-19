@@ -24,7 +24,7 @@
     "fetchSpotBalance": "node BackendDualnet/services/fetchSpotBalance.js",
     "setLeverage": "node BackendDualnet/services/setLeverage.js",
     "getContractDetails": "node BackendDualnet/services/getContractDetails.js",
-    "disableDualMode": "node BackendDualnet/services/disableDualMode.js",
+    "setDualMode": "node BackendDualnet/services/setDualMode.js",
     "getFirstAsk": "node BackendDualnet/services/getFirstAsk.js",
     "setCrossMargin": "node BackendDualnet/services/setCrossMargin.js",
     "getApiCredentials": "node BackendDualnet/services/getApiCredentials.js",
