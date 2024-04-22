@@ -2,12 +2,12 @@
     "sqltools.connections": [
         {
             "previewLimit": 50,
-            "server": "localhost",
-            "port": 5432,
+            "server": "viaduct.proxy.rlwy.net",
+            "port": 16646,
             "driver": "PostgreSQL",
-            "database": "dualnetdb",
-            "username": "dualnetadmin",
-            "password": "password",
+            "database": "railway",
+            "username": "postgres",
+            "password": "VFwQxOHkqOHYTsGCGjifjqJGOGlCWPZU",
             "name": "Dualnet Database"
         }
     ]

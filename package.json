@@ -35,7 +35,8 @@
     "checkTrades": "node BackendDualnet/services/checkTrades.js",
     "getCurrentSpotPrice": "node BackendDualnet/services/getCurrentSpotPrice.js",
     "closeByProfit": "node BackendDualnet/services/closeByProfit.js",
-    "getFundingRate": "node BackendDualnet/services/getFundingRate.js"
+    "getFundingRate": "node BackendDualnet/services/getFundingRate.js",
+    "updateFundingFee": "node BackendDualnet/services/fundingFee.js"
   },
   "repository": {
     "type": "git",
