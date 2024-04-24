@@ -9,6 +9,16 @@
             "username": "postgres",
             "password": "VFwQxOHkqOHYTsGCGjifjqJGOGlCWPZU",
             "name": "Dualnet Database"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "database": "dualnetdb",
+            "username": "dualnetadmin",
+            "password": "password",
+            "name": "LOcal"
         }
     ]
 }
