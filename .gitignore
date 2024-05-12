@@ -4,3 +4,5 @@ package-lock.json
 .vscode/launch.json
 .vscode/settings.json
 Dualnet Database.session.sql
+dumpfile.sql
+backup.sql
