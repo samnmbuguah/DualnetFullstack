@@ -36,7 +36,8 @@
     "getCurrentSpotPrice": "node BackendDualnet/services/getCurrentSpotPrice.js",
     "closeByProfit": "node BackendDualnet/services/closeByProfit.js",
     "getFundingRate": "node BackendDualnet/services/getFundingRate.js",
-    "updateAccumulatedFunding": "node BackendDualnet/services/updateAccumulatedFunding.js"
+    "updateAccumulatedFunding": "node BackendDualnet/services/updateAccumulatedFunding.js",
+    "shortRecursively": "node BackendDualnet/services/shortRecursively.js"
   },
   "repository": {
     "type": "git",
