@@ -48,11 +48,11 @@ app.use('/api', router);
 
 if (process.env.ENVIRONMENT !== 'development') {
   // Serve static files from the React frontend app
-  app.use(express.static(path.join(__dirname, '../FrontendDualnet/build')))
+  app.use(express.static(path.join(__dirname, '../Frontend/build')))
 
   // All other GET requests not handled before will return our React app
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../FrontendDualnet/build', 'index.html'));
+    res.sendFile(path.join(__dirname, '../Frontend/build', 'index.html'));
   });
 }
 
