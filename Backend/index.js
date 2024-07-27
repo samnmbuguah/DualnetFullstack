@@ -27,7 +27,8 @@ let corsOptions = {
     "http://localhost:3000",
     "http://dualnet.railway.internal",
     "http://172.16.5.4:3000",
-    "https://dualnet.ch/login",
+    "https://dualnet.ch",
+    "http://dualnet.ch",
   ],
 };
 
