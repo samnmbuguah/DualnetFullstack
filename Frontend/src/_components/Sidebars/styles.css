@@ -1,0 +1,18 @@
+.hide-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+.hide-scroll {
+    scrollbar-width: none;  /* Firefox */
+  }
+
+.text-shadow {
+  background-color: #494949ba;
+    /* font: bold 48px 'Futura'; */
+    color: transparent;
+    text-shadow: 0px 0px 3px rgba(235, 212, 175, 0.8);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+}

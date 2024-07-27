@@ -1,0 +1,43 @@
+.refresh-icon {
+    color: #727272;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.arrow-icon {
+    font-size: 13px;
+    color: black;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.mb-3 {
+    margin-bottom: 3rem;
+}
+
+.flex-justify-between {
+    justify-content: space-between;
+}
+
+.flex-items-center {
+    align-items: center;
+}
+
+.ml-4 {
+    margin-left: 4rem;
+}
+
+.flex-space-y-2 {
+    gap: 2rem;
+}
+
+.flex-space-x-2 {
+    gap: 2rem;
+}
+
+.text-blue-400 {
+    color: #1a0dab;
+}
