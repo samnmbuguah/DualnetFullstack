@@ -303,14 +303,11 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
             <div className="w-[100%] mx-auto md:w-full flex justify-between items-start lg:items-start md:p-2">
               <div className="flex h-auto w-full md:gap-10 lg:gap-10 flex-col lg:flex-row">
                 <div className="xl:w-2/5 lg:w-1/2 w-full">
-                  <div className="flex space-y-12">
-                  </div>
+                  <div className="flex space-y-12"></div>
 
                   {/* pc version details */}
                   <div className="min-[700px]:cols-span-10 min-[100px]-col-span-10 flex items-center lg:items-start flex-col overflow-hidden col-span-8 lg:col-span-3 pt-4 justify-between h-full">
-                    <DetailsSideBar user={selectedUser.current}/>
-
-                    
+                    <DetailsSideBar user={selectedUser.current} dark={dark} />
                   </div>
                 </div>
                 <div className={`xl:w-3/5 lg:w-1/2 block `}>
@@ -318,14 +315,18 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
                     {/* treadingView widget */}
                     <div
                       style={{
-                        width:"100%",
-                        height: currentView === "chart" && width > 1024 ? "500px" : "100%",
+                        width: "100%",
+                        height:
+                          currentView === "chart" && width > 1024
+                            ? "500px"
+                            : "100%",
                       }}
                     >
                       {/* <Chart dark={dark} /> */}
-                      {window.screen.width > 1024 ? currentView === "chart" && <Chart dark={dark} />
-                      :''}
-                      
+                      {window.screen.width > 1024
+                        ? currentView === "chart" && <Chart dark={dark} />
+                        : ""}
+
                       <ClientSideBar
                         show={currentView === "clientSideBar"}
                         setShow={() =>
@@ -339,7 +340,7 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
                         onSelect={onSelectUser}
                         selectedUserId={seluserid}
                         allInfo={allInfo}
-                      // width={width < 600 ? 0 : width / 2 + 30}
+                        // width={width < 600 ? 0 : width / 2 + 30}
                       />
                       <ExchangeSideBar
                         dark={dark}
@@ -351,7 +352,7 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
                               : "exchangeSidebar"
                           )
                         }
-                      // width={width < 600 ? 0 : width / 2 + 30}
+                        // width={width < 600 ? 0 : width / 2 + 30}
                       />
                       <WalletSideBar
                         dark={dark}
@@ -361,34 +362,38 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
                             x === "walletSidebar" ? "chart" : "walletSidebar"
                           )
                         }
-                      // width={width < 600 ? 0 : width / 2 + 30}
+                        // width={width < 600 ? 0 : width / 2 + 30}
                       />
                       <BotSideBar
                         dark={dark}
                         show={currentView === "botSideBar"}
                         setShow={(x) =>
-                          setCurrentView((x) =>{
-                            console.log("Setting",x);
-                            return x === "botSideBar" ? "chart" : "botSideBar"
+                          setCurrentView((x) => {
+                            console.log("Setting", x);
+                            return x === "botSideBar" ? "chart" : "botSideBar";
                           })
                         }
                         setChartShow={(x) =>
-                          setCurrentView((x) =>{
-                            return x === "botSideBar" ? "chartSideBar" : "botSideBar"
+                          setCurrentView((x) => {
+                            return x === "botSideBar"
+                              ? "chartSideBar"
+                              : "botSideBar";
                           })
                         }
-                      // width={width < 600 ? 0 : width / 2 + 30}
+                        // width={width < 600 ? 0 : width / 2 + 30}
                       />
                       <ChartSideBar
                         dark={dark}
                         show={currentView === "chartSideBar"}
                         setShow={() =>
-                          setCurrentView((x) =>{
-                          console.log(x);
-                            return x === "botSideBar" ? "chartSideBar" : "botSideBar"
+                          setCurrentView((x) => {
+                            console.log(x);
+                            return x === "botSideBar"
+                              ? "chartSideBar"
+                              : "botSideBar";
                           })
                         }
-                      // width={width < 600 ? 0 : width / 2 + 30}
+                        // width={width < 600 ? 0 : width / 2 + 30}
                       />
 
                       <InformationBar
@@ -406,85 +411,91 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
               </div>
             </div>
             <div className="flex gap-16 mb-4 mt-12 justify-between px-2">
-              
               <div
                 style={{ width: "100%" }}
-                className={`flex ${isAdmin.current === 1 ? "justify-between" : "justify-between"
-                  } w-full items-center text-[11px]`}
-              > 
-                <div className="flex space-x-4 cursor-pointer">
-                  
-                </div>
+                className={`flex ${
+                  isAdmin.current === 1 ? "justify-between" : "justify-between"
+                } w-full items-center text-[11px]`}
+              >
+                <div className="flex space-x-4 cursor-pointer"></div>
 
                 <div className="flex place-items-baseline justify-between space-x-4">
                   <div className="p flex justify-center">
-                    {authUser[1].user_roles === 'admin' || authUser[1].user_roles === 'super_admin' ? (
+                    {authUser[1].user_roles === "admin" ||
+                    authUser[1].user_roles === "super_admin" ? (
                       <>
-                        {authUser[1].user_roles === 'super_admin' && <span>
-                          {" "}
-                          <NavLink
-                            to="/admin"
-                            className="hidden lg:flex space-x-2 mr-4 text-sm dark:text-[#A3A2A2] text-center cursor-pointer items-center"
-                          >
-                            Admin{" "}
-                          </NavLink>
-                        </span>}
+                        {authUser[1].user_roles === "super_admin" && (
+                          <span>
+                            {" "}
+                            <NavLink
+                              to="/admin"
+                              className="hidden lg:flex space-x-2 mr-4 text-sm dark:text-[#A3A2A2] text-center cursor-pointer items-center"
+                            >
+                              Admin{" "}
+                            </NavLink>
+                          </span>
+                        )}
                         <span
                           onClick={() => {
                             setCurrentView((x) =>
-                              x === "clientSideBar"
-                                ? "chart"
-                                : "clientSideBar"
+                              x === "clientSideBar" ? "chart" : "clientSideBar"
                             );
                           }}
-                          className={`flex items-center mr-4 text-sm cursor-pointer ${currentView ==='clientSideBar' ? 'text-[#15FF00]':'dark:text-[#A3A2A2] '}`}
-                          
+                          className={`flex items-center mr-4 text-sm cursor-pointer ${
+                            currentView === "clientSideBar"
+                              ? "text-[#15FF00]"
+                              : "dark:text-[#A3A2A2] "
+                          }`}
                         >
                           Sub-Clients
                         </span>
-                        
-
                       </>
                     ) : null}
                     <span
                       onClick={() => {
                         setCurrentView((x) =>
-                          x === "botSideBar"
-                            ? "chart"
-                            : "botSideBar"
+                          x === "botSideBar" ? "chart" : "botSideBar"
                         );
                       }}
-                      className={`flex items-center mr-4 text-sm cursor-pointer ${currentView ==='botSideBar' ? 'text-[#15FF00]':'dark:text-[#A3A2A2] '}`}
+                      className={`flex items-center mr-4 text-sm cursor-pointer ${
+                        currentView === "botSideBar"
+                          ? "text-[#15FF00]"
+                          : "dark:text-[#A3A2A2] "
+                      }`}
                     >
                       Bot
                     </span>
                     <span
                       onClick={() => {
                         setCurrentView((x) =>
-                          x === "exchangeSidebar"
-                            ? "chart"
-                            : "exchangeSidebar"
+                          x === "exchangeSidebar" ? "chart" : "exchangeSidebar"
                         );
                       }}
                       className="hidden lg:flex items-center mr-2 text-sm dark:text-[#A3A2A2] cursor-pointer"
                     >
                       Exchange
                     </span>
-                    {authUser[1].user_roles=== "client" && authUser[1].usertype ===4 && <span
-                     onClick={()=> window.open(`${fetchWrapper.api_url}/pdfs/user_${authUser[1].id}.pdf`, '_blank')}
-                      className="hidden lg:flex items-center mr-2 text-sm dark:text-[#A3A2A2] cursor-pointer"
-                    >
-                      <img
-                        width={26}
-                        className="cursor-pointer"
-                        src={settingIcon}
-                        alt="second logo"
-                      />Statement
-                    </span>}
-                    
-
+                    {authUser[1].user_roles === "client" &&
+                      authUser[1].usertype === 4 && (
+                        <span
+                          onClick={() =>
+                            window.open(
+                              `${fetchWrapper.api_url}/pdfs/user_${authUser[1].id}.pdf`,
+                              "_blank"
+                            )
+                          }
+                          className="hidden lg:flex items-center mr-2 text-sm dark:text-[#A3A2A2] cursor-pointer"
+                        >
+                          <img
+                            width={26}
+                            className="cursor-pointer"
+                            src={settingIcon}
+                            alt="second logo"
+                          />
+                          Statement
+                        </span>
+                      )}
                   </div>
-                  
                 </div>
               </div>
             </div>
@@ -492,9 +503,7 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
         </div>
       ) : (
         // mobile version
-        <>
-          
-        </>
+        <></>
       )}
     </div>
   );
