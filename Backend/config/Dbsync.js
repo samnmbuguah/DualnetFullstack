@@ -9,7 +9,7 @@ console.log("Syncing Tables");
 Scans.sync()
   .then(() => {
     console.log("Scans table has been synced");
-    return Users.sync();
+    return Users.sync({alter: true});
   })
   .then(() => {
     console.log("Users table has been synced");
