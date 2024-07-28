@@ -4,10 +4,10 @@ import WalletBox from "_components/WalletBox/WalletBox";
 import { fetchWrapper } from "_helpers";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
+import SmallChart from "_components/SmallChart";
 const baseUrl = `${fetchWrapper.api_url}/api`;
 
-const DetailsSideBar = ({ user }) => {
+const DetailsSideBar = ({ user, dark }) => {
   const [balances, setBalances] = useState([]);
   const { user: authUser } = useSelector((x) => x.auth);
   useEffect(() => {
@@ -85,44 +85,8 @@ const DetailsSideBar = ({ user }) => {
         <label className="text-[#D7AD7D] dark:text-[#D9CFBF] font-[syncopate-bold] text-xl mt-4 block">
           Profit
         </label>
-        <BotCell
-          title={`APM `}
-          titleStyle="text-[#6C6A66] dark:text-[#D9CFBF] font-[syncopate-light] !font-bold text-sm"
-          value={`${calculateAPM()
-            .toFixed(2)
-            .replace(/[.,]00$/, "")} %`}
-          valueStyle="font-[syncopate-light] !font-bold"
-          ValueColor=" text-[#6C6A66] dark:text-[#D9CFBF]"
-        />
-        <BotCell
-          title={`APR `}
-          titleStyle="text-[#6C6A66] dark:text-[#D9CFBF] font-[syncopate-light] !font-bold text-sm"
-          value={`${(calculateAPM() * 12).toFixed(2).replace(/[.,]00$/, "")} %`}
-          valueStyle="font-[syncopate-light] !font-bold "
-          ValueColor=" text-[#6C6A66] dark:text-[#D9CFBF]"
-        />
       </div>
-      <div
-        className="mt-10 overflow-x-hidden overflow-y-auto max-h-[300px] cursor-pointer"
-        style={{ scrollbarWidth: "none" }}
-      >
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-        <WalletBox />
-      </div>
+      <SmallChart dark={dark} />
     </div>
   );
 };
