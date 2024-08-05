@@ -4,12 +4,13 @@ const MatchingPairs = require('../models/MatchingPairsModel.js');
 const UserPDFs = require('../models/UserPDFsModel.js');
 const Scans = require('../models/ScansModel.js');
 const Bots = require('../models/BotsModel.js');
+const TopScans = require('../models/TopScanModel.js');
 
 console.log("Syncing Tables");
 Scans.sync()
   .then(() => {
     console.log("Scans table has been synced");
-    return Users.sync({alter: true});
+    return Users.sync({ alter: true });
   })
   .then(() => {
     console.log("Users table has been synced");
@@ -21,9 +22,16 @@ Scans.sync()
   })
   .then(() => {
     console.log("UserPDFs table has been synced");
-    return Bots.sync({alter: true}); 
+    return Bots.sync({ alter: true });
   })
   .then(() => {
     console.log("Bots table has been synced");
+    return TopScans.sync({ alter: true });
   })
-  .catch((error) => console.log("Error occurred:", error));
+  .then(() => {
+    console.log("TopScans table has been created.");
+  })
+  .catch((error) => {
+    console.log("Error occurred:", error);
+  });
+  
