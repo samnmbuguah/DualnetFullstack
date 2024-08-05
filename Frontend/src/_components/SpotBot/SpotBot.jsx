@@ -42,6 +42,20 @@ const SpotBot = ({
     scanData.fundingNextApply
   );
   const userId = authUser[1].id;
+  const tradeData = {
+    pair: scanData.matchingPairId,
+    amount: amount,
+    lastPrice: scanData.futuresPrice,
+    quantoMultiplier: scanData.quantoMultiplier,
+    takerFeeRate: scanData.takerFeeRate,
+    leverage: leverage,
+    subClientId: userId,
+    closeByProfit: closeByProfit,
+    fundingRate: scanData.fundingRate,
+    closeByDeviation: closeByDeviation,
+    active: isSwitchOn,
+  };
+
   useEffect(() => {
     if (selectedScan) {
       setScanData(selectedScan);
@@ -186,7 +200,7 @@ const SpotBot = ({
         <h2 className="text-xs text-[#454A57] dark:text-white font-[inter]">
           Spot-Future Arbitrage Bot
         </h2>
-        <Switch onChange={handleSwitchChange} />
+        <Switch onChange={handleSwitchChange} tradeData={tradeData} />
       </div>
       <BotSelectInput
         label="Markets"
