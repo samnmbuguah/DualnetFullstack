@@ -9,7 +9,10 @@ async function getTopScan() {
     const topScan = await Scans.findAll({
       where: {
         updatedAt: {
-          [Op.gte]: moment().subtract(5, "minutes").toDate(),
+          [Op.gte]: moment().subtract(1, "minutes").toDate(),
+        },
+        fundingRate: {
+          [Op.gt]: 0,
         },
       },
       order: [["percentageDifference", "DESC"]],
