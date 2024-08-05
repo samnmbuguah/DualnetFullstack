@@ -9,7 +9,7 @@ async function isLastPercentageDifferenceHigher() {
 				[Op.gte]: moment().subtract(1, "day").toDate(), // updated within the last 1 day
 			},
 		},
-		attributes: ['percentageDifference'],
+		attributes: ['id', 'percentageDifference', 'updatedAt'],
 		order: [['updatedAt', 'DESC']]
 	});
 
@@ -24,6 +24,13 @@ async function isLastPercentageDifferenceHigher() {
 	const meanPlusTwoStdDev = mean + (standardDeviation * 2);
 
 	const lastPercentageDifference = values[0];
+
+	// Save meanPlusTwoStdDev to the standardDeviation field of the last updated TopScan
+	const lastUpdatedScan = scans[0];
+	await TopScans.update(
+		{ standardDeviation: meanPlusTwoStdDev },
+		{ where: { id: lastUpdatedScan.id } }
+	);
 
 	return lastPercentageDifference > meanPlusTwoStdDev;
 }
