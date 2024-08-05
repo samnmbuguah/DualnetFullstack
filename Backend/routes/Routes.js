@@ -133,14 +133,14 @@ router.post("/autobot", verifyToken, async (req, res) => {
     if (result) {
       res.status(200).json({ message: "Autobot started" });
     } else {
-      res.status(400).json({ message: "Error starting autobot" });
+      res.status(200).json({ message: "Autobot stopped" });
     }
   } catch (error) {
     console.error(
       "Error in autobot:",
       error.response ? error.response.data : error
     );
-    res.status(500).json({ message: "Error executing autobot" });
+    res.status(400).json({ message: "Error executing autobot" });
   }
 });
 
@@ -162,7 +162,7 @@ router.post("/close-trade", verifyToken, async (req, res) => {
       spotSize,
       positionId,
       multiplier,
-      reason // Pass the reason here
+      reason 
     );
     if (result) {
       res
