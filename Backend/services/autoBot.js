@@ -37,18 +37,19 @@ async function autoBot(
             }
         
       });
-      console.log("Cron job started to run getTopScan every minute.");
-      return true; // Return true if the job is started
+      console.log("Autobot started to run getTopScan every minute.");
+      return true;
     }
+    return true;
   } else {
     if (job) {
       job.stop();
       job = null;
-      console.log("Auto job stopped.");
-      return true; // Return true if the job is stopped
+      console.log("Autobot stopped.");
+      return false; 
     }
+    return false;
   }
-  return false; // Return false if no action was taken
 }
 
 module.exports = autoBot;
