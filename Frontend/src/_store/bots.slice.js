@@ -26,6 +26,14 @@ export const trade = createAsyncThunk("bots/trade", async (tradeData) => {
   console.log("response", response);
   return response;
 });
+
+export const autoBot = createAsyncThunk("bots/autoBot", async (tradeData) => {
+  console.log("autoBot", tradeData);
+  const response = await fetchWrapper.post(baseUrl + "/autoBot", tradeData);
+  console.log("response", response);
+  return response;
+});
+
 const botsSlice = createSlice({
   name: "bots",
   initialState,
