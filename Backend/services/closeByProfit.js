@@ -4,6 +4,7 @@ const fetchSpotBalance = require("./fetchSpotBalance");
 const Bots = require("../models/BotsModel.js");
 const getCurrentSpotPrice = require("./getCurrentSpotPrice");
 const listFuturesOrderBook = require("./listFuturesOrderBook.js");
+const getContractDetails = require("./getContractDetails.js")
 const cron = require("node-cron");
 
 async function closeByProfit(io, bots) {
@@ -17,8 +18,7 @@ async function closeByProfit(io, bots) {
       bot.matchingPairId,
       bot.userId
     );
-    const futuresResponse = await listFuturesOrderBook(bot.settle, bot.matchingPairId);
-    const futuresPrice = parseFloat(futuresResponse.asks[0].p);
+    const futuresPrice = await getContractDetails(bot.settle, bot.matchingPairId);
     const spotBalance = await fetchSpotBalance(bot.matchingPairId, bot.userId);
     let availableSpotBalance = parseFloat(spotBalance.available);
 
