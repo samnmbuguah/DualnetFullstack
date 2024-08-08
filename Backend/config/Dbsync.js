@@ -10,7 +10,7 @@ console.log("Syncing Tables");
 Scans.sync()
   .then(() => {
     console.log("Scans table has been synced");
-    return Users.sync({ alter: true });
+    return Users.sync();
   })
   .then(() => {
     console.log("Users table has been synced");
@@ -22,11 +22,11 @@ Scans.sync()
   })
   .then(() => {
     console.log("UserPDFs table has been synced");
-    return Bots.sync({ alter: true });
+    return Bots.sync();
   })
   .then(() => {
     console.log("Bots table has been synced");
-    return TopScans.sync({ alter: true });
+    return TopScans.sync();
   })
   .then(() => {
     console.log("TopScans table has been created.");
