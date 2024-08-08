@@ -1,11 +1,10 @@
 const Scans = require("../models/ScansModel.js");
-const getContractDetails = require("./getContractDetails.js");
-const getCurrentSpotPrice = require("./getCurrentSpotPrice");
 const listFuturesOrderBook = require("./listFuturesOrderBook.js");
+const listOrderBook = require("./listSpotOrderBook.js");
 
 // Helper function to handle rate limitting
 function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 class PollPrices {
@@ -23,24 +22,38 @@ class PollPrices {
 
   async fetchAndUpdateScans() {
     const delayInMilliseconds = 100;
+    const takerFeeRate = 0.00075 * 2;
 
     for (let index = 0; index < this.tickers.length; index++) {
       const ticker = this.tickers[index];
+      const amountPrecision = this.amountPrecisions[index] + 1;
 
       const startTime = Date.now();
 
       try {
-        const spotResponse = await getCurrentSpotPrice(ticker);
-        const futuresResponse = await listFuturesOrderBook(this.settle, ticker);
-        const takerFeeRate = 0.00075 * 2;
+        const spotResponse = await listOrderBook(ticker);
+        const futuresResponse = await listFuturesOrderBook(
+          this.settle,
+          ticker
+        );
 
-        const spotPrice = parseFloat(spotResponse.lowestAsk);
+        // Skip to the next ticker if liquidity is insufficient
+        if (!futuresResponse || !spotResponse) {
+          console.log(
+            `Skipping ticker ${ticker} due to insufficient liquidity`
+          );
+          continue;
+        }
+        const spotPrice = parseFloat(spotResponse.asks[0][0]);
         const futuresPrice = parseFloat(futuresResponse.bids[0].p);
 
         let valueDifference = futuresPrice - spotPrice;
-        valueDifference = Math.round(valueDifference * Math.pow(10, this.amountPrecisions[index] + 2)) / Math.pow(10, this.amountPrecisions[index] + 2);
-        
-        let percentageDifference = (valueDifference / spotPrice) * 100 - takerFeeRate;
+        valueDifference =
+          Math.round(valueDifference * Math.pow(10, amountPrecision)) /
+          Math.pow(10, amountPrecision);
+
+        let percentageDifference =
+          (valueDifference / spotPrice) * 100 - takerFeeRate;
         percentageDifference = Math.round(percentageDifference * 10000) / 10000;
 
         await Scans.upsert({

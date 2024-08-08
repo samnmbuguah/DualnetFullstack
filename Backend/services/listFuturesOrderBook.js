@@ -3,24 +3,32 @@ const client = require('./gateClient.js');
 
 const api = new GateApi.FuturesApi(client);
 
-// Define default opts
-const defaultOpts = {
-    'interval': '0', // '0' | '0.1' | '0.01' | Order depth. 0 means no aggregation is applied.
-    'limit': 1, // number | Maximum number of order depth data in asks or bids
-    'withId': false 
-};
+  const defaultOpts = {
+    interval: "0", // string | Interval of order depth data
+    limit: 1, // number | Maximum number of order depth data in asks or bids
+    withId: false,
+  };
 
 async function listFuturesOrderBook(settle, contract, opts = defaultOpts) {
-  return api
-    .listFuturesOrderBook(settle, contract, opts)
-    .then((value) => {
-      const { asks, bids } = value.body;
-      return { asks, bids };
-    })
-    .catch((error) => {
-      console.error(error);
-      throw error;
-    });
+  try {
+    const value = await api.listFuturesOrderBook(settle, contract, opts);
+    const { asks, bids } = value.body;
+
+    // Calculate liquidity
+    const liquidity = parseFloat(bids[0].p) * bids[0].s;
+
+    // Check liquidity
+    if (liquidity <= 100) {
+      console.log(`Futures Liquidity for ${contract} is too low: ${liquidity}`);
+      return null; // Skip further calculations
+    }
+
+    // Proceed with other calculations if liquidity is sufficient
+    return { asks, bids };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
 
 module.exports = listFuturesOrderBook;
@@ -45,5 +53,3 @@ module.exports = listFuturesOrderBook;
 // }
 
 // main().catch(console.error);
-
-
