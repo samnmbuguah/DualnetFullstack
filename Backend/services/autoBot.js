@@ -1,6 +1,7 @@
 const getTopScan = require("./getTopScan.js");
 const trade = require("./trade.js");
 const cron = require("node-cron");
+const setLeverage = require("./setLeverage.js");
 
 let job;
 
@@ -21,21 +22,25 @@ async function autoBot(
     if (!job) {
       job = cron.schedule('* * * * *', async () => {
         let shouldTrade = await getTopScan();
-            if (shouldTrade) {
-              await trade(
-                pair,
-                amount,
-                lastPrice,
-                quantoMultiplier,
-                takerFeeRate,
-                subClientId,
-                leverage,
-                fundingRate,
-                closeByProfit,
-                closeByDeviation
-              );
-            }
-        
+        if (shouldTrade) {
+          try {
+            await setLeverage("usdt", pair, leverage, subClientId);
+            await trade(
+              pair,
+              amount,
+              lastPrice,
+              quantoMultiplier,
+              takerFeeRate,
+              subClientId,
+              leverage,
+              fundingRate,
+              closeByProfit,
+              closeByDeviation
+            );
+          } catch (error) {
+            console.error("Error in setting leverage or trading:", error);
+          }
+        }
       });
       console.log("Autobot started to run getTopScan every minute.");
       return true;
