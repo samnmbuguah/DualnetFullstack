@@ -2,7 +2,7 @@ const GateApi = require('gate-api');
 const client = require('./gateClient');
 
 //Fetch all futures contracts
-function fetchFuturesContracts() {
+async function fetchFuturesContracts() {
     console.log('Fetching futures contracts...');
     const futuresApi = new GateApi.FuturesApi(client);
     const settle = "usdt"
@@ -13,7 +13,7 @@ function fetchFuturesContracts() {
 }
 
 //Fetch all Spot pairs
-function fetchSpotPairs() {
+async function fetchSpotPairs() {
     console.log('Fetching spot pairs...');
     const spotApi = new GateApi.SpotApi(client);
     
@@ -22,7 +22,7 @@ function fetchSpotPairs() {
     .catch(error => console.error(error));
 }
 
-function findMatchingPairs() {
+async function findMatchingPairs() {
     return Promise.all([fetchFuturesContracts(), fetchSpotPairs()])
     .then(([futuresContracts, spotPairs]) => {
         const futuresContractsMap = new Map();
