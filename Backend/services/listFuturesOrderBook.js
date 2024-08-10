@@ -3,27 +3,29 @@ const client = require('./gateClient.js');
 
 const api = new GateApi.FuturesApi(client);
 
-  const defaultOpts = {
-    interval: "0", // string | Interval of order depth data
-    limit: 1, // number | Maximum number of order depth data in asks or bids
-    withId: false,
-  };
+const defaultOpts = {
+  interval: "0", // string | Interval of order depth data
+  limit: 1, // number | Maximum number of order depth data in asks or bids
+  withId: false,
+};
 
 async function listFuturesOrderBook(settle, contract, opts = defaultOpts) {
   try {
     const value = await api.listFuturesOrderBook(settle, contract, opts);
     const { asks, bids } = value.body;
 
-    // Calculate liquidity
-    const liquidity = parseFloat(bids[0].p) * bids[0].s;
+    // Calculate spread as a percentage
+    const bidPrice = parseFloat(bids[0].p);
+    const askPrice = parseFloat(asks[0].p);
+    const spreadPercent = ((askPrice - bidPrice) / askPrice) * 100;
 
-    // Check liquidity
-    if (liquidity <= 100) {
-      console.log(`Futures Liquidity for ${contract} is too low: ${liquidity}`);
+    // Check spread
+    if (spreadPercent < 0.42) {
+      console.log(`Spread for ${contract} is too low: ${spreadPercent}%`);
       return null; // Skip further calculations
     }
 
-    // Proceed with other calculations if liquidity is sufficient
+    // Proceed with other calculations if spread is sufficient
     return { asks, bids };
   } catch (error) {
     console.error(error);
