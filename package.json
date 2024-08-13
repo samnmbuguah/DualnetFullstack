@@ -37,7 +37,9 @@
     "closeByProfit": "node Backend/services/closeByProfit.js",
     "getFundingRate": "node Backend/services/getFundingRate.js",
     "updateAccumulatedFunding": "node Backend/services/updateAccumulatedFunding.js",
-    "shortRecursively": "node Backend/services/shortRecursively.js"
+    "shortRecursively": "node Backend/services/shortRecursively.js",
+    "listDualInvestmentPlans": "node Backend/services/dualinvestment/dualInvestment.js",
+    "getLastClosePrice": "node Backend/services/dualinvestment/getSpotPrice.js"
   },
   "repository": {
     "type": "git",
