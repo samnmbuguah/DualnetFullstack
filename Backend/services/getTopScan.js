@@ -12,7 +12,10 @@ async function getTopScan() {
           [Op.gte]: moment().subtract(1, "minutes").toDate(),
         },
         fundingRate: {
-          [Op.gte]: 0.01,
+          [Op.gte]: 0.005,
+        },
+        percentageDifference: {
+          [Op.gte]: 0.0,
         },
       },
       order: [["percentageDifference", "DESC"]],
