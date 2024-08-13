@@ -5,6 +5,7 @@ const UserPDFs = require('../models/UserPDFsModel.js');
 const Scans = require('../models/ScansModel.js');
 const Bots = require('../models/BotsModel.js');
 const TopScans = require('../models/TopScanModel.js');
+const DualPlans = require('../models/DualPlansModel.js');
 
 console.log("Syncing Tables");
 Scans.sync()
@@ -30,6 +31,10 @@ Scans.sync()
   })
   .then(() => {
     console.log("TopScans table has been created.");
+    return DualPlans.sync();
+  })
+  .then(() => {
+    console.log("All tables have been synced");
   })
   .catch((error) => {
     console.log("Error occurred:", error);
