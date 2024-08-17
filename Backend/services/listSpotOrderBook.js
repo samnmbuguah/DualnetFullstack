@@ -26,7 +26,7 @@ async function listOrderBook(currencyPair, opts = defaultOpts) {
     const spreadPercent = ((askPrice - bidPrice) / askPrice) * 100;
 
     // Check spread
-    if (spreadPercent > 0.42) {
+    if (spreadPercent > 0.5) {
       console.log(`Spread for ${currencyPair} is too low: ${spread}`);
       return null; // Skip further calculations
     }
