@@ -13,7 +13,7 @@ async function isLastPercentageDifferenceHigher() {
 		order: [['updatedAt', 'DESC']]
 	});
 
-	if (scans.length < 14) {
+	if (scans.length < 42) {
 		return false;
 	}
 
@@ -21,7 +21,7 @@ async function isLastPercentageDifferenceHigher() {
 	const mean = values.reduce((acc, val) => acc + val, 0) / values.length;
 	const variance = values.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / values.length;
 	const standardDeviation = Math.sqrt(variance);
-	const meanPlusTwoStdDev = mean + (standardDeviation * 2.7);
+	const meanPlusTwoStdDev = mean + (standardDeviation * 2.5);
 
 	const lastPercentageDifference = values[0];
 
