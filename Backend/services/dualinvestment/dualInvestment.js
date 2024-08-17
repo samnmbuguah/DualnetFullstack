@@ -12,8 +12,8 @@ async function listDualInvestmentPlans(apyThreshold = 6) {
 
     // Collect plans that meet the threshold
     const plansToUpsert = plans
-      .filter(plan => parseFloat(plan.apyDisplay) > apyThreshold)
-      .map(plan => ({
+      .filter((plan) => parseFloat(plan.apyDisplay) > apyThreshold)
+      .map((plan) => ({
         id: plan.id,
         instrumentName: plan.instrumentName,
         investCurrency: plan.investCurrency,
@@ -50,4 +50,3 @@ listDualInvestmentPlans(6)
   .catch((error) => {
     // Handle the error if needed
   });
-  
