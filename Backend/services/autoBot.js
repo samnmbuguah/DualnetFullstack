@@ -20,28 +20,28 @@ async function autoBot(
 ) {
   if (active) {
     if (!job) {
-      job = cron.schedule('* * * * *', async () => {
-        let shouldTrade = await getTopScan();
-        if (shouldTrade) {
-          try {
-            await setLeverage("usdt", pair, leverage, subClientId);
-            await trade(
-              pair,
-              amount,
-              lastPrice,
-              quantoMultiplier,
-              takerFeeRate,
-              subClientId,
-              leverage,
-              fundingRate,
-              closeByProfit,
-              closeByDeviation
-            );
-          } catch (error) {
-            console.error("Error in setting leverage or trading:", error);
-          }
-        }
-      });
+      // job = cron.schedule('* * * * *', async () => {
+      //   let shouldTrade = await getTopScan();
+      //   if (shouldTrade) {
+      //     try {
+      //       await setLeverage("usdt", pair, leverage, subClientId);
+      //       await trade(
+      //         pair,
+      //         amount,
+      //         lastPrice,
+      //         quantoMultiplier,
+      //         takerFeeRate,
+      //         subClientId,
+      //         leverage,
+      //         fundingRate,
+      //         closeByProfit,
+      //         closeByDeviation
+      //       );
+      //     } catch (error) {
+      //       console.error("Error in setting leverage or trading:", error);
+      //     }
+      //   }
+      // });
       console.log("Autobot started to run getTopScan every minute.");
       return true;
     }
