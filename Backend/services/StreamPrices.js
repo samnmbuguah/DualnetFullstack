@@ -30,15 +30,15 @@ async function fetchTopScans(
 async function fetchAndLogPrices(pollPrices, io) {
   updateResult = await pollPrices.fetchAndUpdateScans();
 
-  // If fetchAndUpdateScans was successful, fetch top scans from the database
-  if (updateResult) {
-    // // Emit top scans to the client
-    // const topScans = await fetchTopScans();
-    // io.emit("topScans", topScans);
+  // // If fetchAndUpdateScans was successful, fetch top scans from the database
+  // if (updateResult) {
+  //   // Emit top scans to the client
+  //   const topScans = await fetchTopScans();
+  //   io.emit("topScans", topScans);
 
-    // Recursively call every 10 seconds
-    setTimeout(() => fetchAndLogPrices(pollPrices, io), 10000);
-  }
+  //   // Recursively call every 10 seconds
+  //   setTimeout(() => fetchAndLogPrices(pollPrices, io), 10000);
+  // }
 }
 
 async function updateTickersAndPrecisions(pollPrices) {
