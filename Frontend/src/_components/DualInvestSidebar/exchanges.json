@@ -1,0 +1,12 @@
+[
+  { "name": "KuCoin", "active": false },
+  { "name": "Gate.io", "active": true },
+  { "name": "ByBit", "active": false },
+  { "name": "Binance", "active": false },
+  { "name": "BitGet", "active": false },
+  { "name": "Apollo", "active": false },
+  { "name": "HTX", "active": false },
+  { "name": "CoinEX", "active": false },
+  { "name": "OKX", "active": false },
+  { "name": "Kraken", "active": false }
+]
