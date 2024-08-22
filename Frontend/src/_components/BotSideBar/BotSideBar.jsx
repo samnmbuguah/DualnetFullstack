@@ -137,4 +137,4 @@ function BotSideBar({ show, setShow, dark, width, setChartShow }) {
   );
 }
 
-export { BotSideBar };
+export default BotSideBar;
