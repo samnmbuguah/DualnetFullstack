@@ -1,0 +1,38 @@
+[
+    {
+        "name": "ETH",
+        "logo": "/assets/svg/ETH.svg"
+    },
+    {
+        "name": "BTC",
+        "logo": "/assets/svg/BTC.svg"
+    },
+    {
+        "name": "SOL",
+        "logo": "/assets/svg/SOL.svg"
+    },
+    {
+        "name": "DOGE",
+        "logo": "/assets/svg/DOGE.svg"
+    },
+    {
+        "name": "LTC",
+        "logo": "/assets/svg/LTC.svg"
+    },
+    {
+        "name": "LDO",
+        "logo": "/assets/svg/LDO.svg"
+    },
+    {
+        "name": "NOT",
+        "logo": "/assets/svg/NOT.svg"
+    },
+    {
+        "name": "KAS",
+        "logo": "/assets/svg/KAS.svg"
+    },
+    {
+        "name": "PEPE",
+        "logo": "/assets/svg/PEPE.svg"
+    }
+]
