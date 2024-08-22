@@ -1,5 +1,3 @@
-// styles.js
-
 const styles = {
     dark: {
       boxShadow: "1px 4px 4px #151515 inset",
