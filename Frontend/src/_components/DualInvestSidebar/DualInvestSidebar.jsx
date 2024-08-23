@@ -1,33 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaRegTimesCircle } from "react-icons/fa";
 import { useWindowDimensions } from "_components";
-import { fetchWrapper } from "_helpers";
 import styles from "./styles";
 import Switch from "_components/Switch/Switch";
 import cryptos from "./cryptos.json";
 import CryptoList from "./CryptoList";
 import DualInput from "./DualInput";
 import Threshold from "./Threshold";
+import BuyLowInfo from "./ BuyLowInfo.jsx";
+import SellHighInfo from "./SellHighInfo";
+import { fetchInvestmentsByCurrency } from "_store/bots.slice";
+import BuyAPR from "./BuyAPR";
+import SellAPR from "./SellAPR";
 
-const baseUrl = `${fetchWrapper.api_url}/api`;
-
-const DualInvestSidebar = ({ show, setShow, dark }) => {
+const DualInvestSidebar = ({ show, dark }) => {
   const { user: authUser } = useSelector((x) => x.auth);
+  const exerciseCurrencyList = useSelector((state) => state.bots.dualInvestments?.exerciseCurrencyList || []);
+  const investCurrencyList = useSelector((state) => state.bots.dualInvestments?.investCurrencyList || []);
   const dispatch = useDispatch();
   const customStyles = dark ? styles.dark : styles.light;
   let screenWidth = useWindowDimensions().width;
 
-  const [selectedCrypto, setSelectedCrypto] = useState(null);
+  const [selectedCrypto, setSelectedCrypto] = useState("BTC");
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [tradeData, setTradeData] = useState({});
   const [amount, setAmount] = useState(100);
 
-  const environment = process.env.REACT_APP_ENVIRONMENT;
-  const ws_url =
-    environment === "production"
-      ? "wss://dualnet-production.up.railway.app"
-      : "ws://localhost:3042";
+  useEffect(() => {
+    if (selectedCrypto) {
+      dispatch(fetchInvestmentsByCurrency(selectedCrypto));
+    }
+  }, [selectedCrypto, dispatch]); 
 
   const handleSwitchChange = (isChecked) => {
     setIsSwitchOn(isChecked);
@@ -61,7 +64,7 @@ const DualInvestSidebar = ({ show, setShow, dark }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-row">
         <div className="w-1/3 py-24">
           <div>
             <span className="px-8 text-[#868585]">1 share = 0.2575 USDT</span>
@@ -86,6 +89,14 @@ const DualInvestSidebar = ({ show, setShow, dark }) => {
             />
             <span className="px-8 text-[#868585]">1 share = 0.0001 ETH</span>
           </div>
+        </div>
+        <div className="flex flex-col">
+          <BuyLowInfo />
+          <SellHighInfo />
+        </div>
+        <div>
+          <BuyAPR items={exerciseCurrencyList} />
+          <SellAPR items={investCurrencyList} />
         </div>
       </div>
       <div className="w-3/5">
