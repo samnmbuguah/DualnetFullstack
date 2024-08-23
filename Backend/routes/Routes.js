@@ -24,6 +24,8 @@ const sellSpotAndLongFutures = require("../services/closeTrades.js");
 const fetchBothBalances = require("../services/fetchBalances.js");
 const Bots = require("../models/BotsModel.js");
 const autoBot = require("../services/autoBot.js");
+const fetchInvestmentsByCurrency = require("../services/dualinvestment/fetchInvestments.js");
+
 const router = express.Router();
 
 router.post("/login", Login);
@@ -210,6 +212,24 @@ router.put("/updateProfitThreshold", async (req, res) => {
   } catch (error) {
     console.error("Error updating profitThreshold:", error);
     res.status(500).send({ error: "Error updating profitThreshold" });
+  }
+});
+
+
+// New route for fetching investments by currency
+router.get("/fetch-investments", async (req, res) => {
+  const { currency } = req.query;
+
+  if (!currency) {
+    return res.status(400).send({ error: "currency is required" });
+  }
+
+  try {
+    const investments = await fetchInvestmentsByCurrency(currency);
+    res.status(200).json(investments);
+  } catch (error) {
+    console.error("Error fetching investments:", error);
+    res.status(500).send({ error: "Error fetching investments" });
   }
 });
 
