@@ -2,29 +2,40 @@ import React, { memo } from "react";
 
 const SellAPR = ({ items }) => {
   console.log("Sell APR items", items);
+
+  const calculateRemainingTime = (unixTime) => {
+    const now = Date.now();
+    const timeDifference = unixTime * 1000 - now; 
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    
+    if (days > 1) {
+      return `${days} Days`;
+    } else if (days === 1) {
+      return `${days} Day`;
+    } else {
+      return `${hours} Hours`;
+    }
+  };
+
   return (
-    <div className="w-full p-4 bg-[#fef6e6] dark:bg-[#454A57] rounded-md mb-4">
-      <h2 className="text-[0.875rem] font-bold mb-2 text-[#1D886A]">
-        Sell APR
-      </h2>
+    <div className="p-4 mb-4 bg-transparent text-white">
       <ul className="mb-4">
         {items.slice(0, 6).map((item, index) => (
-          <li key={index} className="mb-2">
-            <div className="text-[0.75rem] text-[#FFFFFF]">
-              <span className="font-semibold">Price:</span> {item.exercisePrice}
+          <li key={index} className="mb-2 flex items-center justify-between">
+            <div className="text-sm text-white">${item.exercisePrice}</div>
+            <div className="text-sm text-[#EA5F00]">
+              {parseFloat(item.apyDisplay).toFixed(2)}%
             </div>
-            <div className="text-[0.75rem] text-[#F09643]">
-              <span className="font-semibold">APR:</span> {item.apyDisplay}
+            <div className="text-sm text-white">
+              {calculateRemainingTime(item.endTime)}
             </div>
-            <div className="text-[0.75rem] text-[#FFFFFF]">
-              <span className="font-semibold">Days:</span> {item.endTime}
-            </div>
+            <button className="py-1 px-2 bg-[#353638] text-white rounded-xl hover:border-red-500 border">
+              Subscribe
+            </button>
           </li>
         ))}
       </ul>
-      <button className="w-full py-2 bg-[#1D886A] text-white rounded-md hover:border-red-500 border-2">
-        Subscribe
-      </button>
     </div>
   );
 };
