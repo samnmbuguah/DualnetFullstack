@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { autoBot } from "_store/bots.slice";
 import { useDispatch } from "react-redux";
 
-
 const Switch = ({ onChange, tradeData }) => {
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useDispatch();
