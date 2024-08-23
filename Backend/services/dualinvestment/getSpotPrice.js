@@ -30,11 +30,11 @@ async function getLastClosePrice(currencyPair) {
 
 module.exports = getLastClosePrice;
 
-// Example usage
-getLastClosePrice("BTC_USDT")
-  .then(lastClosePrice => {
-    // Handle the last close price if needed
-  })
-  .catch(error => {
-    // Handle the error if needed
-  });
+// // Example usage
+// getLastClosePrice("BTC_USDT")
+//   .then(lastClosePrice => {
+//     // Handle the last close price if needed
+//   })
+//   .catch(error => {
+//     // Handle the error if needed
+//   });
