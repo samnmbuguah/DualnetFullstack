@@ -1,24 +1,35 @@
-import React from "react";
+import React from 'react';
 
-const SellHighInfo = () => {
+function SellHighInfo({ infoText, availableAmount, positionAmount, positionRange }) {
   return (
-    <div className="w-1/2 p-4 bg-[#fef6e6] dark:bg-[#454A57] rounded-md mb-4">
-      <h2 className="text-[0.875rem] font-bold mb-2 text-[#1D886A]">
-        Sell High
-      </h2>
-      <p className="text-[0.625rem] mb-4 text-[#D0D0D0]">
-        Sell High means choosing a target price higher than the current price to
-        sell high and earn extra USDT.
-      </p>
-      <div className="mb-2 text-[0.75rem] text-[#FFFFFF]">
-        <span className="font-semibold">Available:</span> 0.0005987
-      </div>
-      <div className="text-[0.625rem] text-[#9A9A9A]">
-        <span className="font-semibold">Position size for 100$ Range:</span>{" "}
-        0.00001497
-      </div>
-    </div>
+    <section className="w-full max-w-[273px] p-4 mb-16"> 
+      <h2 className="text-base font-bold text-orange-400">Sell High</h2>
+      <InfoText text={infoText} />
+      <AvailableAmount amount={availableAmount} />
+      <PositionSize amount={positionAmount} range={positionRange} />
+    </section>
   );
+}
+
+function InfoText({ text }) {
+  return <p className="text-xs text-stone-300 mb-4">{text}</p>;
+}
+
+function AvailableAmount({ amount }) {
+  return <p className="text-sm font-bold text-white">Available {amount.toFixed(7)}</p>;
+}
+
+function PositionSize({ amount, range }) {
+  return (
+    <p className="text-xs text-neutral-400">Position size for {amount}$ Range ({range.toFixed(8)})</p>
+  );
+}
+
+SellHighInfo.defaultProps = {
+  infoText: 'Sell High means choosing a target price higher than the current price to sell high and earn extra USDT.',
+  availableAmount: 0.0005987,
+  positionAmount: 100,
+  positionRange: 0.00001497,
 };
 
 export default SellHighInfo;
