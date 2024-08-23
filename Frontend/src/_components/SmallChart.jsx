@@ -5,15 +5,19 @@ export const SmallChart = memo(({ dark }) => {
   const darkMode = dark;
 
   useEffect(() => {
+    if (!container.current) return;
+
     const colorTheme = darkMode ? "dark" : "light";
     const backgroundColor = darkMode ? "rgba(33, 36, 41, 0.02)" : "#fef6e6";
-    const script = document.createElement("script");
-    script.src =
-      "https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js";
-    script.type = "text/javascript";
-    script.async = true;
-    script.crossOrigin = "anonymous";
-    script.innerHTML = `
+
+    const appendScript = () => {
+      const script = document.createElement("script");
+      script.src =
+        "https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js";
+      script.type = "text/javascript";
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      script.innerHTML = `
 {
          "symbols": [
             [
@@ -61,8 +65,12 @@ export const SmallChart = memo(({ dark }) => {
     "12m|1W"
   ]
 }`;
-    container.current.innerHTML = "";
-    container.current.appendChild(script);
+      container.current.innerHTML = "";
+      container.current.appendChild(script);
+    };
+
+    // Delay the script execution to ensure the DOM is fully ready
+    setTimeout(appendScript, 3000);
   }, [darkMode]);
 
   return (
