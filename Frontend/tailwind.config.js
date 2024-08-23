@@ -5,8 +5,8 @@ module.exports = {
     extend: {
       colors: {
         "dark-text": "rgba(255, 255, 255, 0.5)",
-        // Ensure white color is available (Tailwind includes it by default)
-        white: "#ffffff",
+        white: "#ffffff", 
+        "custom-gray": "#454A57", 
       },
       fontFamily: {
         arrial: ["Arial"],
