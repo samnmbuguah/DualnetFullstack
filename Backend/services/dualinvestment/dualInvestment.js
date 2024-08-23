@@ -3,32 +3,30 @@ const client = new GateApi.ApiClient();
 const api = new GateApi.EarnApi(client);
 const DualPlans = require("../../models/DualPlansModel.js");
 
-async function listDualInvestmentPlans(apyThreshold = 6) {
+async function listDualInvestmentPlans() {
   try {
     const value = await api.listDualInvestmentPlans();
 
     // Assuming value.body is an array of plans
     const plans = value.body;
 
-    // Collect plans that meet the threshold
-    const plansToUpsert = plans
-      .filter((plan) => parseFloat(plan.apyDisplay) > apyThreshold)
-      .map((plan) => ({
-        id: plan.id,
-        instrumentName: plan.instrumentName,
-        investCurrency: plan.investCurrency,
-        exerciseCurrency: plan.exerciseCurrency,
-        exercisePrice: plan.exercisePrice,
-        deliveryTime: plan.deliveryTime,
-        minCopies: plan.minCopies,
-        maxCopies: plan.maxCopies,
-        perValue: plan.perValue,
-        apyDisplay: parseFloat(plan.apyDisplay),
-        startTime: plan.startTime,
-        endTime: plan.endTime,
-        status: plan.status,
-        planType: plan.investCurrency === "USDT" ? "buy_low" : "sell_high",
-      }));
+    // Map through all plans without filtering
+    const plansToUpsert = plans.map((plan) => ({
+      id: plan.id,
+      instrumentName: plan.instrumentName,
+      investCurrency: plan.investCurrency,
+      exerciseCurrency: plan.exerciseCurrency,
+      exercisePrice: plan.exercisePrice,
+      deliveryTime: plan.deliveryTime,
+      minCopies: plan.minCopies,
+      maxCopies: plan.maxCopies,
+      perValue: plan.perValue,
+      apyDisplay: parseFloat(plan.apyDisplay) * 100,
+      startTime: plan.startTime,
+      endTime: plan.endTime,
+      status: plan.status,
+      planType: plan.investCurrency === "USDT" ? "buy_low" : "sell_high",
+    }));
 
     // Use bulkCreate with updateOnDuplicate to insert or update plans
     await DualPlans.bulkCreate(plansToUpsert, {
@@ -42,8 +40,10 @@ async function listDualInvestmentPlans(apyThreshold = 6) {
   }
 }
 
+module.exports = listDualInvestmentPlans;
+
 // Example usage
-listDualInvestmentPlans(6)
+listDualInvestmentPlans()
   .then((response) => {
     // Handle the response if needed
   })
