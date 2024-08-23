@@ -89,24 +89,24 @@ io.on('connection', (socket) => {
 
 server.listen(PORT, () => {
   console.log(`Server running at port ${PORT}`);
-  StreamPrices(io); // Start streaming prices after the server has started
+  // StreamPrices(io); // Start streaming prices after the server has started
 });
 
 // Schedule the cron job
-cron.schedule('* * * * *', async () => {
-    // Fetch all bots where isClose is false
-    const bots = await Bots.findAll({ where: { isClose: false } });
-    if (bots.length) {
-        try {
-            await closeByProfit(io, bots);
-            console.log('Completed the Close By profit loop');
-        } catch (error) {
-            console.error('Error closing trades:', error);
-        }
-    }
-});
+// cron.schedule('* * * * *', async () => {
+//     // Fetch all bots where isClose is false
+//     const bots = await Bots.findAll({ where: { isClose: false } });
+//     if (bots.length) {
+//         try {
+//             await closeByProfit(io, bots);
+//             console.log('Completed the Close By profit loop');
+//         } catch (error) {
+//             console.error('Error closing trades:', error);
+//         }
+//     }
+// });
 
-cron.schedule('0 0 * * *', populateTables);
-cron.schedule('0 */8 * * *', updateAccumulatedFunding);
-cron.schedule('*/10 * * * *', updateFundingRate);
-checkTrades();
+// cron.schedule('0 0 * * *', populateTables);
+// cron.schedule('0 */8 * * *', updateAccumulatedFunding);
+// cron.schedule('*/10 * * * *', updateFundingRate);
+// checkTrades();
