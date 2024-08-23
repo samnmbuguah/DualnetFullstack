@@ -6,6 +6,10 @@ const initialState = {
   botsByUser: {},
   status: "idle",
   error: null,
+  dualInvestments: {
+    exerciseCurrencyList: [],
+    investCurrencyList: [],
+  },
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
@@ -13,26 +17,29 @@ const baseUrl = `${fetchWrapper.api_url}/api`;
 export const fetchBotsByUser = createAsyncThunk(
   "bots/fetchBotsByUser",
   async (userId) => {
-    // const response = await fetchWrapper.get(`/api/users/${userId}/bots`); // Replace with your API endpoint for fetching bots by user
-    // return { userId, bots: response.data };
     return { userId, bots: "" };
   }
 );
 
 export const trade = createAsyncThunk("bots/trade", async (tradeData) => {
-  console.log("trade", tradeData);
   const response = await fetchWrapper.post(baseUrl + "/trade", tradeData);
-  // return response.data;
-  console.log("response", response);
   return response;
 });
 
 export const autoBot = createAsyncThunk("bots/autoBot", async (tradeData) => {
-  console.log("autoBot", tradeData);
   const response = await fetchWrapper.post(baseUrl + "/autoBot", tradeData);
-  console.log("response", response);
   return response;
 });
+
+export const fetchInvestmentsByCurrency = createAsyncThunk(
+  "bots/fetchInvestmentsByCurrency",
+  async (currency) => {
+    const response = await fetchWrapper.get(
+      baseUrl + `/fetch-investments?currency=${currency}`
+    );
+    return response;
+  }
+);
 
 const botsSlice = createSlice({
   name: "bots",
@@ -51,16 +58,20 @@ const botsSlice = createSlice({
         return { payload: { userId, bot } };
       },
     },
-        addBots: {
+    addBots: {
       reducer(state, action) {
         const { userId, bots } = action.payload;
         const incomingPositionIds = new Set(bots.map((bot) => bot.positionId));
         if (!Array.isArray(state.botsByUser[userId])) {
           state.botsByUser[userId] = [];
         }
-        state.botsByUser[userId] = state.botsByUser[userId].filter((bot) =>
+        const filteredBots = state.botsByUser[userId].filter((bot) =>
           incomingPositionIds.has(bot.positionId)
         );
+
+        if (JSON.stringify(filteredBots) !== JSON.stringify(state.botsByUser[userId])) {
+          state.botsByUser[userId] = filteredBots;
+        }
 
         bots.forEach((bot) => {
           const existingBotIndex = state.botsByUser[userId].findIndex(
@@ -76,8 +87,9 @@ const botsSlice = createSlice({
           }
         });
 
-        // Sort bots by createdAt date in descending order (newest first)
-        state.botsByUser[userId].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        state.botsByUser[userId].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
       },
       prepare(userId, bots) {
         return { payload: { userId, bots } };
@@ -85,39 +97,74 @@ const botsSlice = createSlice({
     },
     removeBot(state, action) {
       const { userId, positionId } = action.payload;
-      console.log(positionId, userId, "removing bot");
       if (state.botsByUser[userId]) {
-        state.botsByUser[userId] = state.botsByUser[userId].filter(
+        const filteredBots = state.botsByUser[userId].filter(
           (bot) => bot.positionId !== positionId
         );
+        if (JSON.stringify(filteredBots) !== JSON.stringify(state.botsByUser[userId])) {
+          state.botsByUser[userId] = filteredBots;
+        }
       }
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchBotsByUser.pending, (state) => {
-        state.status = "loading";
+        if (state.status !== "loading") {
+          state.status = "loading";
+        }
       })
       .addCase(fetchBotsByUser.fulfilled, (state, action) => {
-        state.status = "succeeded";
         const { userId, bots } = action.payload;
-        state.botsByUser[userId] = bots;
+        if (state.status !== "succeeded" || state.botsByUser[userId] !== bots) {
+          state.status = "succeeded";
+          state.botsByUser[userId] = bots;
+        }
       })
       .addCase(fetchBotsByUser.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
+        if (state.status !== "failed" || state.error !== action.error.message) {
+          state.status = "failed";
+          state.error = action.error.message;
+        }
       })
       .addCase(trade.pending, (state) => {
-        state.status = "loading";
+        if (state.status !== "loading") {
+          state.status = "loading";
+        }
       })
       .addCase(trade.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        Swal.fire(action.payload.message, "", "success");
+        if (state.status !== "succeeded") {
+          state.status = "succeeded";
+          Swal.fire(action.payload.message, "", "success");
+        }
       })
       .addCase(trade.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-        Swal.fire("Error executing trade", action.error.message, "error");
+        if (state.status !== "failed" || state.error !== action.error.message) {
+          state.status = "failed";
+          state.error = action.error.message;
+          Swal.fire("Error executing trade", action.error.message, "error");
+        }
+      })
+      .addCase(fetchInvestmentsByCurrency.pending, (state) => {
+        if (state.status !== "loading") {
+          state.status = "loading";
+        }
+      })
+      .addCase(fetchInvestmentsByCurrency.fulfilled, (state, action) => {
+        const newInvestments = {
+          ...state.dualInvestments,
+          ...action.payload,
+        };
+        if (JSON.stringify(state.dualInvestments) !== JSON.stringify(newInvestments)) {
+          state.status = "succeeded";
+          state.dualInvestments = newInvestments;
+        }
+      })
+      .addCase(fetchInvestmentsByCurrency.rejected, (state, action) => {
+        if (state.status !== "failed" || state.error !== action.error.message) {
+          state.status = "failed";
+          state.error = action.error.message;
+        }
       });
   },
 });
