@@ -33,7 +33,7 @@ const DualPlans = db.define(
       type: Sequelize.STRING,
     },
     apyDisplay: {
-      type: Sequelize.STRING,
+      type: Sequelize.FLOAT,
     },
     startTime: {
       type: Sequelize.INTEGER,
