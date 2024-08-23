@@ -16,7 +16,7 @@ const DetailsSideBar = ({ user, dark }) => {
         const response = await fetchWrapper.post(baseUrl + "/get-balances", {
           subClientId: authUser[1].id,
         });
-        console.log("API response:", response);
+        // console.log("API response:", response);
         setBalances(
           response.map((balance) =>
             parseFloat(
@@ -35,7 +35,7 @@ const DetailsSideBar = ({ user, dark }) => {
     };
 
     fetchData();
-    console.log("Fetching data", balances);
+    // console.log("Balances", balances);
   }, []);
 
   const calculateAPM = () => {
