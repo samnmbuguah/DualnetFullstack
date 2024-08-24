@@ -18,6 +18,14 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.text-shadow-inner': {
+          textShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.5)',
+        },
+      });
+    },
+  ],
   darkMode: "class",
 };
