@@ -6,10 +6,6 @@ const initialState = {
   botsByUser: {},
   status: "idle",
   error: null,
-  dualInvestments: {
-    exerciseCurrencyList: [],
-    investCurrencyList: [],
-  },
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
@@ -30,16 +26,6 @@ export const autoBot = createAsyncThunk("bots/autoBot", async (tradeData) => {
   const response = await fetchWrapper.post(baseUrl + "/autoBot", tradeData);
   return response;
 });
-
-export const fetchInvestmentsByCurrency = createAsyncThunk(
-  "bots/fetchInvestmentsByCurrency",
-  async (currency) => {
-    const response = await fetchWrapper.get(
-      baseUrl + `/fetch-investments?currency=${currency}`
-    );
-    return response;
-  }
-);
 
 const botsSlice = createSlice({
   name: "bots",
@@ -143,27 +129,6 @@ const botsSlice = createSlice({
           state.status = "failed";
           state.error = action.error.message;
           Swal.fire("Error executing trade", action.error.message, "error");
-        }
-      })
-      .addCase(fetchInvestmentsByCurrency.pending, (state) => {
-        if (state.status !== "loading") {
-          state.status = "loading";
-        }
-      })
-      .addCase(fetchInvestmentsByCurrency.fulfilled, (state, action) => {
-        const newInvestments = {
-          ...state.dualInvestments,
-          ...action.payload,
-        };
-        if (JSON.stringify(state.dualInvestments) !== JSON.stringify(newInvestments)) {
-          state.status = "succeeded";
-          state.dualInvestments = newInvestments;
-        }
-      })
-      .addCase(fetchInvestmentsByCurrency.rejected, (state, action) => {
-        if (state.status !== "failed" || state.error !== action.error.message) {
-          state.status = "failed";
-          state.error = action.error.message;
         }
       });
   },
