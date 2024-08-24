@@ -42,11 +42,11 @@ async function listDualInvestmentPlans() {
 
 module.exports = listDualInvestmentPlans;
 
-// Example usage
-listDualInvestmentPlans()
-  .then((response) => {
-    // Handle the response if needed
-  })
-  .catch((error) => {
-    // Handle the error if needed
-  });
+// // Example usage
+// listDualInvestmentPlans()
+//   .then((response) => {
+//     // Handle the response if needed
+//   })
+//   .catch((error) => {
+//     // Handle the error if needed
+//   });
