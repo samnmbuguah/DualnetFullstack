@@ -2,7 +2,7 @@ import React from "react";
 
 const DualTrade = ({ buyLowPerShare, sellHighPerShare, currentPrice }) => {
   return (
-    <div className="flex flex-col items-start justify-center w-1/3 p-8">
+    <div className="flex flex-col items-start justify-center w-1/3 p-6">
       <BuyLow perShare={buyLowPerShare} />
       <PriceDisplay price={currentPrice} />
       <SellHigh perShare={sellHighPerShare} />
@@ -17,7 +17,7 @@ function ShareInfo({ perShare }) {
   );
 }
 
-function BuyLow({ perShare }) {
+function BuyLow({ perShare = "0.2575 USDT" }) {
   return (
     <div className="flex flex-col w-full">
       <ShareInfo perShare={perShare} />
@@ -38,21 +38,13 @@ function BuyLow({ perShare }) {
   );
 }
 
-// Set default props
-BuyLow.defaultProps = {
-  perShare: "0.2575 USDT",
-};
-
-function PriceDisplay({ price }) {
+function PriceDisplay({ price = "58222" }) {
   return (
     <p className="text-sm font-medium text-white p-4">Current Price: ${price}</p>
   );
 }
-PriceDisplay.defaultProps = {
-  price: "58222",
-};
 
-function SellHigh({ perShare }) {
+function SellHigh({ perShare = "0.0001 ETH" }) {
   return (
     <div className="flex flex-col w-full">
       <div className="flex items-center justify-between rounded bg-custom-gray w-full min-h-[26px]">
@@ -72,9 +64,5 @@ function SellHigh({ perShare }) {
     </div>
   );
 }
-
-SellHigh.defaultProps = {
-  perShare: "0.0001 ETH",
-};
 
 export default DualTrade;
