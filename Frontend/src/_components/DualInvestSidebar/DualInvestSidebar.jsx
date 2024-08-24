@@ -9,15 +9,15 @@ import DualTrade from "./DualTrade";
 import Threshold from "./Threshold";
 import BuyLowInfo from "./ BuyLowInfo.jsx";
 import SellHighInfo from "./SellHighInfo";
-import { fetchInvestmentsByCurrency } from "_store/bots.slice";
+import { fetchInvestmentsByCurrency } from "_store/duals.slice";
 import BuyAPR from "./BuyAPR";
 import SellAPR from "./SellAPR";
 import backgroundImage from "../../_assets/chartCurve.svg";
 
 const DualInvestSidebar = ({ show, dark }) => {
   const { user: authUser } = useSelector((x) => x.auth);
-  const exerciseCurrencyList = useSelector((state) => state.bots.dualInvestments?.exerciseCurrencyList || []);
-  const investCurrencyList = useSelector((state) => state.bots.dualInvestments?.investCurrencyList || []);
+  const exerciseCurrencyList = useSelector((state) => state.duals.dualInvestments?.exerciseCurrencyList || []);
+  const investCurrencyList = useSelector((state) => state.duals.dualInvestments?.investCurrencyList || []);
   const dispatch = useDispatch();
   const customStyles = dark ? styles.dark : styles.light;
   let screenWidth = useWindowDimensions().width;
@@ -74,17 +74,17 @@ const DualInvestSidebar = ({ show, dark }) => {
             <Switch onChange={handleSwitchChange} tradeData={tradeData} />
           </div>
         </div>
-        <div className="flex flex-row ">
-            <DualTrade
-              buyLowPerShare="0.2575 USDT"
-              sellHighPerShare="0.0001 ETH"
-              currentPrice="58222"
-            />
-          <div className="flex flex-col justify-between min-h-full">
+        <div className="flex flex-row">
+          <DualTrade
+            buyLowPerShare="0.2575 USDT"
+            sellHighPerShare="0.0001 ETH"
+            currentPrice="58222"
+          />
+          <div className="flex flex-col justify-between min-h-full px-8">
             <BuyLowInfo />
             <SellHighInfo />
           </div>
-          <div>
+          <div className="flex flex-col justify-between min-h-full">
             <BuyAPR items={exerciseCurrencyList} />
             <SellAPR items={investCurrencyList} />
           </div>
