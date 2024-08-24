@@ -1,6 +1,6 @@
 const DualPlans = require("../../models/DualPlansModel.js");
 const { Op } = require("sequelize");
-
+const listDualInvestmentPlans = require("./dualInvestment.js");
 async function fetchInvestmentsByCurrency(currency) {
   try {
     // Get the current date and time as a Unix timestamp
@@ -16,7 +16,7 @@ async function fetchInvestmentsByCurrency(currency) {
       "planType",
       "exercisePrice",
     ];
-
+    const dualInvestmentPlans = await listDualInvestmentPlans();
     // Query for records where exerciseCurrency matches the given currency and endTime is in the future
     const exerciseCurrencyList = await DualPlans.findAll({
       attributes,
