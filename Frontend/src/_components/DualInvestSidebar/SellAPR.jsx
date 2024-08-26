@@ -1,7 +1,6 @@
 import React from "react";
 
 const SellAPR = ({ items }) => {
-
   const calculateRemainingTime = (unixTime) => {
     const now = Date.now();
     const timeDifference = unixTime * 1000 - now;
@@ -20,19 +19,18 @@ const SellAPR = ({ items }) => {
   };
 
   return (
-    <ul className="mt-20 mb-4 bg-transparent text-white text-shadow-inner text-sm font-medium rounded-none">
+    <ul className="min-h-1/2 bg-transparent text-white text-shadow-inner text-sm font-medium rounded-none">
       {items.slice(0, 6).map((item, index) => (
-        <li key={index} className="mb-4 flex items-center justify-between">
-          <span className="text-sm text-white mr-4">${item.exercisePrice}</span>
-          <span className="text-sm text-[#EA5F00]">
+        <li key={index} className="mb-4 flex items-center">
+          <span className="text-sm text-white pr-10">
+            ${item.exercisePrice}
+          </span>
+          <span className="text-sm text-[#EA5F00] pr-10">
             {parseFloat(item.apyDisplay).toFixed(2)}%
           </span>
-          <span className="pl-4 text-sm text-white min-w-[84px]">
+          <span className="text-sm text-white pr-10">
             {calculateRemainingTime(item.endTime)}
           </span>
-          <button className="py-1 px-2 ml-4 bg-[#353638] text-sm text-white rounded-xl hover:border-red-500 border shadow-md self-end">
-            Subscribe
-          </button>
         </li>
       ))}
     </ul>
