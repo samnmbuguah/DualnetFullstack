@@ -4,7 +4,7 @@ const CryptoItem = ({ crypto, selectedCrypto, onClick }) => {
   return (
     <div
       key={crypto.name}
-      className="flex flex-col items-center mb-2 mr-4 cursor-pointer"
+      className="flex flex-col items-center mb-2 mr-8 cursor-pointer"
       onClick={() => onClick(crypto.name)}
     >
       <img src={crypto.logo} alt={crypto.name} className="w-8 h-8 mb-2" />
