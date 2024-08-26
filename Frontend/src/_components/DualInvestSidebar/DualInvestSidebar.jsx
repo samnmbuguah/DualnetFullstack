@@ -28,9 +28,8 @@ const DualInvestSidebar = ({ show, dark }) => {
   const spotPrice = useSelector((state) => state.duals.spotPrice);
   const usdtBalance = useSelector((state) => state.duals.usdtBalance);
   const cryptoBalance = useSelector((state) => state.duals.cryptoBalance);
-  
-  console.log('USDT Balance:', usdtBalance);
-  console.log('Crypto Balance:', cryptoBalance);
+  console.log("investCurrencyList", investCurrencyList);  
+  console.log("exerciseCurrencyList", exerciseCurrencyList);
   const dispatch = useDispatch();
   const customStyles = dark ? styles.dark : styles.light;
   let screenWidth = useWindowDimensions().width;
@@ -51,7 +50,7 @@ const DualInvestSidebar = ({ show, dark }) => {
         })
       );
     }
-  }, [selectedCrypto, dispatch, authUser.id]);
+  }, [selectedCrypto, dispatch, authUser]);
 
   const handleSwitchChange = (isChecked) => {
     setIsSwitchOn(isChecked);
@@ -96,13 +95,14 @@ const DualInvestSidebar = ({ show, dark }) => {
         }}
       >
         <DualTrade
-          buyLowPerShare={exerciseCurrencyList[0].perValue}
-          sellHighPerShare={investCurrencyList[0].perValue}
+          buyLowPerShare={exerciseCurrencyList[0]?.perValue}
+          sellHighPerShare={investCurrencyList[0]?.perValue}
           currentPrice={spotPrice}
+          selectedCrypto={selectedCrypto}
         />
         <div className="flex flex-col justify-around w-1/3 ml-auto">
           <BuyLowInfo availableAmount={usdtBalance} />
-          <SellHighInfo availableAmount={cryptoBalance}/>
+          <SellHighInfo availableAmount={cryptoBalance} />
         </div>
         <div className="flex flex-col justify-around w-1/3 ml-auto">
           <BuyAPR items={exerciseCurrencyList} />
