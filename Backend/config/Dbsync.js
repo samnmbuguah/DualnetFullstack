@@ -33,15 +33,15 @@ Scans.sync()
   })
   .then(() => {
     console.log("TopScans table has been created.");
-    return DualPlans.sync({ alter: true });
+    return DualPlans.sync({ force: true });
   })
   .then(() => {
     console.log("DualPlans table has been synced");
-    return OpenDuals.sync();
+    return OpenDuals.sync({alter: true});
   })
   .then(() => {
     console.log("OpenDuals table has been synced");
-    return AutoDual.sync(); // Sync the AutoDual table
+    return AutoDual.sync({alter: true}); // Sync the AutoDual table
   })
   .then(() => {
     console.log("AutoDual table has been synced");
