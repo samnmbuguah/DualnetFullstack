@@ -12,7 +12,7 @@ let cronJob;
  * @param {number} amount - The amount to invest.
  * @param {boolean} buyLow - Determines if the strategy is to buy low or sell high.
  */
-async function openDual(active, currency, amount, buyLow) {
+async function autoDual(active, currency, amount, buyLow) {
   if (active) {
     if (!cronJob) {
       cronJob = cron.schedule('*/5 * * * *', async () => {
@@ -61,4 +61,4 @@ async function openDual(active, currency, amount, buyLow) {
   }
 }
 
-module.exports = openDual;
+module.exports = autoDual;
