@@ -8,7 +8,11 @@ import CryptoList from "./CryptoList";
 import DualTrade from "./DualTrade";
 import BuyLowInfo from "./ BuyLowInfo.jsx";
 import SellHighInfo from "./SellHighInfo";
-import { fetchInvestmentsByCurrency } from "_store/duals.slice";
+import {
+  fetchInvestmentsByCurrency,
+  fetchSpotPrice,
+  fetchSpotBalances,
+} from "_store/duals.slice";
 import BuyAPR from "./BuyAPR";
 import SellAPR from "./SellAPR";
 import backgroundImage from "../../_assets/chartCurve.svg";
@@ -21,6 +25,12 @@ const DualInvestSidebar = ({ show, dark }) => {
   const investCurrencyList = useSelector(
     (state) => state.duals.dualInvestments?.investCurrencyList || []
   );
+  const spotPrice = useSelector((state) => state.duals.spotPrice);
+  const usdtBalance = useSelector((state) => state.duals.usdtBalance);
+  const cryptoBalance = useSelector((state) => state.duals.cryptoBalance);
+  
+  console.log('USDT Balance:', usdtBalance);
+  console.log('Crypto Balance:', cryptoBalance);
   const dispatch = useDispatch();
   const customStyles = dark ? styles.dark : styles.light;
   let screenWidth = useWindowDimensions().width;
@@ -33,8 +43,15 @@ const DualInvestSidebar = ({ show, dark }) => {
   useEffect(() => {
     if (selectedCrypto) {
       dispatch(fetchInvestmentsByCurrency(selectedCrypto));
+      dispatch(fetchSpotPrice(selectedCrypto + "_USDT"));
+      dispatch(
+        fetchSpotBalances({
+          subClientId: authUser[1].id,
+          cryptoCurrency: selectedCrypto,
+        })
+      );
     }
-  }, [selectedCrypto, dispatch]);
+  }, [selectedCrypto, dispatch, authUser.id]);
 
   const handleSwitchChange = (isChecked) => {
     setIsSwitchOn(isChecked);
@@ -79,13 +96,13 @@ const DualInvestSidebar = ({ show, dark }) => {
         }}
       >
         <DualTrade
-          buyLowPerShare="0.2575 USDT"
-          sellHighPerShare="0.0001 ETH"
-          currentPrice="58222"
+          buyLowPerShare={exerciseCurrencyList[0].perValue}
+          sellHighPerShare={investCurrencyList[0].perValue}
+          currentPrice={spotPrice}
         />
         <div className="flex flex-col justify-around w-1/3 ml-auto">
-          <BuyLowInfo />
-          <SellHighInfo />
+          <BuyLowInfo availableAmount={usdtBalance} />
+          <SellHighInfo availableAmount={cryptoBalance}/>
         </div>
         <div className="flex flex-col justify-around w-1/3 ml-auto">
           <BuyAPR items={exerciseCurrencyList} />
