@@ -9,6 +9,7 @@ const server = require('http').createServer(app); // Create server with Express 
 const checkTrades = require('./services/checkTrades.js');
 const closeByProfit = require('./services/closeByProfit.js');
 const updateFundingRate = require('./services/getFundingRate.js');
+const listDualInvestmentPlans = require('./services/dualinvestment/dualInvestment.js');
 const updateAccumulatedFunding = require('./services/updateAccumulatedFunding.js');
 const Bots = require('./models/BotsModel.js');
 
@@ -90,6 +91,16 @@ io.on('connection', (socket) => {
 server.listen(PORT, () => {
   console.log(`Server running at port ${PORT}`);
   // StreamPrices(io); // Start streaming prices after the server has started
+});
+
+// Schedule the cron job to run listDualInvestmentPlans once every 5 minutes
+cron.schedule('*/5 * * * *', async () => {
+  try {
+    await listDualInvestmentPlans();
+    console.log('Executed listDualInvestmentPlans');
+  } catch (error) {
+    console.error('Error executing listDualInvestmentPlans:', error);
+  }
 });
 
 // Schedule the cron job
