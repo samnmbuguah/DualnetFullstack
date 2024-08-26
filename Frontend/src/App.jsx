@@ -86,7 +86,7 @@ function App() {
       <div
         className={`flex flex-col items-center  w-full h-full  ${
           screenWidth > 1900
-            ? "px-[200px]"
+            ? "px-[100px]"
             : "sm:px-32 lg:px-16 sm:pb-10 p-8 pt-0"
         }`}
       >
