@@ -1,6 +1,6 @@
 import React from "react";
 
-const DualTrade = ({ buyLowPerShare, sellHighPerShare, currentPrice, aprToOpen}) => {
+const DualTrade = ({ buyLowPerShare, sellHighPerShare, currentPrice, aprToOpen=450}) => {
   return (
     <div className="flex flex-col items-start justify-center w-3/10">
       <span className="leading-normal">

@@ -3,7 +3,7 @@ import React from 'react';
 function SellHighInfo({
   infoText = "Sell High means choosing a target price higher than the current price to sell high and earn extra USDT.",
   availableAmount = 0.0005987,
-  openDuals = 4,
+  openDuals = 0,
 }) {
   return (
     <section className="w-full p-4 min-h-1/2">

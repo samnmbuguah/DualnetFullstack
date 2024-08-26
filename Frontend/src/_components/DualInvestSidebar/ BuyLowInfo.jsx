@@ -3,7 +3,7 @@ import React from "react";
 function BuyLowInfo({
   infoText = 'Buy Low means choosing a target price lower than the current price and buying more crypto at a lower price.',
   availableAmount = 489.36,
-  openDuals = 0
+  openDuals = 4
 }) {
   return (
     <section className="w-full p-4 min-h-1/2">
