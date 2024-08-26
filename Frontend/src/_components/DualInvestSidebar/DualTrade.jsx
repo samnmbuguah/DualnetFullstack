@@ -1,6 +1,6 @@
 import React from "react";
 
-const DualTrade = ({ buyLowPerShare, sellHighPerShare, currentPrice, aprToOpen=450}) => {
+const DualTrade = ({buyLowPerShare="0.2575 USDT", sellHighPerShare="0.0001 ETH", currentPrice="58222", aprToOpen=450}) => {
   return (
     <div className="flex flex-col items-start justify-center w-3/10">
       <span className="leading-normal">
@@ -30,7 +30,7 @@ function BuyLow({ perShare = "0.2575 USDT" }) {
         </label>
         <input
           type="number"
-          defaultValue="100"
+          placeholder="100"
           className="text-base text-[#9A9A9A] bg-custom-gray h-8 text-right w-16"
         />
         <button className="text-sm text-[#0336EB] bg-custom-gray p-1 h-8">
@@ -56,7 +56,7 @@ function SellHigh({ perShare = "0.0001 ETH" }) {
         </label>
         <input
           type="number"
-          defaultValue="0.001"
+          placeholder="0.001"
           className="text-base text-[#9A9A9A] bg-custom-gray h-8 text-right w-16"
         />
         <button className="text-sm text-[#0336EB] bg-custom-gray p-1 h-8">
