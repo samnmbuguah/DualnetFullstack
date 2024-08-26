@@ -16,8 +16,12 @@ import backgroundImage from "../../_assets/chartCurve.svg";
 
 const DualInvestSidebar = ({ show, dark }) => {
   const { user: authUser } = useSelector((x) => x.auth);
-  const exerciseCurrencyList = useSelector((state) => state.duals.dualInvestments?.exerciseCurrencyList || []);
-  const investCurrencyList = useSelector((state) => state.duals.dualInvestments?.investCurrencyList || []);
+  const exerciseCurrencyList = useSelector(
+    (state) => state.duals.dualInvestments?.exerciseCurrencyList || []
+  );
+  const investCurrencyList = useSelector(
+    (state) => state.duals.dualInvestments?.investCurrencyList || []
+  );
   const dispatch = useDispatch();
   const customStyles = dark ? styles.dark : styles.light;
   let screenWidth = useWindowDimensions().width;
@@ -31,7 +35,7 @@ const DualInvestSidebar = ({ show, dark }) => {
     if (selectedCrypto) {
       dispatch(fetchInvestmentsByCurrency(selectedCrypto));
     }
-  }, [selectedCrypto, dispatch]); 
+  }, [selectedCrypto, dispatch]);
 
   const handleSwitchChange = (isChecked) => {
     setIsSwitchOn(isChecked);
@@ -54,43 +58,39 @@ const DualInvestSidebar = ({ show, dark }) => {
         show ? "right-0" : "hidden"
       } bg-[#fef6e6] md:w-[${screenWidth}px] min-h-full px-4 py-3 z-30 transition-transform text-xs dark:bg-[transparent] dark:border-[#6D6D6D] bg-zinc-800 rounded-[25px] font-inter text-white flex flex-col justify-between`}
     >
+      <div>
+        <CryptoList
+          cryptos={cryptos}
+          selectedCrypto={selectedCrypto}
+          onCryptoClick={handleCryptoClick}
+        />
+        <div className="w-1/2 flex flex-row items-center px-8 py-4">
+          <span className="mr-4">Dual-Invest auto on/off</span>
+          <Switch onChange={handleSwitchChange} tradeData={tradeData} />
+        </div>
+      </div>
       <div
+        className="flex flex-row ml-8"
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundPosition: "left center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "auto",
-          margin: "0 4rem 0 1rem",
+          height: "50vh",
         }}
       >
-        <div>
-          <CryptoList
-            cryptos={cryptos}
-            selectedCrypto={selectedCrypto}
-            onCryptoClick={handleCryptoClick}
-          />
-          <div className="w-1/2 flex flex-row items-center px-8 py-4">
-            <span className="mr-4">Dual-Invest auto on/off</span>
-            <Switch onChange={handleSwitchChange} tradeData={tradeData} />
-          </div>
+        <DualTrade
+          buyLowPerShare="0.2575 USDT"
+          sellHighPerShare="0.0001 ETH"
+          currentPrice="58222"
+        />
+        <div className="flex flex-col justify-around w-1/3 ml-auto">
+          <BuyLowInfo />
+          <SellHighInfo />
         </div>
-        <div className="flex flex-row">
-          <DualTrade
-            buyLowPerShare="0.2575 USDT"
-            sellHighPerShare="0.0001 ETH"
-            currentPrice="58222"
-          />
-          <div className="flex flex-col justify-between min-h-full px-8">
-            <BuyLowInfo />
-            <SellHighInfo />
-          </div>
-          <div className="flex flex-col justify-between min-h-full">
-            <BuyAPR items={exerciseCurrencyList} />
-            <SellAPR items={investCurrencyList} />
-          </div>
-        </div>
-        <div className="w-3/5">
-          <Threshold />
+        <div className="flex flex-col justify-around w-1/3 ml-auto">
+          <BuyAPR items={exerciseCurrencyList} />
+          <SellAPR items={investCurrencyList} />
         </div>
       </div>
     </div>
