@@ -39,7 +39,7 @@
     "updateAccumulatedFunding": "node Backend/services/updateAccumulatedFunding.js",
     "shortRecursively": "node Backend/services/shortRecursively.js",
     "listDualInvestmentPlans": "node Backend/services/dualinvestment/dualInvestment.js",
-    "getLastClosePrice": "node Backend/services/dualinvestment/getSpotPrice.js",
+    "getSpotPrice": "node Backend/services/dualinvestment/getSpotPrice.js",
     "fetchInvestmentsByCurrency": "node Backend/services/dualinvestment/fetchInvestments.js",
     "fetchSpotBalances": "node Backend/services/dualinvestment/fetchSpotBalances.js"
   },
