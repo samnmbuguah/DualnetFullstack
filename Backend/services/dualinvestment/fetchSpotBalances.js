@@ -2,7 +2,7 @@ const GateApi = require('gate-api');
 const getApiCredentials = require('../getApiCredentials');
 
 // Fetch spot account balances
-async function fetchSpotBalances(subClientId) {
+async function fetchSpotBalances(subClientId, cryptoCurrency) {
     try {
         console.log('Fetching spot account balances...');
         const credentials = await getApiCredentials(subClientId);
@@ -12,8 +12,22 @@ async function fetchSpotBalances(subClientId) {
             const spotApi = new GateApi.SpotApi(client);
 
             const response = await spotApi.listSpotAccounts();
-            console.log('Fetched spot account balances', response.body);
-            return response.body;
+
+            // Initialize balances
+            let usdtBalance = 0;
+            let cryptoBalance = 0;
+
+            // Filter and map the response
+            response.body.forEach(account => {
+                if (account.currency === 'USDT') {
+                    usdtBalance = parseFloat(account.available);
+                }
+                if (account.currency === cryptoCurrency) {
+                    cryptoBalance = parseFloat(account.available);
+                }
+            });
+
+            return [usdtBalance, cryptoBalance];
         } else {
             console.error('API credentials not found');
         }
@@ -24,4 +38,4 @@ async function fetchSpotBalances(subClientId) {
 
 module.exports = fetchSpotBalances;
 
-fetchSpotBalances(1);
+// fetchSpotBalances(1, "DHX");
