@@ -6,7 +6,6 @@ import Switch from "_components/Switch/Switch";
 import cryptos from "./cryptos.json";
 import CryptoList from "./CryptoList";
 import DualTrade from "./DualTrade";
-import Threshold from "./Threshold";
 import BuyLowInfo from "./ BuyLowInfo.jsx";
 import SellHighInfo from "./SellHighInfo";
 import { fetchInvestmentsByCurrency } from "_store/duals.slice";
