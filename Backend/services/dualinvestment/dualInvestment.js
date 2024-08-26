@@ -23,7 +23,7 @@ async function listDualInvestmentPlans() {
       deliveryTime: plan.deliveryTime,
       minCopies: plan.minCopies,
       maxCopies: plan.maxCopies,
-      perValue: plan.perValue,
+      perValue: parseFloat(plan.perValue),
       apyDisplay: parseFloat(plan.apyDisplay) * 100,
       startTime: plan.startTime,
       endTime: plan.endTime,
