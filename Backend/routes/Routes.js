@@ -24,6 +24,8 @@ const sellSpotAndLongFutures = require("../services/closeTrades.js");
 const fetchBothBalances = require("../services/fetchBalances.js");
 const Bots = require("../models/BotsModel.js");
 const autoBot = require("../services/autoBot.js");
+const getSpotPrice = require("../services/dualinvestment/getSpotPrice.js");
+const fetchSpotBalances = require("../services/dualinvestment/fetchSpotBalances.js");
 const fetchInvestmentsByCurrency = require("../services/dualinvestment/fetchInvestments.js");
 
 const router = express.Router();
@@ -216,7 +218,7 @@ router.put("/updateProfitThreshold", async (req, res) => {
 });
 
 
-// New route for fetching investments by currency
+// Route for fetching investments by currency
 router.get("/fetch-investments", async (req, res) => {
   const { currency } = req.query;
 
@@ -230,6 +232,40 @@ router.get("/fetch-investments", async (req, res) => {
   } catch (error) {
     console.error("Error fetching investments:", error);
     res.status(500).send({ error: "Error fetching investments" });
+  }
+});
+
+// Route for fetching spot price by currency pair
+router.get("/get-spot-price", async (req, res) => {
+  const { currencyPair } = req.query;
+
+  if (!currencyPair) {
+    return res.status(400).send({ error: "currencyPair is required" });
+  }
+
+  try {
+    const spotPrice = await getSpotPrice(currencyPair);
+    res.status(200).json({ spotPrice });
+  } catch (error) {
+    console.error("Error fetching spot price:", error);
+    res.status(500).send({ error: "Error fetching spot price" });
+  }
+});
+
+// Route for fetching spot balances
+router.get("/fetch-spot-balances", async (req, res) => {
+  const { subClientId, cryptoCurrency } = req.query;
+
+  if (!subClientId || !cryptoCurrency) {
+    return res.status(400).send({ error: "subClientId and cryptoCurrency are required" });
+  }
+
+  try {
+    const balances = await fetchSpotBalances(subClientId, cryptoCurrency);
+    res.status(200).json(balances);
+  } catch (error) {
+    console.error("Error fetching spot balances:", error);
+    res.status(500).send({ error: "Error fetching spot balances" });
   }
 });
 
