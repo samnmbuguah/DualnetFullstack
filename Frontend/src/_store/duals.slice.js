@@ -10,6 +10,9 @@ const initialState = {
   spotPrice: null,
   usdtBalance: 0,
   cryptoBalance: 0,
+  buyLowAmount: 0,
+  sellHighAmount: 0,
+  aprToOpen: 0,
   status: "idle",
   error: null,
 };
@@ -49,7 +52,17 @@ export const fetchSpotBalances = createAsyncThunk(
 const dualsSlice = createSlice({
   name: "duals",
   initialState,
-  reducers: {},
+  reducers: {
+    updateBuyLowAmount: (state, action) => {
+      state.buyLowAmount = action.payload;
+    },
+    updateSellHighAmount: (state, action) => {
+      state.sellHighAmount = action.payload;
+    },
+    updateAprToOpen: (state, action) => {
+      state.aprToOpen = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchInvestmentsByCurrency.pending, (state) => {
@@ -112,4 +125,5 @@ const dualsSlice = createSlice({
 });
 
 // Export actions and reducer
+export const { updateBuyLowAmount, updateSellHighAmount, updateAprToOpen } = dualsSlice.actions; 
 export const dualsReducer = dualsSlice.reducer;
