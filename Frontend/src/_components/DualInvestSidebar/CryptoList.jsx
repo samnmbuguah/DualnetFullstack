@@ -3,15 +3,22 @@ import CryptoItem from "./CryptoItem";
 
 const CryptoList = ({ cryptos, selectedCrypto, onCryptoClick }) => {
   return (
-    <div className="border-b border-stone-500 flex flex-row flex-wrap justify-around px-4 w-3/5">
-      {cryptos.map((crypto) => (
-        <CryptoItem
-          key={crypto.name}
-          crypto={crypto}
-          selectedCrypto={selectedCrypto}
-          onClick={onCryptoClick}
-        />
-      ))}
+    <div className="flex border-b border-stone-500 px-4 pt-4 w-full items-end">
+      <div className="flex flex-row flex-wrap justify-around">
+        {cryptos.map((crypto) => (
+          <CryptoItem
+            key={crypto.name}
+            crypto={crypto}
+            selectedCrypto={selectedCrypto}
+            onClick={onCryptoClick}
+          />
+        ))}
+      </div>
+      <div className="text-sm text-white w-1/3 ml-auto mb-2">
+        <span className="pr-16 pl-4">Strike</span>
+        <span className="pr-16">Apr</span>
+        <span className="pr-16">Term</span>
+      </div>
     </div>
   );
 };
