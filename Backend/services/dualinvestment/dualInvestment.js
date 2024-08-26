@@ -10,8 +10,11 @@ async function listDualInvestmentPlans() {
     // Assuming value.body is an array of plans
     const plans = value.body;
 
-    // Map through all plans without filtering
-    const plansToUpsert = plans.map((plan) => ({
+    // Filter plans with apyDisplay greater than 1
+    const filteredPlans = plans.filter(plan => parseFloat(plan.apyDisplay) > 1);
+
+    // Map through filtered plans
+    const plansToUpsert = filteredPlans.map((plan) => ({
       id: plan.id,
       instrumentName: plan.instrumentName,
       investCurrency: plan.investCurrency,
@@ -42,11 +45,5 @@ async function listDualInvestmentPlans() {
 
 module.exports = listDualInvestmentPlans;
 
-// // Example usage
-// listDualInvestmentPlans()
-//   .then((response) => {
-//     // Handle the response if needed
-//   })
-//   .catch((error) => {
-//     // Handle the error if needed
-//   });
+// Example usage
+listDualInvestmentPlans();
