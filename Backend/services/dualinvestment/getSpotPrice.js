@@ -8,7 +8,7 @@ const api = new GateApi.SpotApi(client);
  * @param {string} currencyPair - The currency pair to get the close price for.
  * @returns {Promise<number>} - A promise that resolves to the close price of the last candle.
  */
-async function getLastClosePrice(currencyPair) {
+async function getSpotPrice(currencyPair) {
   const opts = {
     'limit': 1, // Fetch only one candle
     'interval': '1m' // Default interval
@@ -16,11 +16,9 @@ async function getLastClosePrice(currencyPair) {
 
   try {
     const value = await api.listCandlesticks(currencyPair, opts);
-    console.log('API called successfully. Returned data: ', value.body);
     // Extract the close price of the last candle
     const lastCandle = value.body[0];
     const lastClosePrice = parseFloat(lastCandle[2]); // Close price is at index 2
-    console.log('Last close price: ', lastClosePrice);
     return lastClosePrice;
   } catch (error) {
     console.error(error);
@@ -28,13 +26,7 @@ async function getLastClosePrice(currencyPair) {
   }
 }
 
-module.exports = getLastClosePrice;
+module.exports = getSpotPrice;
 
 // // Example usage
-// getLastClosePrice("BTC_USDT")
-//   .then(lastClosePrice => {
-//     // Handle the last close price if needed
-//   })
-//   .catch(error => {
-//     // Handle the error if needed
-//   });
+// getSpotPrice("BTC_USDT");
