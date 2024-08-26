@@ -7,6 +7,9 @@ const initialState = {
     exerciseCurrencyList: data.exerciseCurrencyList || [],
     investCurrencyList: data.investCurrencyList || [],
   },
+  spotPrice: null,
+  usdtBalance: 0,
+  cryptoBalance: 0,
   status: "idle",
   error: null,
 };
@@ -18,6 +21,26 @@ export const fetchInvestmentsByCurrency = createAsyncThunk(
   async (currency) => {
     const response = await fetchWrapper.get(
       baseUrl + `/fetch-investments?currency=${currency}`
+    );
+    return response;
+  }
+);
+
+export const fetchSpotPrice = createAsyncThunk(
+  "duals/fetchSpotPrice",
+  async (currencyPair) => {
+    const response = await fetchWrapper.get(
+      baseUrl + `/get-spot-price?currencyPair=${currencyPair}`
+    );
+    return response.spotPrice;
+  }
+);
+
+export const fetchSpotBalances = createAsyncThunk(
+  "duals/fetchSpotBalances",
+  async ({ subClientId, cryptoCurrency }) => {
+    const response = await fetchWrapper.get(
+      baseUrl + `/fetch-spot-balances?subClientId=${subClientId}&cryptoCurrency=${cryptoCurrency}`
     );
     return response;
   }
@@ -48,6 +71,38 @@ const dualsSlice = createSlice({
         }
       })
       .addCase(fetchInvestmentsByCurrency.rejected, (state, action) => {
+        if (state.status !== "failed" || state.error !== action.error.message) {
+          state.status = "failed";
+          state.error = action.error.message;
+        }
+      })
+      .addCase(fetchSpotPrice.pending, (state) => {
+        if (state.status !== "loading") {
+          state.status = "loading";
+        }
+      })
+      .addCase(fetchSpotPrice.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.spotPrice = action.payload;
+      })
+      .addCase(fetchSpotPrice.rejected, (state, action) => {
+        if (state.status !== "failed" || state.error !== action.error.message) {
+          state.status = "failed";
+          state.error = action.error.message;
+        }
+      })
+      .addCase(fetchSpotBalances.pending, (state) => {
+        if (state.status !== "loading") {
+          state.status = "loading";
+        }
+      })
+      .addCase(fetchSpotBalances.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const [usdtBalance, cryptoBalance] = action.payload;
+        state.usdtBalance = usdtBalance;
+        state.cryptoBalance = cryptoBalance;
+      })
+      .addCase(fetchSpotBalances.rejected, (state, action) => {
         if (state.status !== "failed" || state.error !== action.error.message) {
           state.status = "failed";
           state.error = action.error.message;
