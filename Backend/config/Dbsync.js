@@ -7,6 +7,7 @@ const Bots = require('../models/BotsModel.js');
 const TopScans = require('../models/TopScanModel.js');
 const DualPlans = require('../models/DualPlansModel.js');
 const OpenDuals = require('../models/OpenDualsModel.js');
+const AutoDual = require('../models/AutoDualModel.js');
 
 console.log("Syncing Tables");
 Scans.sync()
@@ -40,6 +41,10 @@ Scans.sync()
   })
   .then(() => {
     console.log("OpenDuals table has been synced");
+    return AutoDual.sync(); // Sync the AutoDual table
+  })
+  .then(() => {
+    console.log("AutoDual table has been synced");
     console.log("All tables have been synced");
   })
   .catch((error) => {
