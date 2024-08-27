@@ -16,7 +16,7 @@ async function openDualPlan(planId, userId, amount, perValue) {
     client.setApiKeySecret(credentials.apiKey, credentials.apiSecret);
 
     // Calculate copies
-    const copies = 1
+    const copies = amount;
     // const copies = Math.round(amount / perValue);
 
     // Create a new dual investment order
