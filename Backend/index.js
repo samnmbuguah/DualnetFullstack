@@ -11,6 +11,7 @@ const closeByProfit = require('./services/closeByProfit.js');
 const updateFundingRate = require('./services/getFundingRate.js');
 const listDualInvestmentPlans = require('./services/dualinvestment/dualInvestment.js');
 const updateAccumulatedFunding = require('./services/updateAccumulatedFunding.js');
+const runAutoDuals = require('./services/dualinvestment/runAutoDuals.js');
 const Bots = require('./models/BotsModel.js');
 
 // Check for required environment variables
@@ -93,11 +94,13 @@ server.listen(PORT, () => {
   // StreamPrices(io); // Start streaming prices after the server has started
 });
 
-// Schedule the cron job to run listDualInvestmentPlans once every 5 minutes
-cron.schedule('*/5 * * * *', async () => {
+// Schedule the cron job to run listDualInvestmentPlans once every 1 minute
+cron.schedule('* * * * *', async () => {
   try {
     await listDualInvestmentPlans();
     console.log('Executed listDualInvestmentPlans');
+    await runAutoDuals();
+    console.log('Executed runAutoDuals');
   } catch (error) {
     console.error('Error executing listDualInvestmentPlans:', error);
   }
