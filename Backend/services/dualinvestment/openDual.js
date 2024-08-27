@@ -39,7 +39,7 @@ async function openDualPlan(planId, userId, amount, perValue) {
     //   copies,
     // });
 
-    return newDualPlan;
+    return true;
   } catch (error) {
     console.error('Error opening dual plan:', error);
     throw error;
