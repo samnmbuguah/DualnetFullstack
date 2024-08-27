@@ -45,5 +45,5 @@ async function listDualInvestmentPlans() {
 
 module.exports = listDualInvestmentPlans;
 
-// Example usage
-listDualInvestmentPlans();
+// // Example usage
+// listDualInvestmentPlans();
