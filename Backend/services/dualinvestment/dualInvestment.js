@@ -14,9 +14,7 @@ async function listDualInvestmentPlans() {
     const currentTime = Math.floor(Date.now() / 1000);
 
     // Filter plans with apyDisplay greater than 1 and endTime greater than 1 day from now
-    const filteredPlans = plans.filter(plan => 
-      parseFloat(plan.apyDisplay) > 1 && (plan.endTime - currentTime) >= 86400
-    );
+    const filteredPlans = plans.filter(plan => parseFloat(plan.apyDisplay) > 1 && (plan.deliveryTime - currentTime) >= 86400);
 
     // Map through filtered plans
     const plansToUpsert = filteredPlans.map((plan) => ({
@@ -31,7 +29,7 @@ async function listDualInvestmentPlans() {
       perValue: parseFloat(plan.perValue),
       apyDisplay: parseFloat(plan.apyDisplay) * 100,
       startTime: plan.startTime,
-      endTime: plan.endTime,
+      endTime: plan.deliveryTime,
       status: plan.status,
       planType: plan.investCurrency === "USDT" ? "buy_low" : "sell_high",
     }));
