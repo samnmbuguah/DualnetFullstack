@@ -10,8 +10,13 @@ async function listDualInvestmentPlans() {
     // Assuming value.body is an array of plans
     const plans = value.body;
 
-    // Filter plans with apyDisplay greater than 1
-    const filteredPlans = plans.filter(plan => parseFloat(plan.apyDisplay) > 1);
+    // Get the current time in Unix time
+    const currentTime = Math.floor(Date.now() / 1000);
+
+    // Filter plans with apyDisplay greater than 1 and endTime greater than 1 day from now
+    const filteredPlans = plans.filter(plan => 
+      parseFloat(plan.apyDisplay) > 1 && (plan.endTime - currentTime) >= 86400
+    );
 
     // Map through filtered plans
     const plansToUpsert = filteredPlans.map((plan) => ({
