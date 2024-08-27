@@ -5,7 +5,7 @@ async function fetchInvestmentsByCurrency(currency) {
   try {
     // Get the current date and time as a Unix timestamp
     const now = Math.floor(Date.now() / 1000);
-    const fiveMinutesAgo = now - 5 * 60;
+    const oneMinuteAgo = now - 1 * 60; // Changed from 5 minutes to 1 minute
     const twoDaysFromNow = now + 2 * 24 * 60 * 60;
 
     // Define the attributes to be selected
@@ -20,37 +20,31 @@ async function fetchInvestmentsByCurrency(currency) {
       "id",
     ];
 
-    // Query for records where exerciseCurrency matches the given currency, endTime is in the future, and updatedAt is within the last 5 minutes
+    // Query for records where exerciseCurrency matches the given currency, endTime is in the future, and updatedAt is within the last 1 minute
     const exerciseCurrencyList = await DualPlans.findAll({
       attributes,
       where: {
         exerciseCurrency: currency,
-        endTime: {
-          [Op.gt]: now,
-        },
         updatedAt: {
-          [Op.gt]: fiveMinutesAgo,
+          [Op.gt]: oneMinuteAgo,
         },
       },
       order: [["apyDisplay", "DESC"]],
     });
 
-    // Query for records where investCurrency matches the given currency, endTime is in the future, and updatedAt is within the last 5 minutes
+    // Query for records where investCurrency matches the given currency, endTime is in the future, and updatedAt is within the last 1 minute
     const investCurrencyList = await DualPlans.findAll({
       attributes,
       where: {
         investCurrency: currency,
-        endTime: {
-          [Op.gt]: now,
-        },
         updatedAt: {
-          [Op.gt]: fiveMinutesAgo,
+          [Op.gt]: oneMinuteAgo,
         },
       },
       order: [["apyDisplay", "DESC"]],
     });
 
-    // Filter out records where endTime is more than 2 days away, except for the first record
+    // Filter out records where expiry time is more than 2 days away, except for the first record
     const filteredExerciseCurrencyList = exerciseCurrencyList.filter((item, index) => index === 0 || item.endTime <= twoDaysFromNow);
     const filteredInvestCurrencyList = investCurrencyList.filter((item, index) => index === 0 || item.endTime <= twoDaysFromNow);
 
