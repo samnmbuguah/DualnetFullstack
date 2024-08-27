@@ -24,6 +24,7 @@ const sellSpotAndLongFutures = require("../services/closeTrades.js");
 const fetchBothBalances = require("../services/fetchBalances.js");
 const Bots = require("../models/BotsModel.js");
 const autoBot = require("../services/autoBot.js");
+const autoDual = require("../services/dualinvestment/autoDual.js");
 const getSpotPrice = require("../services/dualinvestment/getSpotPrice.js");
 const fetchSpotBalances = require("../services/dualinvestment/fetchSpotBalances.js");
 const fetchInvestmentsByCurrency = require("../services/dualinvestment/fetchInvestments.js");
@@ -117,7 +118,7 @@ router.post("/autobot", verifyToken, async (req, res) => {
     fundingRate,
     closeByProfit,
     closeByDeviation,
-    active
+    active,
   } = req.body;
 
   try {
@@ -166,7 +167,7 @@ router.post("/close-trade", verifyToken, async (req, res) => {
       spotSize,
       positionId,
       multiplier,
-      reason 
+      reason
     );
     if (result) {
       res
@@ -217,7 +218,6 @@ router.put("/updateProfitThreshold", async (req, res) => {
   }
 });
 
-
 // Route for fetching investments by currency
 router.get("/fetch-investments", async (req, res) => {
   const { currency } = req.query;
@@ -257,7 +257,9 @@ router.get("/fetch-spot-balances", async (req, res) => {
   const { subClientId, cryptoCurrency } = req.query;
 
   if (!subClientId || !cryptoCurrency) {
-    return res.status(400).send({ error: "subClientId and cryptoCurrency are required" });
+    return res
+      .status(400)
+      .send({ error: "subClientId and cryptoCurrency are required" });
   }
 
   try {
@@ -266,6 +268,34 @@ router.get("/fetch-spot-balances", async (req, res) => {
   } catch (error) {
     console.error("Error fetching spot balances:", error);
     res.status(500).send({ error: "Error fetching spot balances" });
+  }
+});
+
+// Route for autoDual
+router.post("/auto-dual", async (req, res) => {
+  const { active, currency, amount, threshold, dualType, subClientId } = req.body;
+
+  if (
+    typeof active !== "boolean" ||
+    typeof currency !== "string" ||
+    typeof amount !== "number" ||
+    typeof threshold !== "number" ||
+    typeof dualType !== "string" ||
+    typeof subClientId !== "number"
+  ) {
+    return res.status(400).send({ error: "Invalid parameters" });
+  }
+
+  if (amount <= 0 || threshold <= 0) {
+    return res.status(400).send({ error: "amount and threshold must be greater than 0" });
+  }
+
+  try {
+    await autoDual(active, currency, amount, threshold, dualType, subClientId);
+    res.status(200).send({ message: "autoDual executed successfully" });
+  } catch (error) {
+    console.error("Error executing autoDual:", error);
+    res.status(500).send({ error: "Error executing autoDual" });
   }
 });
 
