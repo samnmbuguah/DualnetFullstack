@@ -41,7 +41,7 @@ Scans.sync()
   })
   .then(() => {
     console.log("OpenDuals table has been synced");
-    return AutoDual.sync({alter: true}); // Sync the AutoDual table
+    return AutoDual.sync({alter: true});
   })
   .then(() => {
     console.log("AutoDual table has been synced");
