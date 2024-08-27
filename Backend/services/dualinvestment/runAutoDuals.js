@@ -17,31 +17,30 @@ async function runAutoDuals() {
     }
 
     for (const record of activeRecords) {
-      const { currency, amount, threshold } = record;
+      const { currency, amount, threshold, userId } = record;
 
       // Fetch data from the database
-      const investments = await fetchInvestmentsByCurrency(currency);
-      const lastClosePrice = await getLastClosePrice(currency);
+      const { exerciseCurrencyList, investCurrencyList } = await fetchInvestmentsByCurrency(currency);
+
+      if (exerciseCurrencyList.length === 0) {
+        console.log(`No investments found for currency: ${currency}.`);
+        continue;
+      }
+
+      const firstExerciseCurrency = exerciseCurrencyList[0];
 
       // Check criteria based on the APY display
-      const criteriaMet = investments.length > 0 && investments[0].apyDisplay > threshold;
+      const criteriaMet = firstExerciseCurrency.apyDisplay > threshold;
 
       if (criteriaMet) {
         // Open a dual plan using the fetched data
-        for (const investment of investments) {
-          await openDualPlan(
-            investment.dualId,
-            investment.userId,
-            investment.strikePrice,
-            investment.expiryTime,
-            investment.apr,
-            amount,
-            investment.copies
-          );
-        }
+        await openDualPlan(firstExerciseCurrency.id, userId, amount, firstExerciseCurrency.perValue);
+
         console.log(`Dual plan opened successfully for currency: ${currency}.`);
       } else {
-        console.log(`Criteria not met for currency: ${currency}. No dual plan opened.`);
+        console.log(
+          `Criteria not met for currency: ${currency}. No dual plan opened.`
+        );
       }
     }
   } catch (error) {
