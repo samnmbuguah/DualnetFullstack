@@ -22,13 +22,13 @@ const BuyAPR = ({ items }) => {
     <ul className="min-h-1/2 bg-transparent text-white text-shadow-inner text-sm font-medium rounded-none">
       {items.slice(0, 6).map((item, index) => (
         <li key={index} className="mb-4 flex items-center">
-          <span className="text-sm text-white pr-10">
+          <span className="text-sm text-white pr-6">
             ${item.exercisePrice}
           </span>
-          <span className="text-sm text-[#01D497] pr-10">
+          <span className="text-sm text-[#01D497] pr-6">
             {parseFloat(item.apyDisplay).toFixed(2)}%
           </span>
-          <span className="text-sm text-white pr-10">
+          <span className="text-sm text-white pr-6">
             {calculateRemainingTime(item.endTime)}
           </span>
         </li>
