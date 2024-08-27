@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchWrapper } from "_helpers";
 import data from "_components/DualInvestSidebar/DefaultApr.json";
+import Swal from "sweetalert2";
 
 const initialState = {
   dualInvestments: {
@@ -12,9 +13,11 @@ const initialState = {
   cryptoBalance: 0,
   buyLowAmount: 0,
   sellHighAmount: 0,
-  aprToOpen: 0,
+  aprToOpen: 450,
   status: "idle",
   error: null,
+  isChecked: false,
+  selectedCrypto: "BTC",
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
@@ -49,6 +52,33 @@ export const fetchSpotBalances = createAsyncThunk(
   }
 );
 
+export const toggleAutoDual = createAsyncThunk(
+  "duals/toggleAutoDual",
+  async (_, { getState }) => {
+    const state = getState().duals;
+    const authUser = getState().auth.user;
+    const subClientId = authUser[1].id;
+
+    const payload = {
+      active: state.isChecked,
+      currency: state.selectedCrypto,
+      amount: state.buyLowAmount,
+      threshold: state.aprToOpen,
+      dualType: "buyLow",
+      subClientId: subClientId,
+    };
+
+    const response = await fetchWrapper.post(baseUrl + "/auto-dual", payload);
+    return response;
+  }
+);
+
+export const toggleChecked = () => (dispatch, getState) => {
+  const state = getState().duals;
+  dispatch(dualsSlice.actions.toggleCheckedState(state.isChecked));
+  dispatch(toggleAutoDual());
+};
+
 const dualsSlice = createSlice({
   name: "duals",
   initialState,
@@ -62,52 +92,42 @@ const dualsSlice = createSlice({
     updateAprToOpen: (state, action) => {
       state.aprToOpen = action.payload;
     },
+    toggleCheckedState: (state, action) => {
+      state.isChecked = !action.payload;
+    },
+    updateSelectedCrypto: (state, action) => {
+      state.selectedCrypto = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchInvestmentsByCurrency.pending, (state) => {
-        if (state.status !== "loading") {
-          state.status = "loading";
-        }
+        state.status = "loading";
       })
       .addCase(fetchInvestmentsByCurrency.fulfilled, (state, action) => {
-        const newInvestments = {
+        state.status = "succeeded";
+        state.dualInvestments = {
           ...state.dualInvestments,
           ...action.payload,
         };
-        if (
-          JSON.stringify(state.dualInvestments) !==
-          JSON.stringify(newInvestments)
-        ) {
-          state.status = "succeeded";
-          state.dualInvestments = newInvestments;
-        }
       })
       .addCase(fetchInvestmentsByCurrency.rejected, (state, action) => {
-        if (state.status !== "failed" || state.error !== action.error.message) {
-          state.status = "failed";
-          state.error = action.error.message;
-        }
+        state.status = "failed";
+        state.error = action.error.message;
       })
       .addCase(fetchSpotPrice.pending, (state) => {
-        if (state.status !== "loading") {
-          state.status = "loading";
-        }
+        state.status = "loading";
       })
       .addCase(fetchSpotPrice.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.spotPrice = action.payload;
       })
       .addCase(fetchSpotPrice.rejected, (state, action) => {
-        if (state.status !== "failed" || state.error !== action.error.message) {
-          state.status = "failed";
-          state.error = action.error.message;
-        }
+        state.status = "failed";
+        state.error = action.error.message;
       })
       .addCase(fetchSpotBalances.pending, (state) => {
-        if (state.status !== "loading") {
-          state.status = "loading";
-        }
+        state.status = "loading";
       })
       .addCase(fetchSpotBalances.fulfilled, (state, action) => {
         state.status = "succeeded";
@@ -116,14 +136,38 @@ const dualsSlice = createSlice({
         state.cryptoBalance = cryptoBalance;
       })
       .addCase(fetchSpotBalances.rejected, (state, action) => {
-        if (state.status !== "failed" || state.error !== action.error.message) {
-          state.status = "failed";
-          state.error = action.error.message;
-        }
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(toggleAutoDual.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(toggleAutoDual.fulfilled, (state) => {
+        state.status = "succeeded";
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Auto dual activated successfully!",
+        });
+      })
+      .addCase(toggleAutoDual.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: `Failed to activate auto dual: ${action.error.message}`,
+        });
       });
   },
 });
 
 // Export actions and reducer
-export const { updateBuyLowAmount, updateSellHighAmount, updateAprToOpen } = dualsSlice.actions; 
+export const {
+  updateBuyLowAmount,
+  updateSellHighAmount,
+  updateAprToOpen,
+  toggleCheckedState,
+  updateSelectedCrypto,
+} = dualsSlice.actions;
 export const dualsReducer = dualsSlice.reducer;
