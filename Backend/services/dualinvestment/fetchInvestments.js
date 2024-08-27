@@ -17,6 +17,7 @@ async function fetchInvestmentsByCurrency(currency) {
       "endTime",
       "planType",
       "exercisePrice",
+      "id",
     ];
 
     // Query for records where exerciseCurrency matches the given currency, endTime is in the future, and updatedAt is within the last 5 minutes
