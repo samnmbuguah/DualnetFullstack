@@ -34,9 +34,15 @@ async function runAutoDuals() {
 
       if (criteriaMet) {
         // Open a dual plan using the fetched data
-        await openDualPlan(firstExerciseCurrency.id, userId, amount, firstExerciseCurrency.perValue);
+        const success = await openDualPlan(firstExerciseCurrency.id, userId, amount, firstExerciseCurrency.perValue);
 
-        console.log(`Dual plan opened successfully for currency: ${currency}.`);
+        if (success) {
+          // Update the AutoDual record to set active to false
+          await AutoDual.update({ active: false }, { where: { id: record.id } });
+          console.log(`Dual plan opened and AutoDual record updated for currency: ${currency}.`);
+        } else {
+          console.log(`Failed to open dual plan for currency: ${currency}.`);
+        }
       } else {
         console.log(
           `Criteria not met for currency: ${currency}. No dual plan opened.`
