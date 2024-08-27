@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useWindowDimensions } from "_components";
 import styles from "./styles";
-import Switch from "_components/Switch/Switch";
+import DualSwitch from "_components/DualInvestSidebar/DualSwitch";
 import cryptos from "./cryptos.json";
 import CryptoList from "./CryptoList";
 import DualTrade from "./DualTrade";
@@ -12,6 +12,7 @@ import {
   fetchInvestmentsByCurrency,
   fetchSpotPrice,
   fetchSpotBalances,
+  updateSelectedCrypto,
 } from "_store/duals.slice";
 import BuyAPR from "./BuyAPR";
 import SellAPR from "./SellAPR";
@@ -28,16 +29,10 @@ const DualInvestSidebar = ({ show, dark }) => {
   const spotPrice = useSelector((state) => state.duals.spotPrice);
   const usdtBalance = useSelector((state) => state.duals.usdtBalance);
   const cryptoBalance = useSelector((state) => state.duals.cryptoBalance);
-  console.log("investCurrencyList", investCurrencyList);  
-  console.log("exerciseCurrencyList", exerciseCurrencyList);
+  const selectedCrypto = useSelector((state) => state.duals.selectedCrypto);
   const dispatch = useDispatch();
   const customStyles = dark ? styles.dark : styles.light;
   let screenWidth = useWindowDimensions().width;
-
-  const [selectedCrypto, setSelectedCrypto] = useState("BTC");
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
-  const [tradeData, setTradeData] = useState({});
-  const [amount, setAmount] = useState(100);
 
   useEffect(() => {
     if (selectedCrypto) {
@@ -52,16 +47,8 @@ const DualInvestSidebar = ({ show, dark }) => {
     }
   }, [selectedCrypto, dispatch, authUser]);
 
-  const handleSwitchChange = (isChecked) => {
-    setIsSwitchOn(isChecked);
-  };
-
   const handleCryptoClick = (cryptoName) => {
-    setSelectedCrypto(cryptoName);
-  };
-
-  const handleAmountChange = (event) => {
-    setAmount(event.target.value);
+    dispatch(updateSelectedCrypto(cryptoName));
   };
 
   return (
@@ -81,7 +68,7 @@ const DualInvestSidebar = ({ show, dark }) => {
         />
         <div className="w-1/2 flex flex-row items-center px-8 py-4">
           <span className="mr-4">Dual-Invest auto on/off</span>
-          <Switch onChange={handleSwitchChange} tradeData={tradeData} />
+          <DualSwitch/>
         </div>
       </div>
       <div
