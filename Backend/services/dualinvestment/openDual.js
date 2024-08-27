@@ -16,7 +16,8 @@ async function openDualPlan(planId, userId, amount, perValue) {
     client.setApiKeySecret(credentials.apiKey, credentials.apiSecret);
 
     // Calculate copies
-    const copies = Math.round(amount / perValue);
+    const copies = 1
+    // const copies = Math.round(amount / perValue);
 
     // Create a new dual investment order
     const placeDualInvestmentOrder = new GateApi.PlaceDualInvestmentOrder();
