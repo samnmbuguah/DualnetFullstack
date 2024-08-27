@@ -25,15 +25,15 @@ const DualTrade = ({
   const [isEditingApr, setIsEditingApr] = useState(false);
 
   const handleBuyLowChange = (event) => {
-    const value = event.target.value;
+    const value = Number(event.target.value);
     dispatch(updateBuyLowAmount(value));
   };
-
+  
   const handleSellHighChange = (event) => {
-    const value = event.target.value;
+    const value = Number(event.target.value);
     dispatch(updateSellHighAmount(value));
   };
-
+  
   const handleBuyLowAllClick = () => {
     dispatch(updateBuyLowAmount(usdtBalance));
   };
@@ -108,7 +108,7 @@ function BuyLow({ perShare, onChange, onAllClick, value }) {
         </label>
         <input
           type="number"
-          placeholder="100"
+          placeholder={100}
           className="text-base text-[#9A9A9A] bg-custom-gray h-8 text-right w-16"
           onChange={onChange}
           value={value}
@@ -141,7 +141,7 @@ function SellHigh({ perShare, onChange, onAllClick, value, currency }) {
         </label>
         <input
           type="number"
-          placeholder="0.001"
+          placeholder={0.001}
           className="text-base text-[#9A9A9A] bg-custom-gray h-8 text-right w-16"
           onChange={onChange}
           value={value}
