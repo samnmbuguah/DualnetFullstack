@@ -19,6 +19,9 @@ const initialState = {
   isChecked: false,
   selectedCrypto: "BTC",
   openedBuyDuals: 0,
+  buyLowPerShare: 0.2575,
+  sellHighPerShare: 0.0001
+
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
@@ -130,6 +133,10 @@ const dualsSlice = createSlice({
           ...state.dualInvestments,
           ...action.payload,
         };
+        state.buyLowPerShare =
+          action.payload.exerciseCurrencyList[0]?.perValue || 0;
+        state.sellHighPerShare =
+          action.payload.investCurrencyList[0]?.perValue || 0;
       })
       .addCase(fetchInvestmentsByCurrency.rejected, (state, action) => {
         state.status = "failed";
@@ -195,7 +202,9 @@ const dualsSlice = createSlice({
           state.openedDuals = action.payload;
           state.aprToOpen = action.payload.threshold || 450;
           state.isChecked = action.payload.active || false;
-          state.openedBuyDuals = action.payload.strikePrices ? action.payload.strikePrices.length : 0;
+          state.openedBuyDuals = action.payload.strikePrices
+            ? action.payload.strikePrices.length
+            : 0;
         }
       })
       .addCase(fetchOpenedDuals.rejected, (state, action) => {
