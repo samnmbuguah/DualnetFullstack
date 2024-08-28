@@ -3,9 +3,9 @@ const { Op } = require("sequelize");
 
 async function fetchInvestmentsByCurrency(currency) {
   try {
-    // Get the current date and time as a Unix timestamp
-    const now = Math.floor(Date.now() / 1000);
-    const oneMinuteAgo = now - 1 * 60; // Changed from 5 minutes to 1 minute
+    // Get the current date and time
+    const now = new Date();
+    const oneMinuteAgo = new Date(now.getTime() - 5 * 60 * 1000);
     const twoDaysFromNow = now + 2 * 24 * 60 * 60;
 
     // Define the attributes to be selected
