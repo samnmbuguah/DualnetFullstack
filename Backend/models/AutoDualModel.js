@@ -17,17 +17,9 @@ const AutoDual = db.define("AutoDual", {
     },
     amount: {
         type: Sequelize.FLOAT,
-        allowNull: false,
-        validate: {
-            min: 0.01
-        }
     },
     threshold: {
         type: Sequelize.FLOAT,
-        allowNull: false,
-        validate: {
-            min: 0.01
-        }
     },
     active: {
         type: Sequelize.BOOLEAN,
