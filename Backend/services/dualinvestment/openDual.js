@@ -16,8 +16,13 @@ async function openDualPlan(planId, userId, amount, perValue) {
     client.setApiKeySecret(credentials.apiKey, credentials.apiSecret);
 
     // Calculate copies
-    const copies = amount;
-    // const copies = Math.round(amount / perValue);
+    const copies = Math.floor(amount / perValue);
+
+    // Check if copies are less than 1
+    if (copies < 1) {
+      console.log('Insufficient amount to create any copies. Aborting trade.');
+      return false;
+    }
 
     // Create a new dual investment order
     const placeDualInvestmentOrder = new GateApi.PlaceDualInvestmentOrder();
@@ -28,6 +33,12 @@ async function openDualPlan(planId, userId, amount, perValue) {
 
     // Place the dual investment order using the Gate API
     const apiResponse = await api.placeDualOrder(placeDualInvestmentOrder);
+
+    // Check if the API response indicates an error
+    if (apiResponse.status !== 200) {
+      console.error('API error:', apiResponse);
+      return false;
+    }
 
     // Log the API response
     console.log('API called successfully:', apiResponse);
