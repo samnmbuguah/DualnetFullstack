@@ -33,7 +33,7 @@ Scans.sync()
   })
   .then(() => {
     console.log("TopScans table has been created.");
-    return DualPlans.sync({ force: true });
+    return DualPlans.sync({ alter: true });
   })
   .then(() => {
     console.log("DualPlans table has been synced");
