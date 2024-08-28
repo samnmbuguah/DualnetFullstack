@@ -20,7 +20,8 @@ async function runAutoDuals() {
       const { currency, amount, threshold, userId, strikePrices } = record;
 
       // Fetch data from the database
-      const { exerciseCurrencyList, investCurrencyList } = await fetchInvestmentsByCurrency(currency);
+      const { exerciseCurrencyList, investCurrencyList } =
+        await fetchInvestmentsByCurrency(currency);
 
       if (exerciseCurrencyList.length === 0) {
         console.log(`No investments found for currency: ${currency}.`);
@@ -28,12 +29,17 @@ async function runAutoDuals() {
       }
 
       // Filter the exerciseCurrencyList to remove records where the exercisePrice is in the strikePrices array
-      const filteredExerciseCurrencyList = strikePrices && strikePrices.length > 0
-        ? exerciseCurrencyList.filter(item => !strikePrices.includes(item.exercisePrice))
-        : exerciseCurrencyList;
+      const filteredExerciseCurrencyList =
+        strikePrices && strikePrices.length > 0
+          ? exerciseCurrencyList.filter(
+              (item) => !strikePrices.includes(item.exercisePrice)
+            )
+          : exerciseCurrencyList;
 
       if (filteredExerciseCurrencyList.length === 0) {
-        console.log(`No suitable investments found for currency: ${currency} after filtering.`);
+        console.log(
+          `No suitable investments found for currency: ${currency} after filtering.`
+        );
         continue;
       }
 
@@ -43,8 +49,22 @@ async function runAutoDuals() {
       const criteriaMet = firstExerciseCurrency.apyDisplay > threshold;
 
       if (criteriaMet) {
+        // Set perValue based on investCurrency
+        let perValue = firstExerciseCurrency.perValue;
+        if (
+          firstExerciseCurrency.exerciseCurrency !== "BTC" &&
+          firstExerciseCurrency.exerciseCurrency !== "ETH"
+        ) {
+          perValue = 1;
+        }
+
         // Open a dual plan using the fetched data
-        const success = await openDualPlan(firstExerciseCurrency.id, userId, amount, firstExerciseCurrency.perValue);
+        const success = await openDualPlan(
+          firstExerciseCurrency.id,
+          userId,
+          amount,
+          perValue
+        );
 
         if (success) {
           // Fetch the current strikePrices array
@@ -56,7 +76,9 @@ async function runAutoDuals() {
           // Update the AutoDual record with the new strikePrices array
           await AutoDual.update({ strikePrices }, { where: { id: record.id } });
 
-          console.log(`Dual plan opened and strikePrices updated for currency: ${currency}.`);
+          console.log(
+            `Dual plan opened and strikePrices updated for currency: ${currency}.`
+          );
         } else {
           console.log(`Failed to open dual plan for currency: ${currency}.`);
         }
