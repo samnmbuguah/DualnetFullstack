@@ -16,6 +16,9 @@ async function getSpotPrice(currencyPair) {
 
   try {
     const value = await api.listCandlesticks(currencyPair, opts);
+    if (!value.body || value.body.length === 0) {
+      throw new Error('No candlestick data available');
+    }
     // Extract the close price of the last candle
     const lastCandle = value.body[0];
     const lastClosePrice = parseFloat(lastCandle[2]); // Close price is at index 2
