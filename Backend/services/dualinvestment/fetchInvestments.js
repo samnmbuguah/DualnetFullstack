@@ -5,8 +5,9 @@ async function fetchInvestmentsByCurrency(currency) {
   try {
     // Get the current date and time
     const now = new Date();
-    const oneMinuteAgo = new Date(now.getTime() - 5 * 60 * 1000);
-    const twoDaysFromNow = now + 2 * 24 * 60 * 60;
+    const unixNow = Math.floor(Date.now() / 1000); 
+    const oneMinuteAgo = new Date(now.getTime() - 2 * 60 * 1000);
+    const twoDaysFromNow = unixNow + 2 * 24 * 60 * 60;
 
     // Define the attributes to be selected
     const attributes = [
