@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   updateBuyLowAmount,
   updateSellHighAmount,
@@ -12,15 +12,13 @@ const DualTrade = ({
   sellHighPerShare = 0.0001,
   currentPrice = "58222",
   selectedCrypto = "BTC",
+  usdtBalance,
+  cryptoBalance,
+  buyLowAmount,
+  sellHighAmount,
+  aprToOpen,
 }) => {
   const dispatch = useDispatch();
-  const {
-    usdtBalance,
-    cryptoBalance,
-    buyLowAmount,
-    sellHighAmount,
-    aprToOpen,
-  } = useSelector((state) => state.duals);
 
   const [isEditingApr, setIsEditingApr] = useState(false);
 

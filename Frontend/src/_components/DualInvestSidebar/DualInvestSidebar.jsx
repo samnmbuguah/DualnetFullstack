@@ -6,7 +6,7 @@ import DualSwitch from "_components/DualInvestSidebar/DualSwitch";
 import cryptos from "./cryptos.json";
 import CryptoList from "./CryptoList";
 import DualTrade from "./DualTrade";
-import BuyLowInfo from "./ BuyLowInfo.jsx";
+import BuyLowInfo from "./BuyLowInfo";
 import SellHighInfo from "./SellHighInfo";
 import {
   fetchInvestmentsByCurrency,
@@ -31,6 +31,12 @@ const DualInvestSidebar = ({ show, dark }) => {
   const usdtBalance = useSelector((state) => state.duals.usdtBalance);
   const cryptoBalance = useSelector((state) => state.duals.cryptoBalance);
   const selectedCrypto = useSelector((state) => state.duals.selectedCrypto);
+  const buyLowAmount = useSelector((state) => state.duals.buyLowAmount);
+  const sellHighAmount = useSelector((state) => state.duals.sellHighAmount);
+  const aprToOpen = useSelector((state) => state.duals.aprToOpen);
+  const buyLowPerShare = useSelector((state) => state.duals.buyLowPerShare);
+  const sellHighPerShare = useSelector((state) => state.duals.sellHighPerShare);
+  
   const dispatch = useDispatch();
   const customStyles = dark ? styles.dark : styles.light;
   let screenWidth = useWindowDimensions().width;
@@ -84,10 +90,15 @@ const DualInvestSidebar = ({ show, dark }) => {
         }}
       >
         <DualTrade
-          buyLowPerShare={exerciseCurrencyList[0]?.perValue}
-          sellHighPerShare={investCurrencyList[0]?.perValue}
+          buyLowPerShare={buyLowPerShare}
+          sellHighPerShare={sellHighPerShare}
           currentPrice={spotPrice}
           selectedCrypto={selectedCrypto}
+          usdtBalance={usdtBalance}
+          cryptoBalance={cryptoBalance}
+          buyLowAmount={buyLowAmount}
+          sellHighAmount={sellHighAmount}
+          aprToOpen={aprToOpen}
         />
         <div className="flex flex-col justify-around w-1/3 ml-auto">
           <BuyLowInfo availableAmount={usdtBalance} />
