@@ -94,15 +94,24 @@ server.listen(PORT, () => {
   // StreamPrices(io); // Start streaming prices after the server has started
 });
 
+
 // Schedule the cron job to run listDualInvestmentPlans once every 1 minute
 cron.schedule('* * * * *', async () => {
   try {
     await listDualInvestmentPlans();
     console.log('Executed listDualInvestmentPlans');
+  } catch (error) {
+    console.error('Error executing listDualInvestmentPlans:', error);
+  }
+});
+
+// Schedule the cron job to run runAutoDuals once every 1 minute
+cron.schedule('* * * * *', async () => {
+  try {
     await runAutoDuals();
     console.log('Executed runAutoDuals');
   } catch (error) {
-    console.error('Error executing listDualInvestmentPlans:', error);
+    console.error('Error executing runAutoDuals:', error);
   }
 });
 
