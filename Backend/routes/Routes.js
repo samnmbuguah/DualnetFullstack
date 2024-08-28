@@ -24,6 +24,7 @@ const sellSpotAndLongFutures = require("../services/closeTrades.js");
 const fetchBothBalances = require("../services/fetchBalances.js");
 const Bots = require("../models/BotsModel.js");
 const autoBot = require("../services/autoBot.js");
+const fetchOpenedDuals = require("../services/dualinvestment/fetchOpenedDuals.js");
 const autoDual = require("../services/dualinvestment/autoDual.js");
 const getSpotPrice = require("../services/dualinvestment/getSpotPrice.js");
 const fetchSpotBalances = require("../services/dualinvestment/fetchSpotBalances.js");
@@ -286,8 +287,8 @@ router.post("/auto-dual", async (req, res) => {
     return res.status(400).send({ error: "Invalid parameters" });
   }
 
-  if (amount <= 0 || threshold <= 0) {
-    return res.status(400).send({ error: "amount and threshold must be greater than 0" });
+  if (active && (amount <= 0 || threshold <= 0)) {
+    return res.status(400).send({ error: "amount and threshold must be greater than 0 when active is true" });
   }
 
   try {
@@ -296,6 +297,27 @@ router.post("/auto-dual", async (req, res) => {
   } catch (error) {
     console.error("Error executing autoDual:", error);
     res.status(500).send({ error: "Error executing autoDual" });
+  }
+});
+
+// Route for fetching opened duals
+router.get("/fetch-opened-duals", async (req, res) => {
+  const { currency, userId } = req.query;
+
+  if (!currency || !userId) {
+    return res.status(400).send({ error: "currency and userId are required" });
+  }
+
+  try {
+    const openedDuals = await fetchOpenedDuals(currency, userId);
+    if (openedDuals) {
+      res.status(200).json(openedDuals);
+    } else {
+      res.status(200).json({ message: "No opened duals found", data: [] });
+    }
+  } catch (error) {
+    console.error("Error fetching opened duals:", error);
+    res.status(500).send({ error: "Error fetching opened duals" });
   }
 });
 
