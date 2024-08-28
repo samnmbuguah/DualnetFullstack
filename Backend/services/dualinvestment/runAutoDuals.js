@@ -17,7 +17,7 @@ async function runAutoDuals() {
     }
 
     for (const record of activeRecords) {
-      const { currency, amount, threshold, userId } = record;
+      const { currency, amount, threshold, userId, strikePrices } = record;
 
       // Fetch data from the database
       const { exerciseCurrencyList, investCurrencyList } = await fetchInvestmentsByCurrency(currency);
@@ -27,7 +27,17 @@ async function runAutoDuals() {
         continue;
       }
 
-      const firstExerciseCurrency = exerciseCurrencyList[0];
+      // Filter the exerciseCurrencyList to remove records where the exercisePrice is in the strikePrices array
+      const filteredExerciseCurrencyList = strikePrices && strikePrices.length > 0
+        ? exerciseCurrencyList.filter(item => !strikePrices.includes(item.exercisePrice))
+        : exerciseCurrencyList;
+
+      if (filteredExerciseCurrencyList.length === 0) {
+        console.log(`No suitable investments found for currency: ${currency} after filtering.`);
+        continue;
+      }
+
+      const firstExerciseCurrency = filteredExerciseCurrencyList[0];
 
       // Check criteria based on the APY display
       const criteriaMet = firstExerciseCurrency.apyDisplay > threshold;
@@ -37,9 +47,16 @@ async function runAutoDuals() {
         const success = await openDualPlan(firstExerciseCurrency.id, userId, amount, firstExerciseCurrency.perValue);
 
         if (success) {
-          // Update the AutoDual record to set active to false
-          await AutoDual.update({ active: false }, { where: { id: record.id } });
-          console.log(`Dual plan opened and AutoDual record updated for currency: ${currency}.`);
+          // Fetch the current strikePrices array
+          const strikePrices = record.strikePrices || [];
+
+          // Add the exercisePrice to the end of the array
+          strikePrices.push(firstExerciseCurrency.exercisePrice);
+
+          // Update the AutoDual record with the new strikePrices array
+          await AutoDual.update({ strikePrices }, { where: { id: record.id } });
+
+          console.log(`Dual plan opened and strikePrices updated for currency: ${currency}.`);
         } else {
           console.log(`Failed to open dual plan for currency: ${currency}.`);
         }
