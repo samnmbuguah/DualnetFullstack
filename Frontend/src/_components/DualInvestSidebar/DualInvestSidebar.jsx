@@ -13,6 +13,7 @@ import {
   fetchSpotPrice,
   fetchSpotBalances,
   updateSelectedCrypto,
+  fetchOpenedDuals, // Import the thunk
 } from "_store/duals.slice";
 import BuyAPR from "./BuyAPR";
 import SellAPR from "./SellAPR";
@@ -44,6 +45,7 @@ const DualInvestSidebar = ({ show, dark }) => {
           cryptoCurrency: selectedCrypto,
         })
       );
+      dispatch(fetchOpenedDuals(selectedCrypto));
     }
   }, [selectedCrypto, dispatch, authUser]);
 
@@ -68,7 +70,7 @@ const DualInvestSidebar = ({ show, dark }) => {
         />
         <div className="w-1/2 flex flex-row items-center px-8 py-4">
           <span className="mr-4">Dual-Invest auto on/off</span>
-          <DualSwitch/>
+          <DualSwitch />
         </div>
       </div>
       <div
