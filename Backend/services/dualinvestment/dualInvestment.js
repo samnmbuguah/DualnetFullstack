@@ -17,27 +17,35 @@ async function listDualInvestmentPlans() {
     const filteredPlans = plans.filter(plan => parseFloat(plan.apyDisplay) > 1 && (plan.deliveryTime - currentTime) >= 86400);
 
     // Map through filtered plans
-    const plansToUpsert = filteredPlans.map((plan) => ({
-      id: plan.id,
-      instrumentName: plan.instrumentName,
-      investCurrency: plan.investCurrency,
-      exerciseCurrency: plan.exerciseCurrency,
-      exercisePrice: plan.exercisePrice,
-      deliveryTime: plan.deliveryTime,
-      minCopies: plan.minCopies,
-      maxCopies: plan.maxCopies,
-      perValue: parseFloat(plan.perValue),
-      apyDisplay: parseFloat(plan.apyDisplay) * 100,
-      startTime: plan.startTime,
-      endTime: plan.deliveryTime,
-      status: plan.status,
-      planType: plan.investCurrency === "USDT" ? "buy_low" : "sell_high",
-    }));
+    for (const plan of filteredPlans) {
+      const planData = {
+        id: plan.id,
+        instrumentName: plan.instrumentName,
+        investCurrency: plan.investCurrency,
+        exerciseCurrency: plan.exerciseCurrency,
+        exercisePrice: plan.exercisePrice,
+        deliveryTime: plan.deliveryTime,
+        minCopies: plan.minCopies,
+        maxCopies: plan.maxCopies,
+        perValue: parseFloat(plan.perValue),
+        apyDisplay: parseFloat(plan.apyDisplay) * 100,
+        startTime: plan.startTime,
+        endTime: plan.deliveryTime,
+        status: plan.status,
+        planType: plan.investCurrency === "USDT" ? "buy_low" : "sell_high"
+      };
 
-    // Use bulkCreate with updateOnDuplicate to insert or update plans
-    await DualPlans.bulkCreate(plansToUpsert, {
-      updateOnDuplicate: ["apyDisplay"],
-    });
+      // Check if the plan exists
+      const existingPlan = await DualPlans.findOne({ where: { id: plan.id } });
+
+      if (existingPlan) {
+        // Update the existing plan
+        await DualPlans.update(planData, { where: { id: plan.id } });
+      } else {
+        // Create a new plan
+        await DualPlans.create(planData);
+      }
+    }
 
     return;
   } catch (error) {
@@ -48,5 +56,5 @@ async function listDualInvestmentPlans() {
 
 module.exports = listDualInvestmentPlans;
 
-// // Example usage
+// Example usage
 listDualInvestmentPlans();
