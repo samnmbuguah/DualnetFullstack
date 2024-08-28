@@ -18,6 +18,7 @@ const initialState = {
   error: null,
   isChecked: false,
   selectedCrypto: "BTC",
+  openedBuyDuals: 0,
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
@@ -60,7 +61,7 @@ export const toggleAutoDual = createAsyncThunk(
     const subClientId = authUser[1].id;
 
     const payload = {
-      active: state.isChecked,
+      active: !state.isChecked,
       currency: state.selectedCrypto,
       amount: state.buyLowAmount,
       threshold: state.aprToOpen,
@@ -73,10 +74,29 @@ export const toggleAutoDual = createAsyncThunk(
   }
 );
 
-export const toggleChecked = () => (dispatch, getState) => {
+export const fetchOpenedDuals = createAsyncThunk(
+  "duals/fetchOpenedDuals",
+  async (currency, { getState }) => {
+    const state = getState().auth;
+    const userId = state.user[1].id;
+    const response = await fetchWrapper.get(
+      `${baseUrl}/fetch-opened-duals?currency=${currency}&userId=${userId}`
+    );
+    console.log("response", response);
+    return response;
+  }
+);
+
+export const toggleChecked = () => async (dispatch, getState) => {
   const state = getState().duals;
-  dispatch(dualsSlice.actions.toggleCheckedState(state.isChecked));
-  dispatch(toggleAutoDual());
+  try {
+    const result = await dispatch(toggleAutoDual());
+    if (result.meta.requestStatus === "fulfilled") {
+      dispatch(dualsSlice.actions.toggleCheckedState(state.isChecked));
+    }
+  } catch (error) {
+    console.error("Error toggling auto dual:", error);
+  }
 };
 
 const dualsSlice = createSlice({
@@ -158,8 +178,31 @@ const dualsSlice = createSlice({
           title: "Error",
           text: `Failed to activate auto dual: ${action.error.message}`,
         });
+      })
+      .addCase(fetchOpenedDuals.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchOpenedDuals.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        if (Array.isArray(action.payload) && action.payload.length === 0) {
+          // Handle the case when the payload is an empty array
+          state.openedDuals = [];
+          state.aprToOpen = 450;
+          state.isChecked = false;
+          state.openedBuyDuals = 0;
+        } else {
+          // Handle the case when the payload contains data
+          state.openedDuals = action.payload;
+          state.aprToOpen = action.payload.threshold || 450;
+          state.isChecked = action.payload.active || false;
+          state.openedBuyDuals = action.payload.strikePrices ? action.payload.strikePrices.length : 0;
+        }
+      })
+      .addCase(fetchOpenedDuals.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
-  },
+  }
 });
 
 // Export actions and reducer
