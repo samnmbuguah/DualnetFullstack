@@ -15,7 +15,6 @@ function BotInputCell(
                    onBlur={onBlur} // Call handleBlur function
                    required={required}
                />
-                %
            </div>
        </div>
    );
