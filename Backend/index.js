@@ -1,27 +1,29 @@
-require('dotenv').config();
-const express = require('express');
+require("dotenv").config();
+const express = require("express");
 const app = express();
 const path = require("path");
-const cors = require('cors');
-const cron = require('node-cron');
-const socketIO = require('socket.io');
-const server = require('http').createServer(app); // Create server with Express app
-const checkTrades = require('./services/checkTrades.js');
-const closeByProfit = require('./services/closeByProfit.js');
-const updateFundingRate = require('./services/getFundingRate.js');
-const listDualInvestmentPlans = require('./services/dualinvestment/dualInvestment.js');
-const updateAccumulatedFunding = require('./services/updateAccumulatedFunding.js');
-const runAutoDuals = require('./services/dualinvestment/runAutoDuals.js');
-const Bots = require('./models/BotsModel.js');
+const cors = require("cors");
+const cron = require("node-cron");
+const socketIO = require("socket.io");
+const server = require("http").createServer(app); // Create server with Express app
+const checkTrades = require("./services/checkTrades.js");
+const closeByProfit = require("./services/closeByProfit.js");
+const updateFundingRate = require("./services/getFundingRate.js");
+const listDualInvestmentPlans = require("./services/dualinvestment/dualInvestment.js");
+const updateAccumulatedFunding = require("./services/updateAccumulatedFunding.js");
+const runAutoDuals = require("./services/dualinvestment/runAutoDuals.js");
+const Bots = require("./models/BotsModel.js");
 
 // Check for required environment variables
 if (!process.env.PORT) {
-  console.error("Missing PORT environment variable. Please check your .env file");
+  console.error(
+    "Missing PORT environment variable. Please check your .env file"
+  );
   process.exit(1);
 }
 
 // CORS configuration
-console.log("IN",process.env.ENVIRONMENT, "ENVIRONMENT");
+console.log("IN", process.env.ENVIRONMENT, "ENVIRONMENT");
 let corsOptions = {
   origin: [
     "https://dualnet-production.up.railway.app",
@@ -34,59 +36,61 @@ let corsOptions = {
   ],
 };
 
-if (process.env.ENVIRONMENT === 'development') {
-  corsOptions = { origin: '*' }; // Allow all origins in development
+if (process.env.ENVIRONMENT === "development") {
+  corsOptions = { origin: "*" }; // Allow all origins in development
 }
 
 app.use(cors(corsOptions));
 
-const populateTables = require('./jobs/PopulateTables.js');
-const StreamPrices = require('./services/StreamPrices.js');
+const populateTables = require("./jobs/PopulateTables.js");
+const StreamPrices = require("./services/StreamPrices.js");
 const router = require("./routes/Routes.js");
-const PORT = process.env.PORT || 3042; 
+const PORT = process.env.PORT || 3042;
 
 app.use(express.json());
-app.use('/api', router);
+app.use("/api", router);
 
-if (process.env.ENVIRONMENT !== 'development') {
+if (process.env.ENVIRONMENT !== "development") {
   // Serve static files from the React frontend app
-  app.use(express.static(path.join(__dirname, '../Frontend/build')))
+  app.use(express.static(path.join(__dirname, "../Frontend/build")));
 
   // All other GET requests not handled before will return our React app
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Frontend/build', 'index.html'));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../Frontend/build", "index.html"));
   });
 }
 
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.status(500).send("Something broke!");
 });
 
 // Create the WebSocket server
 const io = socketIO(server, { cors: corsOptions });
 
-io.on('connection', (socket) => {
-    // When a client connects, they should emit a 'join' event with their userId
-    socket.on('join', (userId) => {
-        // The client joins a room with a name equal to their userId
-        socket.join(userId);
-    });
+io.on("connection", (socket) => {
+  // When a client connects, they should emit a 'join' event with their userId
+  socket.on("join", (userId) => {
+    // The client joins a room with a name equal to their userId
+    socket.join(userId);
+  });
 
-    // Listen for 'getBotData' event from the client
-    socket.on('getBotData', async (userId) => {
-        // Fetch all bots where isClose is false and userId matches the provided userId
-        const bots = await Bots.findAll({ where: { isClose: false, userId: userId } });
-        if (bots.length) {
-            try {
-                await closeByProfit(io, bots);
-                console.log('Completed the Close By profit loop');
-            } catch (error) {
-                console.error('Error closing trades:', error);
-            }
-        }
+  // Listen for 'getBotData' event from the client
+  socket.on("getBotData", async (userId) => {
+    // Fetch all bots where isClose is false and userId matches the provided userId
+    const bots = await Bots.findAll({
+      where: { isClose: false, userId: userId },
     });
+    if (bots.length) {
+      try {
+        await closeByProfit(io, bots);
+        console.log("Completed the Close By profit loop");
+      } catch (error) {
+        console.error("Error closing trades:", error);
+      }
+    }
+  });
 });
 
 server.listen(PORT, () => {
@@ -94,29 +98,23 @@ server.listen(PORT, () => {
   // StreamPrices(io); // Start streaming prices after the server has started
 });
 
-
-async function executeListDualInvestmentPlans() {
+// Schedule the cron job to run listDualInvestmentPlans once every 1 minute
+cron.schedule("* * * * *", async () => {
   try {
     await listDualInvestmentPlans();
-    console.log('Executed listDualInvestmentPlans');
+    console.log("Executed listDualInvestmentPlans");
   } catch (error) {
-    console.error('Error executing listDualInvestmentPlans:', error);
-  } finally {
-    // Schedule the next execution after 5 seconds
-    setTimeout(executeListDualInvestmentPlans, 5000);
+    console.error("Error executing listDualInvestmentPlans:", error);
   }
-}
-
-// Start the recursive function
-executeListDualInvestmentPlans();
+});
 
 // Schedule the cron job to run runAutoDuals once every 1 minute
-cron.schedule('* * * * *', async () => {
+cron.schedule("* * * * *", async () => {
   try {
     await runAutoDuals();
-    console.log('Executed runAutoDuals');
+    console.log("Executed runAutoDuals");
   } catch (error) {
-    console.error('Error executing runAutoDuals:', error);
+    console.error("Error executing runAutoDuals:", error);
   }
 });
 
