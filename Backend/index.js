@@ -136,3 +136,5 @@ cron.schedule("* * * * *", async () => {
 // cron.schedule('0 */8 * * *', updateAccumulatedFunding);
 // cron.schedule('*/10 * * * *', updateFundingRate);
 // checkTrades();
+
+
