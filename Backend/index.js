@@ -95,15 +95,20 @@ server.listen(PORT, () => {
 });
 
 
-// Schedule the cron job to run listDualInvestmentPlans once every 1 minute
-cron.schedule('* * * * *', async () => {
+async function executeListDualInvestmentPlans() {
   try {
     await listDualInvestmentPlans();
     console.log('Executed listDualInvestmentPlans');
   } catch (error) {
     console.error('Error executing listDualInvestmentPlans:', error);
+  } finally {
+    // Schedule the next execution after 5 seconds
+    setTimeout(executeListDualInvestmentPlans, 5000);
   }
-});
+}
+
+// Start the recursive function
+executeListDualInvestmentPlans();
 
 // Schedule the cron job to run runAutoDuals once every 1 minute
 cron.schedule('* * * * *', async () => {
