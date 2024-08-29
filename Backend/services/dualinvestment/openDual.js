@@ -34,12 +34,6 @@ async function openDualPlan(planId, userId, amount, perValue) {
     // Place the dual investment order using the Gate API
     const apiResponse = await api.placeDualOrder(placeDualInvestmentOrder);
 
-    // Check if the API response indicates an error
-    if (apiResponse.status !== 200) {
-      console.error('API error:', apiResponse);
-      return false;
-    }
-
     // Log the API response
     console.log('API called successfully:', apiResponse);
 
