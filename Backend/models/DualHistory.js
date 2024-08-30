@@ -1,9 +1,14 @@
 const { Sequelize } = require("sequelize");
 const db = require("../config/Database.js");
 
-const OpenDuals = db.define(
-  "OpenDuals",
+const DualHistory = db.define(
+  "DualHistory",
   {
+    orderId: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
+    },
     dualId: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -16,11 +21,11 @@ const OpenDuals = db.define(
       type: Sequelize.DECIMAL,
       allowNull: false,
     },
-    expiryTime: {
+    settlementTime: {
       type: Sequelize.DATE,
       allowNull: false,
     },
-    apr: {
+    apy: {
       type: Sequelize.DECIMAL,
       allowNull: false,
     },
@@ -32,10 +37,31 @@ const OpenDuals = db.define(
       type: Sequelize.INTEGER,
       allowNull: false,
     },
+    dualType: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    currency: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    settled: {
+      type: Sequelize.BOOLEAN,
+    },
+    settlementCurrency: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    priceAtExpiration: {
+      type: Sequelize.DECIMAL,
+    },
+    settleAmount: {
+      type: Sequelize.DECIMAL,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = OpenDuals;
+module.exports = DualHistory;

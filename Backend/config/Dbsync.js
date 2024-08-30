@@ -6,17 +6,17 @@ const Scans = require('../models/ScansModel.js');
 const Bots = require('../models/BotsModel.js');
 const TopScans = require('../models/TopScanModel.js');
 const DualPlans = require('../models/DualPlansModel.js');
-const OpenDuals = require('../models/OpenDualsModel.js');
+const DualHistory = require('../models/DualHistory.js');
 const AutoDual = require('../models/AutoDualModel.js');
 
 console.log("Syncing Tables");
-Scans.sync()
-  .then(() => {
-    console.log("Scans table has been synced");
-    return Users.sync();
-  })
+Users.sync()
   .then(() => {
     console.log("Users table has been synced");
+    return Scans.sync();
+  })
+  .then(() => {
+    console.log("Scans table has been synced");
     return MatchingPairs.sync();
   })
   .then(() => {
@@ -32,16 +32,16 @@ Scans.sync()
     return TopScans.sync();
   })
   .then(() => {
-    console.log("TopScans table has been created.");
+    console.log("TopScans table has been synced");
     return DualPlans.sync({ alter: true });
   })
   .then(() => {
     console.log("DualPlans table has been synced");
-    return OpenDuals.sync({alter: true});
+    return DualHistory.sync({ alter: true });
   })
   .then(() => {
-    console.log("OpenDuals table has been synced");
-    return AutoDual.sync({alter: true});
+    console.log("DualHistory table has been synced");
+    return AutoDual.sync({ alter: true });
   })
   .then(() => {
     console.log("AutoDual table has been synced");
