@@ -293,7 +293,7 @@ router.post("/auto-dual", async (req, res) => {
 
   try {
     await autoDual(active, currency, amount, threshold, dualType, subClientId);
-    res.status(200).send({ message: "autoDual executed successfully" });
+    res.status(200).send({ message: "autoDual executed successfully", active });
   } catch (error) {
     console.error("Error executing autoDual:", error);
     res.status(500).send({ error: "Error executing autoDual" });
