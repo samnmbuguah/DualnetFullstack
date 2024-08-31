@@ -6,7 +6,7 @@ const Scans = require('../models/ScansModel.js');
 const Bots = require('../models/BotsModel.js');
 const TopScans = require('../models/TopScanModel.js');
 const DualPlans = require('../models/DualPlansModel.js');
-const DualHistory = require('../models/DualHistory.js');
+const DualHistory = require('../models/DualHistoryModel.js');
 const AutoDual = require('../models/AutoDualModel.js');
 
 console.log("Syncing Tables");
