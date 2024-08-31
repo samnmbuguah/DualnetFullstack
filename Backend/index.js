@@ -119,8 +119,8 @@ cron.schedule("* * * * *", async () => {
   }
 });
 
-// Schedule the cron job to run settleRecords every day at 8:02 AM UTC
-cron.schedule("2 8 * * *", async () => {
+// Schedule the cron job to run settleRecords every day at 8:00 AM UTC
+cron.schedule("0 8 * * *", async () => {
   try {
     await settleRecords();
     console.log("Executed settleRecords");
