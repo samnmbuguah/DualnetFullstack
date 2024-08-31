@@ -24,10 +24,6 @@ const AutoDual = db.define("AutoDual", {
     active: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
-    },
-    strikePrices: {
-        type: Sequelize.ARRAY(Sequelize.FLOAT),
-        defaultValue: []
     }
 }, {
     timestamps: true
