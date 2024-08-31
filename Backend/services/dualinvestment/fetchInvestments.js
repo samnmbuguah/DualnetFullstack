@@ -15,13 +15,14 @@ async function fetchInvestmentsByCurrency(currency) {
       "exerciseCurrency",
       "perValue",
       "apyDisplay",
+      "deliveryTime",
       "endTime",
       "planType",
       "exercisePrice",
       "id",
     ];
 
-    // Query for records where exerciseCurrency matches the given currency, endTime is in the future, and updatedAt is within the last 1 minute
+    // Query for records where exerciseCurrency matches the given currency and updatedAt is within the last 1 minute
     const exerciseCurrencyList = await DualPlans.findAll({
       attributes,
       where: {
@@ -34,7 +35,7 @@ async function fetchInvestmentsByCurrency(currency) {
       limit: 1,
     });
     
-    // Query for records where investCurrency matches the given currency, endTime is in the future, and updatedAt is within the last 1 minute
+    // Query for records where investCurrency matches the given currency and updatedAt is within the last 1 minute
     const investCurrencyList = await DualPlans.findAll({
       attributes,
       where: {
@@ -46,18 +47,6 @@ async function fetchInvestmentsByCurrency(currency) {
       order: [["apyDisplay", "DESC"]],
       limit: 1,
     });
-
-    // // Filter out records where expiry time is more than 2 days away, except for the first record
-    // const filteredExerciseCurrencyList = exerciseCurrencyList.filter((item, index) => index === 0 || item.endTime <= twoDaysFromNow);
-    // const filteredInvestCurrencyList = investCurrencyList.filter((item, index) => index === 0 || item.endTime <= twoDaysFromNow);
-
-    // // Filter to ensure all exercisePrice values are unique, including the first record
-    // const uniqueExerciseCurrencyList = filteredExerciseCurrencyList.filter((item, index, self) =>
-    //   self.findIndex(i => i.exercisePrice === item.exercisePrice) === index
-    // );
-    // const uniqueInvestCurrencyList = filteredInvestCurrencyList.filter((item, index, self) =>
-    //   self.findIndex(i => i.exercisePrice === item.exercisePrice) === index
-    // );
 
     // Return the filtered lists
     return {
