@@ -22,6 +22,8 @@
     "express": "^4.18.2",
     "gate-api": "^5.60.1",
     "jsonwebtoken": "^9.0.0",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.45",
     "node-cron": "^3.0.3",
     "pdf-lib": "^1.17.1",
     "pdfkit": "^0.14.0",
