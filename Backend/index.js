@@ -13,6 +13,7 @@ const listDualInvestmentPlans = require("./services/dualinvestment/dualInvestmen
 const updateAccumulatedFunding = require("./services/updateAccumulatedFunding.js");
 const runAutoDuals = require("./services/dualinvestment/runAutoDuals.js");
 const Bots = require("./models/BotsModel.js");
+const settleRecords = require("./services/dualinvestment/settle.js"); 
 
 // Check for required environment variables
 if (!process.env.PORT) {
@@ -118,7 +119,19 @@ cron.schedule("* * * * *", async () => {
   }
 });
 
-// Schedule the cron job
+// Schedule the cron job to run settleRecords every day at 8:02 AM UTC
+cron.schedule("2 8 * * *", async () => {
+  try {
+    await settleRecords();
+    console.log("Executed settleRecords");
+  } catch (error) {
+    console.error("Error executing settleRecords:", error);
+  }
+}, {
+  scheduled: true,
+  timezone: "Etc/UTC"
+});
+
 // cron.schedule('* * * * *', async () => {
 //     // Fetch all bots where isClose is false
 //     const bots = await Bots.findAll({ where: { isClose: false } });
@@ -136,5 +149,3 @@ cron.schedule("* * * * *", async () => {
 // cron.schedule('0 */8 * * *', updateAccumulatedFunding);
 // cron.schedule('*/10 * * * *', updateFundingRate);
 // checkTrades();
-
-
