@@ -1,10 +1,21 @@
-const GateApi = require('gate-api');
-const OpenDuals = require('../../models/OpenDualsModel.js');
-const getApiCredentials = require('../getApiCredentials.js');
+const GateApi = require("gate-api");
+const DualHistory = require("../../models/DualHistoryModel.js");
+const getApiCredentials = require("../getApiCredentials.js");
 
 const client = new GateApi.ApiClient();
 
-async function openDualPlan(planId, userId, amount, perValue) {
+async function openDualPlan(
+  planId,
+  userId,
+  amount,
+  perValue,
+  strikePrice,
+  settlementTime,
+  apy,
+  dualType,
+  currency,
+  settlementCurrency
+) {
   try {
     // Fetch API credentials
     const credentials = await getApiCredentials(userId);
@@ -20,7 +31,7 @@ async function openDualPlan(planId, userId, amount, perValue) {
 
     // Check if copies are less than 1
     if (copies < 1) {
-      console.log('Insufficient amount to create any copies. Aborting trade.');
+      console.log("Insufficient amount to create any copies. Aborting trade.");
       return false;
     }
 
@@ -35,19 +46,33 @@ async function openDualPlan(planId, userId, amount, perValue) {
     const apiResponse = await api.placeDualOrder(placeDualInvestmentOrder);
 
     // Log the API response
-    console.log('API called successfully:', apiResponse);
+    console.log("API called successfully:", apiResponse);
 
-    // Create a new record in the OpenDuals table
-    let newDualPlan;
-    // newDualPlan = await OpenDuals.create({
-    //   planId,
-    //   userId,
-    //   copies,
-    // });
+    // Extract orderId from the API response body
+    const { order_id: orderId } = apiResponse.body;
 
-    return true;
+    // Create a new record in the DualHistory table
+    await DualHistory.create({
+      orderId,
+      dualId: planId,
+      userId,
+      strikePrice,
+      settlementTime,
+      apy,
+      investAmount: amount,
+      copies,
+      dualType,
+      currency,
+      settlementCurrency,
+      settled: false,
+    });
+
+    console.log(
+      `Dual plan opened and data saved in the database for currency: ${currency}.`
+    );
+    return;
   } catch (error) {
-    console.error('Error opening dual plan:', error);
+    console.error("Error opening dual plan:", error);
     throw error;
   }
 }
