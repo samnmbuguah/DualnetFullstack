@@ -13,8 +13,8 @@ async function listDualInvestmentPlans() {
     // Get the current time in Unix time
     const currentTime = Math.floor(Date.now() / 1000);
 
-    // Filter plans with apyDisplay greater than 1 and endTime greater than 1 day from now
-    const filteredPlans = plans.filter(plan => parseFloat(plan.apyDisplay) > 1 && (plan.deliveryTime - currentTime) >= 86400);
+    // Filter plans with apyDisplay greater than 0.5 and deliveryTime greater than 1 day from now
+    const filteredPlans = plans.filter(plan => parseFloat(plan.apyDisplay) > 0.5 && (plan.deliveryTime - currentTime) >= 86400);
 
     // Map through filtered plans
     for (const plan of filteredPlans) {
@@ -24,15 +24,15 @@ async function listDualInvestmentPlans() {
         investCurrency: plan.investCurrency,
         exerciseCurrency: plan.exerciseCurrency,
         exercisePrice: plan.exercisePrice,
-        deliveryTime: plan.deliveryTime,
         minCopies: plan.minCopies,
         maxCopies: plan.maxCopies,
         perValue: parseFloat(plan.perValue),
         apyDisplay: parseFloat(plan.apyDisplay) * 100,
+        deliveryTime: plan.deliveryTime,
+        endTime: plan.endTime,
         startTime: plan.startTime,
-        endTime: plan.deliveryTime,
         status: plan.status,
-        planType: plan.investCurrency === "USDT" ? "buy_low" : "sell_high"
+        planType: plan.investCurrency === "USDT" ? "buy_low" : "sell_high",
       };
 
       // Check if the plan exists
