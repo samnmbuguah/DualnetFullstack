@@ -51,7 +51,7 @@ async function runAutoDuals() {
 
       if (filteredExerciseCurrencyList.length === 0) {
         console.log(
-          `No suitable investments found for currency: ${currency} after filtering.`
+          `No suitable investments found for currency: ${currency} after filtering  strike prices .`
         );
         continue;
       }
