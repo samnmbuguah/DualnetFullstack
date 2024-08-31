@@ -8,3 +8,4 @@ Dualnet Database.session.sql
 dumpfile.sql
 backup.sql
 .vscode/settings.json
+backup.dump
