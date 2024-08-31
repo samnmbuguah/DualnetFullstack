@@ -14,7 +14,7 @@ const DualHistory = db.define(
       allowNull: false,
     },
     userId: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       allowNull: false,
     },
     strikePrice: {
