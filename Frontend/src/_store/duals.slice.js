@@ -133,10 +133,23 @@ const dualsSlice = createSlice({
           ...state.dualInvestments,
           ...action.payload,
         };
-        state.buyLowPerShare =
-          action.payload.exerciseCurrencyList[0]?.perValue || 0;
+
+        // Extract the first item from exerciseCurrencyList safely
+        const firstExerciseCurrency =
+          action.payload.exerciseCurrencyList?.[0] || {};
+
+        // Set buyLowPerShare based on exerciseCurrency
+        let buyLowPerShare = firstExerciseCurrency?.perValue ?? 0;
+        if (
+          firstExerciseCurrency.exerciseCurrency !== "BTC" &&
+          firstExerciseCurrency.exerciseCurrency !== "ETH"
+        ) {
+          buyLowPerShare = 1;
+        }
+
+        state.buyLowPerShare = buyLowPerShare;
         state.sellHighPerShare =
-          action.payload.investCurrencyList[0]?.perValue || 0;
+          action.payload.investCurrencyList?.[0]?.perValue ?? 0;
       })
       .addCase(fetchInvestmentsByCurrency.rejected, (state, action) => {
         state.status = "failed";
@@ -169,12 +182,15 @@ const dualsSlice = createSlice({
       .addCase(toggleAutoDual.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(toggleAutoDual.fulfilled, (state) => {
+      .addCase(toggleAutoDual.fulfilled, (state, action) => {
         state.status = "succeeded";
+        const message = action.payload.active
+          ? "Auto dual activated successfully!"
+          : "Auto dual deactivated successfully!";
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Auto dual activated successfully!",
+          text: message,
         });
       })
       .addCase(toggleAutoDual.rejected, (state, action) => {
@@ -183,7 +199,7 @@ const dualsSlice = createSlice({
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: `Failed to activate auto dual: ${action.error.message}`,
+          text: `Failed to toggle auto dual: ${action.error.message}`,
         });
       })
       .addCase(fetchOpenedDuals.pending, (state) => {
@@ -202,9 +218,7 @@ const dualsSlice = createSlice({
           state.openedDuals = action.payload;
           state.aprToOpen = action.payload.threshold || 450;
           state.isChecked = action.payload.active || false;
-          state.openedBuyDuals = action.payload.strikePrices
-            ? action.payload.strikePrices.length
-            : 0;
+          state.openedBuyDuals = action.payload.strikePrices || 0;
         }
       })
       .addCase(fetchOpenedDuals.rejected, (state, action) => {
