@@ -1,5 +1,6 @@
 const fetchInvestmentsByCurrency = require("./fetchInvestments");
 const AutoDual = require("../../models/AutoDualModel");
+const DualHistory = require("../../models/DualHistoryModel");
 const openDualPlan = require("./openDual");
 const getLastClosePrice = require("./getSpotPrice");
 
@@ -17,7 +18,7 @@ async function runAutoDuals() {
     }
 
     for (const record of activeRecords) {
-      const { currency, amount, threshold, userId, strikePrices } = record;
+      const { currency, amount, threshold, userId } = record;
 
       // Fetch data from the database
       const { exerciseCurrencyList, investCurrencyList } =
@@ -28,9 +29,21 @@ async function runAutoDuals() {
         continue;
       }
 
+      // Fetch all unsettled records from DualHistory for the user and currency
+      const unsettledRecords = await DualHistory.findAll({
+        where: {
+          userId: userId,
+          currency: currency,
+          settled: false,
+        },
+      });
+
+      // Compile the strikePrices list from the unsettled records
+      const strikePrices = unsettledRecords.map((record) => record.strikePrice);
+
       // Filter the exerciseCurrencyList to remove records where the exercisePrice is in the strikePrices array
       const filteredExerciseCurrencyList =
-        strikePrices && strikePrices.length > 0
+        strikePrices.length > 0
           ? exerciseCurrencyList.filter(
               (item) => !strikePrices.includes(item.exercisePrice)
             )
@@ -59,29 +72,18 @@ async function runAutoDuals() {
         }
 
         // Open a dual plan using the fetched data
-        const success = await openDualPlan(
+        await openDualPlan(
           firstExerciseCurrency.id,
           userId,
           amount,
-          perValue
+          perValue,
+          firstExerciseCurrency.exercisePrice,
+          firstExerciseCurrency.deliveryTime,
+          firstExerciseCurrency.apyDisplay,
+          firstExerciseCurrency.planType,
+          currency,
+          firstExerciseCurrency.exerciseCurrency
         );
-
-        if (success) {
-          // Fetch the current strikePrices array
-          const strikePrices = record.strikePrices || [];
-
-          // Add the exercisePrice to the end of the array
-          strikePrices.push(firstExerciseCurrency.exercisePrice);
-
-          // Update the AutoDual record with the new strikePrices array
-          await AutoDual.update({ strikePrices }, { where: { id: record.id } });
-
-          console.log(
-            `Dual plan opened and strikePrices updated for currency: ${currency}.`
-          );
-        } else {
-          console.log(`Failed to open dual plan for currency: ${currency}.`);
-        }
       } else {
         console.log(
           `Criteria not met for currency: ${currency}. No dual plan opened.`
