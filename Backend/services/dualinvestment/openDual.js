@@ -1,6 +1,7 @@
 const GateApi = require("gate-api");
 const DualHistory = require("../../models/DualHistoryModel.js");
 const getApiCredentials = require("../getApiCredentials.js");
+const moment = require('moment-timezone'); // Import moment-timezone
 
 const client = new GateApi.ApiClient();
 
@@ -51,13 +52,16 @@ async function openDualPlan(
     // Extract orderId from the API response body
     const { order_id: orderId } = apiResponse.body;
 
+    // Convert Unix timestamp to JavaScript Date object in UTC
+    const settlementDate = moment.unix(settlementTime).utc().toDate();
+
     // Create a new record in the DualHistory table
     await DualHistory.create({
       orderId,
       dualId: planId,
       userId,
       strikePrice,
-      settlementTime,
+      settlementTime: settlementDate,
       apy,
       investAmount: amount,
       copies,
