@@ -18,10 +18,7 @@ const DualPlans = db.define(
       type: Sequelize.STRING,
     },
     exercisePrice: {
-      type: Sequelize.FLOAT,
-    },
-    deliveryTime: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DECIMAL,
     },
     minCopies: {
       type: Sequelize.INTEGER,
@@ -35,10 +32,13 @@ const DualPlans = db.define(
     apyDisplay: {
       type: Sequelize.FLOAT,
     },
-    startTime: {
+    deliveryTime: {
       type: Sequelize.INTEGER,
     },
     endTime: {
+      type: Sequelize.INTEGER,
+    },
+    startTime: {
       type: Sequelize.INTEGER,
     },
     status: {
