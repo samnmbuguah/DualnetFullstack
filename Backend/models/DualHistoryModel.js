@@ -17,6 +17,13 @@ const DualHistory = db.define(
       type: Sequelize.INTEGER,
       allowNull: false,
     },
+    settled: {
+      type: Sequelize.BOOLEAN,
+    },
+    settlementCurrency: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     strikePrice: {
       type: Sequelize.DECIMAL,
       allowNull: false,
@@ -42,13 +49,6 @@ const DualHistory = db.define(
       allowNull: false,
     },
     currency: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    settled: {
-      type: Sequelize.BOOLEAN,
-    },
-    settlementCurrency: {
       type: Sequelize.STRING,
       allowNull: false,
     },
