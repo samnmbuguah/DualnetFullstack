@@ -1,4 +1,5 @@
 const DualHistory = require("../../models/DualHistoryModel.js");
+const closeShort = require("./closeShort.js");
 const { Op } = require("sequelize");
 
 async function settleRecords() {
@@ -15,12 +16,18 @@ async function settleRecords() {
       },
     });
 
-    // Update the settled field to true for the found records
+    // Update the settled field to true and hedged field to false for the found records
     for (const record of recordsToUpdate) {
-      await record.update({ settled: true });
+      // // Close the short position if hedged is true
+      // if (record.hedged) {
+      //   await closeShort(record.currency + "_USDT", record.hedgedAmount, record.userId);
+      // }
+
+      // Update the settled and hedged fields
+      await record.update({ settled: true, hedged: false });
     }
 
-    console.log(`settled ${recordsToUpdate.length} records.`);
+    console.log(`Settled ${recordsToUpdate.length} records.`);
   } catch (error) {
     console.error("Error updating records:", error);
   }
