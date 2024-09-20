@@ -13,7 +13,9 @@ const listDualInvestmentPlans = require("./services/dualinvestment/dualInvestmen
 const updateAccumulatedFunding = require("./services/updateAccumulatedFunding.js");
 const runAutoDuals = require("./services/dualinvestment/runAutoDuals.js");
 const Bots = require("./models/BotsModel.js");
-const settleRecords = require("./services/dualinvestment/settle.js"); 
+const settleRecords = require("./services/dualinvestment/settle.js");
+const hedgeDuals = require("./services/dualinvestment/hedgeDuals.js");
+const closeHedges = require("./services/dualinvestment/closeHedges.js");
 
 // Check for required environment variables
 if (!process.env.PORT) {
@@ -126,6 +128,26 @@ cron.schedule("0 8 * * *", async () => {
     console.log("Executed settleRecords");
   } catch (error) {
     console.error("Error executing settleRecords:", error);
+  }
+}, {
+  scheduled: true,
+  timezone: "Etc/UTC"
+});
+
+// New cron job to run hedgeDuals and closeHedges every 10 seconds
+cron.schedule("*/10 * * * * *", async () => {
+  try {
+    await hedgeDuals();
+    console.log("Executed hedgeDuals");
+  } catch (error) {
+    console.error("Error executing hedgeDuals:", error);
+  }
+
+  try {
+    await closeHedges();
+    console.log("Executed closeHedges");
+  } catch (error) {
+    console.error("Error executing closeHedges:", error);
   }
 }, {
   scheduled: true,
