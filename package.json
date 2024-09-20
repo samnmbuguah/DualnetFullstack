@@ -41,7 +41,13 @@
     "listDualInvestmentPlans": "node Backend/services/dualinvestment/dualInvestment.js",
     "getSpotPrice": "node Backend/services/dualinvestment/getSpotPrice.js",
     "fetchInvestmentsByCurrency": "node Backend/services/dualinvestment/fetchInvestments.js",
-    "fetchSpotBalances": "node Backend/services/dualinvestment/fetchSpotBalances.js"
+    "fetchSpotBalances": "node Backend/services/dualinvestment/fetchSpotBalances.js",
+    "getFuturesContract": "node Backend/services/dualinvestment/getFuturesContract.js",
+    "openShort": "node Backend/services/dualinvestment/openShort.js",
+    "closeShort": "node Backend/services/dualinvestment/closeShort.js",
+    "hedgeDuals": "node Backend/services/dualinvestment/hedgeDuals.js",
+    "closeHedges": "node Backend/services/dualinvestment/closeHedges.js",
+    "websocketPrice": "node Backend/services/dualinvestment/websocketPrice.js"
   },
   "repository": {
     "type": "git",
