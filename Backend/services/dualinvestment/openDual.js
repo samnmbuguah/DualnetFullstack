@@ -54,6 +54,7 @@ async function openDualPlan(
 
     // Convert Unix timestamp to JavaScript Date object in UTC
     const settlementDate = moment.unix(settlementTime).utc().toDate();
+    amount = copies * perValue;
 
     // Create a new record in the DualHistory table
     await DualHistory.create({
