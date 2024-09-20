@@ -19,7 +19,8 @@
     "sweetalert2": "^11.6.13",
     "tailwindcss": "^3.4.3",
     "web3": "^4.7.0",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "winston": "^3.14.2"
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false react-scripts start",
