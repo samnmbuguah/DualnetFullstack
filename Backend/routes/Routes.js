@@ -29,6 +29,7 @@ const autoDual = require("../services/dualinvestment/autoDual.js");
 const getSpotPrice = require("../services/dualinvestment/getSpotPrice.js");
 const fetchSpotBalances = require("../services/dualinvestment/fetchSpotBalances.js");
 const fetchInvestmentsByCurrency = require("../services/dualinvestment/fetchInvestments.js");
+const hedgeBotOpen = require("../services/dualinvestment/hedgeBotOpen.js");
 
 const router = express.Router();
 
@@ -318,6 +319,23 @@ router.get("/fetch-opened-duals", async (req, res) => {
   } catch (error) {
     console.error("Error fetching opened duals:", error);
     res.status(500).send({ error: "Error fetching opened duals" });
+  }
+});
+
+// Route for opening hedge bot
+router.post("/hedge-bot-open", async (req, res) => {
+  const { currency, strikePrice, size } = req.body;
+
+  if (!currency || !strikePrice) {
+    return res.status(400).send({ error: "currency and strikePrice are required" });
+  }
+
+  try {
+    await hedgeBotOpen(currency, strikePrice, size);
+    res.status(200).send({ message: "Hedge bot opened successfully" });
+  } catch (error) {
+    console.error("Error opening hedge bot:", error);
+    res.status(500).send({ error: "Error opening hedge bot" });
   }
 });
 
