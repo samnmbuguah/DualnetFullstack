@@ -36,6 +36,7 @@ async function fetchOpenedDuals(currency, userId) {
 
     // Fetch all unsettled records from DualHistory for the user and currency
     const unsettledRecords = await DualHistory.findAll({
+      attributes: ["strikePrice"], // Fetch only the strikePrice attribute
       where: {
         userId: userId,
         currency: currency,
@@ -43,13 +44,17 @@ async function fetchOpenedDuals(currency, userId) {
       },
     });
 
-    // Set strikePrices to the count of the unsettled records
-    const strikePrices = unsettledRecords.length;
+    // Create a list of all strikePrice values
+    const strikePrices = unsettledRecords.map(record => record.strikePrice);
 
-    // Add the strikePrices count to the record
+    // Set dualCount to the length of the strikePrices array
+    const dualCount = strikePrices.length;
+
+    // Add the strikePrices list and dualCount to the record
     return {
       ...record.toJSON(),
       strikePrices,
+      dualCount,
     };
   } catch (error) {
     console.error("Error fetching record:", error);
