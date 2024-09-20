@@ -20,8 +20,10 @@ const initialState = {
   selectedCrypto: "BTC",
   openedBuyDuals: 0,
   buyLowPerShare: 0.2575,
-  sellHighPerShare: 0.0001
-
+  sellHighPerShare: 0.0001,
+  strikePrices: [],
+  selectedStrikePrice: "",
+  shortSize: 0,
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
@@ -102,6 +104,21 @@ export const toggleChecked = () => async (dispatch, getState) => {
   }
 };
 
+export const openHedgeBot = createAsyncThunk(
+  "duals/openHedgeBot",
+  async (_, { getState }) => {
+    const state = getState().duals;
+    const payload = {
+      currency: state.selectedCrypto,
+      strikePrice: state.selectedStrikePrice,
+      size: state.shortSize,
+    };
+
+    const response = await fetchWrapper.post(baseUrl + "/hedge-bot-open", payload);
+    return response;
+  }
+);
+
 const dualsSlice = createSlice({
   name: "duals",
   initialState,
@@ -120,6 +137,12 @@ const dualsSlice = createSlice({
     },
     updateSelectedCrypto: (state, action) => {
       state.selectedCrypto = action.payload;
+    },
+    setStrikePrice: (state, action) => {
+      state.selectedStrikePrice = action.payload;
+    },
+    updateShortSize: (state, action) => {
+      state.shortSize = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -218,14 +241,28 @@ const dualsSlice = createSlice({
           state.openedDuals = action.payload;
           state.aprToOpen = action.payload.threshold || 450;
           state.isChecked = action.payload.active || false;
-          state.openedBuyDuals = action.payload.strikePrices || 0;
+          state.openedBuyDuals = action.payload.dualCount || 0;
+          state.strikePrices = action.payload.strikePrices || ["64000"];
+          state.selectedStrikePrice = action.payload.strikePrices[0] || "";
         }
       })
       .addCase(fetchOpenedDuals.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(openHedgeBot.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(openHedgeBot.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        Swal.fire("Success", "Hedge bot opened successfully", "success");
+      })
+      .addCase(openHedgeBot.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        Swal.fire("Error", "Failed to open hedge bot", "error");
       });
-  }
+  },
 });
 
 // Export actions and reducer
@@ -235,5 +272,7 @@ export const {
   updateAprToOpen,
   toggleCheckedState,
   updateSelectedCrypto,
+  setStrikePrice,
+  updateShortSize,
 } = dualsSlice.actions;
 export const dualsReducer = dualsSlice.reducer;
