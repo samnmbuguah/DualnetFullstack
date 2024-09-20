@@ -6,18 +6,17 @@ import DualSwitch from "_components/DualInvestSidebar/DualSwitch";
 import cryptos from "./cryptos.json";
 import CryptoList from "./CryptoList";
 import DualTrade from "./DualTrade";
-import BuyLowInfo from "./BuyLowInfo";
-import SellHighInfo from "./SellHighInfo";
 import {
   fetchInvestmentsByCurrency,
   fetchSpotPrice,
   fetchSpotBalances,
   updateSelectedCrypto,
-  fetchOpenedDuals, // Import the thunk
+  fetchOpenedDuals,
 } from "_store/duals.slice";
 import BuyAPR from "./BuyAPR";
 import SellAPR from "./SellAPR";
 import backgroundImage from "../../_assets/chartCurve.svg";
+import HedgeBot from "./HedgeBot";
 
 const DualInvestSidebar = ({ show, dark }) => {
   const { user: authUser } = useSelector((x) => x.auth);
@@ -100,10 +99,7 @@ const DualInvestSidebar = ({ show, dark }) => {
           sellHighAmount={sellHighAmount}
           aprToOpen={aprToOpen}
         />
-        <div className="flex flex-col justify-around w-1/3 ml-auto">
-          <BuyLowInfo availableAmount={usdtBalance} />
-          <SellHighInfo availableAmount={cryptoBalance} />
-        </div>
+        <HedgeBot />
         <div className="flex flex-col justify-around w-1/3 ml-auto">
           <BuyAPR items={exerciseCurrencyList} />
           <SellAPR items={investCurrencyList} />
