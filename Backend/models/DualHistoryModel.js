@@ -20,6 +20,10 @@ const DualHistory = db.define(
     settled: {
       type: Sequelize.BOOLEAN,
     },
+    hedged: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
     settlementCurrency: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -40,6 +44,13 @@ const DualHistory = db.define(
       type: Sequelize.DECIMAL,
       allowNull: false,
     },
+    hedgeBotOpen: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+    hedgedAmount: {
+      type: Sequelize.INTEGER,
+    },
     copies: {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -56,6 +67,9 @@ const DualHistory = db.define(
       type: Sequelize.DECIMAL,
     },
     settleAmount: {
+      type: Sequelize.DECIMAL,
+    },
+    shortSize: {
       type: Sequelize.DECIMAL,
     },
   },
