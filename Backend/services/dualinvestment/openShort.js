@@ -14,10 +14,16 @@ async function openShort(settle, contract, size, userId) {
     const futuresApi = new GateApi.FuturesApi(client);
       
     const options = {
-    crossLeverageLimit: 1, // string | Cross margin leverage(when `leverage` is 0)
+      crossLeverageLimit: 1, // string | Cross margin leverage(when `leverage` is 0)
     };
 
-    futuresApi.updatePositionLeverage(settle, contract, 0, options)
+    try {
+      await futuresApi.updatePositionLeverage(settle, contract, 0, options);
+      console.log("Leverage updated successfully");
+    } catch (leverageError) {
+      console.error("Error updating leverage:", leverageError);
+      // Continue without crashing
+    }
 
     console.log("Creating futures short order...");
     const futuresOrder = new GateApi.FuturesOrder();
@@ -30,7 +36,7 @@ async function openShort(settle, contract, size, userId) {
 
     const response = await futuresApi.createFuturesOrder(settle, futuresOrder);
     console.log("Futures short order created", response.body);
-    return size;
+    return;
   } catch (error) {
     console.error("Error creating futures short order:", error);
     throw error;
