@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setStrikePrice, openHedgeBot, updateShortSize } from "_store/duals.slice";
+import { setStrikePrice, addShortBot, updateShortSize } from "_store/duals.slice";
+import quantoMultipliers from "./quantoMultipliers.json"; // Import the JSON file
 
 function HedgeBot() {
   const dispatch = useDispatch();
   const selectedCrypto = useSelector((state) => state.duals.selectedCrypto);
-  const strikePrices = useSelector((state) => state.duals.strikePrices);
   const selectedStrikePrice = useSelector((state) => state.duals.selectedStrikePrice);
   const shortSize = useSelector((state) => state.duals.shortSize);
+  const spotPrice = useSelector((state) => state.duals.spotPrice);
+
+  const [multiples, setMultiples] = useState([]);
+
+  useEffect(() => {
+    const quantoMultiplier = quantoMultipliers[selectedCrypto];
+    if (quantoMultiplier) {
+      let generatedMultiples = Array.from({ length: 10 }, (_, i) => (i + 1) * quantoMultiplier);
+      if (quantoMultiplier.toString().includes('.')) {
+        generatedMultiples = generatedMultiples.map(multiple => parseFloat(multiple.toFixed(5)));
+      }
+      setMultiples(generatedMultiples);
+    } else {
+      setMultiples([]); // Clear multiples if quantoMultiplier is undefined
+    }
+  }, [selectedCrypto]);
 
   const handleStrikePriceChange = (event) => {
     const newStrikePrice = event.target.value;
@@ -15,11 +31,12 @@ function HedgeBot() {
   };
 
   const handleOpenHedgeBot = () => {
-    dispatch(openHedgeBot());
+    dispatch(addShortBot());
   };
 
   const handleShortSizeChange = (event) => {
-    dispatch(updateShortSize(event.target.value));
+    const selectedIndex = (event.target.selectedIndex + 1)*-1;
+    dispatch(updateShortSize(selectedIndex));
   };
 
   return (
@@ -31,17 +48,12 @@ function HedgeBot() {
       </div>
       <div className="flex justify-between w-full border-b border-stone-500 pb-4">
         <span>Triggerprice</span>
-        <select
+        <input
+          type="number"
           value={selectedStrikePrice}
           onChange={handleStrikePriceChange}
-          className="bg-[#25292f] text-[#868585] border border-stone-500 rounded"
-        >
-          {strikePrices.map((price, index) => (
-            <option key={index} value={price}>
-              {price}
-            </option>
-          ))}
-        </select>
+          className="bg-[#25292f] text-[#868585] border border-stone-500 rounded w-20"
+        />
       </div>
       <div className="pt-4 w-full">Increment on/off</div>
       <div className="flex justify-between w-full border-b border-stone-500 pb-4">
@@ -50,12 +62,17 @@ function HedgeBot() {
       </div>
       <div className="flex justify-between w-full pt-4">
         <span>Short Size</span>
-        $<input
-          type="number"
-          value={shortSize}
+        <select
           onChange={handleShortSizeChange}
-          className="bg-[#25292f] text-[#868585] border border-stone-500 rounded w-16"
-        />
+          className="bg-[#25292f] text-[#868585] border border-stone-500 rounded w-24"
+          size={1}
+        >
+          {multiples.map((multiple, index) => (
+            <option key={index} value={multiple}>
+              {multiple}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="flex justify-between w-full">
         <span>Leverage</span>
