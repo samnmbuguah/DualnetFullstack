@@ -30,6 +30,7 @@ const getSpotPrice = require("../services/dualinvestment/getSpotPrice.js");
 const fetchSpotBalances = require("../services/dualinvestment/fetchSpotBalances.js");
 const fetchInvestmentsByCurrency = require("../services/dualinvestment/fetchInvestments.js");
 const hedgeBotOpen = require("../services/dualinvestment/hedgeBotOpen.js");
+const addShortBot = require("../services/dualinvestment/shortBotActive.js");
 
 const router = express.Router();
 
@@ -336,6 +337,23 @@ router.post("/hedge-bot-open", async (req, res) => {
   } catch (error) {
     console.error("Error opening hedge bot:", error);
     res.status(500).send({ error: "Error opening hedge bot" });
+  }
+});
+
+// Route for adding a short bot
+router.post("/add-short-bot", async (req, res) => {
+  const { userId, currency, strikePrice, investAmount } = req.body;
+
+  if (!userId || !currency || !strikePrice || !investAmount) {
+    return res.status(400).send({ error: "All fields are required" });
+  }
+
+  try {
+    const newShortBot = await addShortBot(userId, currency, strikePrice, investAmount);
+    res.status(200).send({ message: "Short bot added successfully", data: newShortBot });
+  } catch (error) {
+    console.error("Error adding short bot:", error);
+    res.status(500).send({ error: "Error adding short bot" });
   }
 });
 
