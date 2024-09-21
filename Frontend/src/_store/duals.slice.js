@@ -23,7 +23,7 @@ const initialState = {
   sellHighPerShare: 0.0001,
   strikePrices: [],
   selectedStrikePrice: "",
-  shortSize: 0,
+  shortSize: -1,
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
@@ -104,17 +104,21 @@ export const toggleChecked = () => async (dispatch, getState) => {
   }
 };
 
-export const openHedgeBot = createAsyncThunk(
-  "duals/openHedgeBot",
+export const addShortBot = createAsyncThunk(
+  "duals/addShortBot",
   async (_, { getState }) => {
-    const state = getState().duals;
+    const dualsState = getState().duals;
+    const authState = getState().auth;
+    const userId = authState.user[1].id;
+
     const payload = {
-      currency: state.selectedCrypto,
-      strikePrice: state.selectedStrikePrice,
-      size: state.shortSize,
+      userId,
+      currency: dualsState.selectedCrypto,
+      strikePrice: dualsState.selectedStrikePrice,
+      investAmount: dualsState.shortSize,
     };
 
-    const response = await fetchWrapper.post(baseUrl + "/hedge-bot-open", payload);
+    const response = await fetchWrapper.post(baseUrl + "/add-short-bot", payload);
     return response;
   }
 );
@@ -243,21 +247,21 @@ const dualsSlice = createSlice({
           state.isChecked = action.payload.active || false;
           state.openedBuyDuals = action.payload.dualCount || 0;
           state.strikePrices = action.payload.strikePrices || ["64000"];
-          state.selectedStrikePrice = action.payload.strikePrices[0] || "";
+          state.selectedStrikePrice = action.payload.strikePrices?.[0] || "64000";
         }
       })
       .addCase(fetchOpenedDuals.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(openHedgeBot.pending, (state) => {
+      .addCase(addShortBot.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(openHedgeBot.fulfilled, (state, action) => {
+      .addCase(addShortBot.fulfilled, (state, action) => {
         state.status = "succeeded";
-        Swal.fire("Success", "Hedge bot opened successfully", "success");
+        Swal.fire("Success", "Short bot opened successfully", "success");
       })
-      .addCase(openHedgeBot.rejected, (state, action) => {
+      .addCase(addShortBot.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
         Swal.fire("Error", "Failed to open hedge bot", "error");
