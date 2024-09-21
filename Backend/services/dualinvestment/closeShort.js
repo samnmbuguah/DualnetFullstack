@@ -15,7 +15,7 @@ async function closeShort(contract, futuresSize, subClientId) {
     const futuresOrder = new GateApi.FuturesOrder();
     futuresOrder.contract = contract;
     futuresOrder.settle = "usdt";
-    futuresOrder.size = futuresSize;
+    futuresOrder.size = -futuresSize;
     futuresOrder.price = "0";
     futuresOrder.tif = "ioc";
     futuresOrder.reduceOnly = true;
