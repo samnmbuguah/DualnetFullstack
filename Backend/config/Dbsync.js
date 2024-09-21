@@ -8,6 +8,7 @@ const TopScans = require('../models/TopScanModel.js');
 const DualPlans = require('../models/DualPlansModel.js');
 const DualHistory = require('../models/DualHistoryModel.js');
 const AutoDual = require('../models/AutoDualModel.js');
+const ShortBot = require('../models/shortBotModel.js');
 
 console.log("Syncing Tables");
 Users.sync()
@@ -45,6 +46,10 @@ Users.sync()
   })
   .then(() => {
     console.log("AutoDual table has been synced");
+    return ShortBot.sync({ alter: true });
+  })
+  .then(() => {
+    console.log("ShortBot table has been synced");
     console.log("All tables have been synced");
   })
   .catch((error) => {
