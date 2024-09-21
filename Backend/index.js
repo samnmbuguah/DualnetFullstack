@@ -16,6 +16,7 @@ const Bots = require("./models/BotsModel.js");
 const settleRecords = require("./services/dualinvestment/settle.js");
 const hedgeDuals = require("./services/dualinvestment/hedgeDuals.js");
 const closeHedges = require("./services/dualinvestment/closeHedges.js");
+const manageShortBots = require("./services/dualinvestment/shortBot.js");
 
 // Check for required environment variables
 if (!process.env.PORT) {
@@ -122,37 +123,51 @@ cron.schedule("* * * * *", async () => {
 });
 
 // Schedule the cron job to run settleRecords every day at 8:00 AM UTC
-cron.schedule("0 8 * * *", async () => {
-  try {
-    await settleRecords();
-    console.log("Executed settleRecords");
-  } catch (error) {
-    console.error("Error executing settleRecords:", error);
+cron.schedule(
+  "0 8 * * *",
+  async () => {
+    try {
+      await settleRecords();
+      console.log("Executed settleRecords");
+    } catch (error) {
+      console.error("Error executing settleRecords:", error);
+    }
+  },
+  {
+    scheduled: true,
+    timezone: "Etc/UTC",
   }
-}, {
-  scheduled: true,
-  timezone: "Etc/UTC"
-});
+);
 
-// New cron job to run hedgeDuals and closeHedges every 10 seconds
+// New cron job to run manageShortBots every 10 seconds
 cron.schedule("*/10 * * * * *", async () => {
   try {
-    await hedgeDuals();
-    console.log("Executed hedgeDuals");
+    await manageShortBots();
+    console.log("Executed manageShortBots");
   } catch (error) {
-    console.error("Error executing hedgeDuals:", error);
+    console.error("Error executing manageShortBots:", error);
   }
-
-  try {
-    await closeHedges();
-    console.log("Executed closeHedges");
-  } catch (error) {
-    console.error("Error executing closeHedges:", error);
-  }
-}, {
-  scheduled: true,
-  timezone: "Etc/UTC"
 });
+
+// // New cron job to run hedgeDuals and closeHedges every 10 seconds
+// cron.schedule("*/10 * * * * *", async () => {
+//   try {
+//     await hedgeDuals();
+//     console.log("Executed hedgeDuals");
+//   } catch (error) {
+//     console.error("Error executing hedgeDuals:", error);
+//   }
+
+//   try {
+//     await closeHedges();
+//     console.log("Executed closeHedges");
+//   } catch (error) {
+//     console.error("Error executing closeHedges:", error);
+//   }
+// }, {
+//   scheduled: true,
+//   timezone: "Etc/UTC"
+// });
 
 // cron.schedule('* * * * *', async () => {
 //     // Fetch all bots where isClose is false
