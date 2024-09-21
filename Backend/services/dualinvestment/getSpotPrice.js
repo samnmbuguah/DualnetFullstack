@@ -11,20 +11,21 @@ const api = new GateApi.SpotApi(client);
 async function getSpotPrice(currencyPair) {
   const opts = {
     'limit': 1, // Fetch only one candle
-    'interval': '1m' // Default interval
+    'interval': '10s' // Default interval
   };
 
   try {
     const value = await api.listCandlesticks(currencyPair, opts);
     if (!value.body || value.body.length === 0) {
-      throw new Error('No candlestick data available');
+      console.error('No candlestick data available');
+      return null; // Return null or a default value
     }
     // Extract the close price of the last candle
     const lastCandle = value.body[0];
     const lastClosePrice = parseFloat(lastCandle[2]); // Close price is at index 2
     return lastClosePrice;
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching spot price:', error);
     throw error;
   }
 }
