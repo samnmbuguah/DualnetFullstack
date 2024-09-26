@@ -139,15 +139,15 @@ cron.schedule(
   }
 );
 
-// New cron job to run manageShortBots every 10 seconds
-cron.schedule("*/10 * * * * *", async () => {
-  try {
-    await manageShortBots();
-    console.log("Executed manageShortBots");
-  } catch (error) {
-    console.error("Error executing manageShortBots:", error);
-  }
-});
+// // New cron job to run manageShortBots every second
+// cron.schedule("* * * * * *", async () => {
+//   try {
+//     await manageShortBots();
+//     console.log("Executed manageShortBots");
+//   } catch (error) {
+//     console.error("Error executing manageShortBots:", error);
+//   }
+// });
 
 // // New cron job to run hedgeDuals and closeHedges every 10 seconds
 // cron.schedule("*/10 * * * * *", async () => {
