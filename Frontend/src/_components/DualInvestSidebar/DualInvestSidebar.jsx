@@ -15,8 +15,9 @@ import {
 } from "_store/duals.slice";
 import BuyAPR from "./BuyAPR";
 import SellAPR from "./SellAPR";
+import BuyLowInfo from "./BuyLowInfo";
+import SellHighInfo from "./SellHighInfo";
 import backgroundImage from "../../_assets/chartCurve.svg";
-import HedgeBot from "./HedgeBot";
 
 const DualInvestSidebar = ({ show, dark }) => {
   const { user: authUser } = useSelector((x) => x.auth);
@@ -99,7 +100,10 @@ const DualInvestSidebar = ({ show, dark }) => {
           sellHighAmount={sellHighAmount}
           aprToOpen={aprToOpen}
         />
-        <HedgeBot />
+        <div className="flex flex-col justify-around w-1/3 ml-auto">
+          <BuyLowInfo availableAmount={usdtBalance} />
+          <SellHighInfo availableAmount={cryptoBalance} />
+        </div>
         <div className="flex flex-col justify-around w-1/3 ml-auto">
           <BuyAPR items={exerciseCurrencyList} />
           <SellAPR items={investCurrencyList} />
