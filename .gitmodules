@@ -1,6 +1,0 @@
-[submodule "BackendDualnet"]
-	path = BackendDualnet
-	url = git@github.com:Soundmoney254/Dualnet-Backend.git
-[submodule "FrontendDualnet"]
-	path = FrontendDualnet
-	url = git@github.com:gfarhan18/Dualnet.git

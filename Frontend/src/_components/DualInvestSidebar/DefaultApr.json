@@ -1,0 +1,24 @@
+{
+  "exerciseCurrencyList": [
+    {
+      "investCurrency": "USDT",
+      "exerciseCurrency": "DOGE",
+      "perValue": "0.1057360000",
+      "apyDisplay": 88.48,
+      "deliveryTime": 1727596800,
+      "planType": "buy_low",
+      "exercisePrice": "0.105"
+    }
+  ],
+  "investCurrencyList": [
+    {
+      "investCurrency": "DOGE",
+      "exerciseCurrency": "USDT",
+      "perValue": "1.0000000000",
+      "apyDisplay": 97.85,
+      "deliveryTime": 1727596800,
+      "planType": "sell_high",
+      "exercisePrice": "0.106"
+    }
+  ]
+}

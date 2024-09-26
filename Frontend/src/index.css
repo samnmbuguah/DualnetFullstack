@@ -1,0 +1,207 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "syncopate-bold";
+  src: url(../public/fonts/Syncopate-Bold.ttf);
+}
+@font-face {
+  font-family: "syncopate-light";
+  src: url(../public/fonts/Syncopate-Regular.ttf);
+}
+
+@font-face {
+  font-family: "tomorrow-light";
+  src: url(../public/fonts/tomorrow/Tomorrow-Light.ttf);
+}
+
+@font-face {
+  font-family: "tomorrow-bold";
+  src: url(../public/fonts/tomorrow/Tomorrow-Bold.ttf);
+}
+
+@font-face {
+  font-family: "tomorrow-medium";
+  src: url(../public/fonts/tomorrow/Tomorrow-Medium.ttf);
+}
+
+@font-face {
+  font-family: "inter";
+  src: url(../public/fonts/Inter/static/Inter-Regular.ttf);
+}
+@import url("https://fonts.cdnfonts.com/css/ibm-plex-sans");
+@import url("https://fonts.cdnfonts.com/css/inter");
+
+body {
+  font-family: syncopate-bold;
+}
+
+.dark {
+  background-color: #212429;
+  color: #dddddd42;
+}
+.light {
+  background-color: #E1DAD2;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.dark .box {
+  border-radius: 25px;
+  border: 1px solid #2b3036;
+  opacity: 0.8;
+  background: linear-gradient(
+      223deg,
+      #df485d -1%,
+      #212429 16.07%,
+      #212429 90.73%,
+      rgba(241, 36, 244, 0) 101.2%,
+      #6c32d7 105.2%
+    ),
+    linear-gradient(35deg, #6c32d7 -70%, #212429 16.07%, #212429 90.73%);
+
+  background-blend-mode: color-dodge;
+}
+
+.dark .details {
+  background: linear-gradient(90deg, #b75bff 0.02%, #4ea7ff 38.03%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.light .box {
+  border-radius: 25px;
+  border: 1px solid #c9c5c5;
+  background: linear-gradient(
+    252deg,
+    rgba(236, 102, 89, 0) -1.72%,
+    rgba(255, 246, 231, 0) -1.72%,
+    rgba(255, 246, 231, 0.67) 101.5%,
+    rgba(215, 51, 208, 0) 101.74%
+  );
+}
+.font-syn-regular {
+  font-family: syncopate-light;
+}
+
+.font-syn-bold {
+  font-family: syncopate-bold;
+}
+
+.font-ibm {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+.font-inter {
+  font-family: "Inter", sans-serif;
+}
+.scroll-bar::-webkit-scrollbar {
+  width: 10px;
+  background-color: darkgrey;
+  border-radius: 100px;
+}
+.scroll-bar::-webkit-scrollbar-thumb {
+  background: #6d6d6d;
+  border-radius: 100px;
+}
+
+.sidebar {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.menu {
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.menu div {
+  height: 0.4px;
+  width: 100%;
+  background-color: #aaa;
+  margin-top: 5px;
+}
+.border-height {
+  border-top: 0.3px solid transparent;
+}
+.w-inner-100 > div {
+  width: 100%;
+}
+.font-light {
+  font-family: "syncopate-light";
+}
+.popup-container:hover .popup {
+  display: flex;
+}
+.popup-container.dark-bg-active .popup {
+  background-color: #212429;
+}
+.popup {
+  background: linear-gradient(
+    224.77deg,
+    rgba(0, 96, 255, 0.49) 7.85%,
+    rgba(33, 36, 41, 0) 16.49%,
+    rgba(74, 34, 58, 0.046211) 81.86%,
+    rgba(235, 27, 127, 0.23) 92.43%
+  );
+  background-color:  #fff6e7;
+  color: #6a6661;
+  box-shadow: 4px 4px 8px 2px #12141666;
+  padding: 41px;
+  border-radius: 25px;
+  position: absolute;
+  right: 9px;
+  bottom: 15px;
+  width: 209px;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.popup span {
+  font-family: syncopate-light;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  margin-bottom: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+.popup-container.dark-bg-active .popup span:nth-child(1) {
+  background: linear-gradient(89.98deg, #fff6e7 65.33%, #0094ff 81.99%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.popup-container.dark-bg-active .popup span:nth-child(2) {
+  background: linear-gradient(89.98deg, #fff6e7 0.02%, #0094ff 50%);
+  margin-bottom: 36px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.popup-container.dark-bg-active .popup span:nth-child(3) {
+  background: linear-gradient(89.98deg, #b5c7c8 64.81%, #ff4ef8 80.43%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.popup-container.dark-bg-active .popup span:nth-child(4) {
+  background: linear-gradient(89.98deg, #b5c7c8 26.8%, #f13645 39.3%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.col-span-7 {
+  grid-column: span 7;
+}
+/* dark mode */
+.dark .tradingview-widget-container iframe .tv-widget-chart {
+  background: #454545;
+}
+@media only screen and (max-width: 425px) {
+  .sidebar {
+    top: 57%;
+    width: 93%;
+  }
+}

@@ -5,18 +5,18 @@ FROM node:20
 WORKDIR /app
 
 # Copy the frontend and backend directories to the Docker image
-COPY FrontendDualnet ./FrontendDualnet
-COPY BackendDualnet ./BackendDualnet
+COPY Frontend ./Frontend
+COPY Backend ./Backend
 
 # Install the frontend dependencies and build the frontend
-WORKDIR /app/FrontendDualnet
-COPY FrontendDualnet/package*.json ./
+WORKDIR /app/Frontend
+COPY Frontend/package*.json ./
 RUN npm install
 RUN npm run build
 
 # Install the backend dependencies
-WORKDIR /app/BackendDualnet
-COPY BackendDualnet/package*.json ./
+WORKDIR /app/Backend
+COPY Backend/package*.json ./
 RUN npm install
 
 # Go back to the /app directory

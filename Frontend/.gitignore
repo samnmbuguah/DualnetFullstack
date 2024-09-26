@@ -1,0 +1,51 @@
+# Node.js
+node_modules/
+
+# Build files
+build/
+dist/
+out/
+tmp/
+*.zip
+# Dependency directories
+bower_components/
+jspm_packages/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+# Editor-specific files
+.idea/
+.vscode/
+
+# Logs and debugging
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log
+
+# Application-specific
+/.pnp.*
+.pnp.js
+
+# Jest test runner
+coverage/
+
+# Production build
+*.log
+*.log.*
+*.pid
+*.seed
+*.pid.lock
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
