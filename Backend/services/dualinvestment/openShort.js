@@ -1,5 +1,7 @@
 const GateApi = require("gate-api");
 const client = new GateApi.ApiClient();
+// Uncomment the next line to change base path
+// client.basePath = "https://some-other-host";
 const getApiCredentials = require("../getApiCredentials.js");
 
 async function openShort(settle, contract, size, userId) {
