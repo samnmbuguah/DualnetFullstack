@@ -47,7 +47,8 @@
     "closeShort": "node Backend/services/dualinvestment/closeShort.js",
     "hedgeDuals": "node Backend/services/dualinvestment/hedgeDuals.js",
     "closeHedges": "node Backend/services/dualinvestment/closeHedges.js",
-    "websocketPrice": "node Backend/services/dualinvestment/websocketPrice.js"
+    "websocketPrice": "node Backend/services/dualinvestment/websocketPrice.js",
+    "getFuturesPrice": "node Backend/services/dualinvestment/getFuturesPrice.js"
   },
   "repository": {
     "type": "git",
