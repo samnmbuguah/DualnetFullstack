@@ -50,18 +50,17 @@ const DualInvestSidebar = ({ show, dark }) => {
       style={{
         ...customStyles,
         height: "493px",
+        width: "100%", // Set width to 100%
       }}
       className={`${
         show ? "right-0" : "hidden"
-      } bg-[#fef6e6] md:w-[${screenWidth}px] px-5 py-4 text-xs dark:bg-[transparent] dark:border-[#6D6D6D] rounded-[25px] font-inter text-white flex flex-col justify-between bg-[url('/_assets/Line 207.svg')] bg-no-repeat bg-center`}
+      } bg-[#fef6e6] px-5 py-4 text-xs dark:bg-[transparent] dark:border-[#6D6D6D] rounded-[25px] font-inter text-white flex flex-col justify-between bg-[url('/_assets/Line 207.svg')] bg-no-repeat bg-center`}
     >
       <div>
         <CryptoList />
         <DualSwitch />
       </div>
-      <div
-        className="flex flex-row w-full items-center justify-between bg-line207"
-      >
+      <div className="flex flex-row w-full items-center justify-between bg-line207">
         <DualTrade
           buyLowPerShare={buyLowPerShare}
           sellHighPerShare={sellHighPerShare}
@@ -76,7 +75,9 @@ const DualInvestSidebar = ({ show, dark }) => {
         <img src={Curve} alt="Curve illustration" />
         <div className="flex flex-col ml-auto h-full justify-between">
           <BuyAPR />
-          <span className="font-inter-semibold text-xxs self-end">BTC Last Price:</span>
+          <span className="font-inter-semibold text-xxs self-end">
+            BTC Last Price:
+          </span>
           <SellAPR />
         </div>
       </div>
