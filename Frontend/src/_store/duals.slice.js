@@ -5,21 +5,22 @@ import Swal from "sweetalert2";
 
 const initialState = {
   dualInvestments: {
-    exerciseCurrencyList: data.exerciseCurrencyList || [],
-    investCurrencyList: data.investCurrencyList || [],
+    exerciseCurrencyList: data.exerciseCurrencyList,
+    investCurrencyList: data.investCurrencyList,
   },
   spotPrice: null,
-  usdtBalance: 0,
-  cryptoBalance: 0,
+  usdtBalance: 22.589,
+  cryptoBalance: 0.00,
   buyLowAmount: 0,
   sellHighAmount: 0,
-  aprToOpen: 450,
+  aprToBuy: 400,
+  aprToSell: 400,
   status: "idle",
   error: null,
   isChecked: false,
   selectedCrypto: "BTC",
   openedBuyDuals: 0,
-  buyLowPerShare: 0.2575,
+  buyLowPerShare: 0.63785,
   sellHighPerShare: 0.0001,
   strikePrices: [],
   selectedStrikePrice: "",
@@ -69,7 +70,7 @@ export const toggleAutoDual = createAsyncThunk(
       active: !state.isChecked,
       currency: state.selectedCrypto,
       amount: state.buyLowAmount,
-      threshold: state.aprToOpen,
+      threshold: state.aprToBuy,
       dualType: "buyLow",
       subClientId: subClientId,
     };
@@ -133,8 +134,11 @@ const dualsSlice = createSlice({
     updateSellHighAmount: (state, action) => {
       state.sellHighAmount = action.payload;
     },
-    updateAprToOpen: (state, action) => {
-      state.aprToOpen = action.payload;
+    updateAprToBuy: (state, action) => {
+      state.aprToBuy = action.payload;
+    },
+    updateAprToSell: (state, action) => { // Add this new reducer
+      state.aprToSell = action.payload;
     },
     toggleCheckedState: (state, action) => {
       state.isChecked = !action.payload;
@@ -237,13 +241,15 @@ const dualsSlice = createSlice({
         if (Array.isArray(action.payload) && action.payload.length === 0) {
           // Handle the case when the payload is an empty array
           state.openedDuals = [];
-          state.aprToOpen = 450;
+          state.aprToBuy = 450;
+          state.aprToSell = 450; // Add this line
           state.isChecked = false;
           state.openedBuyDuals = 0;
         } else {
           // Handle the case when the payload contains data
           state.openedDuals = action.payload;
-          state.aprToOpen = action.payload.threshold || 450;
+          state.aprToBuy = action.payload.thresholdBuy || 450;
+          state.aprToSell = action.payload.thresholdSell || 450; // Add this line
           state.isChecked = action.payload.active || false;
           state.openedBuyDuals = action.payload.dualCount || 0;
           state.strikePrices = action.payload.strikePrices || ["64000"];
@@ -273,7 +279,8 @@ const dualsSlice = createSlice({
 export const {
   updateBuyLowAmount,
   updateSellHighAmount,
-  updateAprToOpen,
+  updateAprToBuy,
+  updateAprToSell, // Add this new action
   toggleCheckedState,
   updateSelectedCrypto,
   setStrikePrice,
