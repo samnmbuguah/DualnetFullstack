@@ -1,37 +1,81 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-const BuyAPR = ({ items }) => {
-  const calculateRemainingTime = (unixTime) => {
-    const now = Date.now();
-    const timeDifference = unixTime * 1000 - now;
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
+const BuyAPR = () => {
 
-    if (days > 1) {
-      return `${days} Days`;
-    } else if (days === 1) {
-      return `${days} Day`;
-    } else {
-      return `${hours} Hours`;
-    }
-  };
+  const exerciseCurrencyList = useSelector(
+    (state) => state.duals.dualInvestments?.exerciseCurrencyList || []
+  );
 
   return (
-    <ul className="min-h-1/2 bg-transparent text-white text-shadow-inner text-sm font-medium rounded-none">
-      {items.slice(0, 6).map((item, index) => (
-        <li key={index} className="mb-4 flex items-center">
-          <span className="text-sm text-white pr-6">${item.exercisePrice}</span>
-          <span className="text-sm text-[#01D497] pr-6">
-            {parseFloat(item.apyDisplay).toFixed(2)}%
+    <div className="font-inter-medium bg-transparent text-white font-medium rounded-none w-auto h-auto text-[11px] mb-2">
+      <div className="grid grid-cols-5 gap-2 mb-2">
+        <span className="font-inter-medium text-xs text-[#1D886A] mr-1 flex items-center justify-center">
+          Buy Low
+        </span>
+        <span className="font-inter flex items-center justify-center">
+          lost
+        </span>
+        <span className="font-inter flex items-center justify-center">
+          share
+        </span>
+        <span className="font-inter flex items-center justify-center">
+          Strike
+        </span>
+        <span className="font-inter flex items-center justify-center">
+          APR %
+        </span>
+      </div>
+      {exerciseCurrencyList.slice(0, 4).map((item, index) => (
+        <div key={index} className="grid grid-cols-5 gap-2 mb-2">
+          {item.buyLowCount > 0 && (
+            <span
+              className={`font-inter-extrabold mr-1 hover:border-[0.3px] hover:border-[#9A9898] hover:shadow-md w-[30px] h-[15px] rounded-[4px] flex items-center justify-center ${
+                item.lostShareCount < 0 ? "bg-[#EA5F00]" : "bg-[#02855F]"
+              }`}
+            >
+              {item.buyLowCount}
+            </span>
+          )}
+          <span className="hover:border-[0.3px] hover:border-[#9A9898] hover:rounded-[3px] hover:shadow-md h-[15px] flex items-center justify-center">
+            {item.lostShareCount !== 0 ? item.lostShareCount : ""}
           </span>
-          <span className="text-sm text-white pr-6">
-            {calculateRemainingTime(item.deliveryTime)}
+          <span
+            className={`${
+              item.buyLowCount > 0 &&
+              item.lostShareCount >= 0 &&
+              item.settled === true
+                ? "text-[#01D497]"
+                : ""
+            } hover:border-[0.3px] hover:border-[#9A9898] hover:rounded-[3px] hover:shadow-md h-[15px] flex items-center justify-center`}
+          >
+            {item.shareCount}
           </span>
-        </li>
+          <span
+            className={`${
+              item.buyLowCount > 0 &&
+              item.lostShareCount >= 0 &&
+              item.settled === true
+                ? "text-[#01D497]"
+                : ""
+            } hover:border-[0.3px] hover:border-[#9A9898] hover:rounded-[3px] hover:shadow-md h-[15px] flex items-center justify-center`}
+          >
+            ${item.exercisePrice}
+          </span>
+          <span
+            className={`${
+              item.buyLowCount > 0 &&
+              item.lostShareCount >= 0 &&
+              item.settled === true
+                ? "text-[#01D497]"
+                : ""
+            } hover:border-[0.3px] hover:border-[#9A9898] hover:rounded-[3px] hover:shadow-md h-[15px] flex items-center justify-center`}
+          >
+            {parseFloat(item.apyDisplay).toFixed(0)}
+          </span>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 

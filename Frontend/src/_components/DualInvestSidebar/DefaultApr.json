@@ -1,24 +1,14 @@
 {
   "exerciseCurrencyList": [
-    {
-      "investCurrency": "USDT",
-      "exerciseCurrency": "DOGE",
-      "perValue": "0.1057360000",
-      "apyDisplay": 88.48,
-      "deliveryTime": 1727596800,
-      "planType": "buy_low",
-      "exercisePrice": "0.105"
-    }
+    { "buyLowCount": 4, "lostShareCount": 0, "shareCount": 99999, "exercisePrice": 59500, "apyDisplay": 435, "settled": false },
+    { "buyLowCount": 1, "lostShareCount": -2.59, "shareCount": 156.78, "exercisePrice": 59000, "apyDisplay": 419, "settled": true },
+    { "buyLowCount": 2, "lostShareCount": 0, "shareCount": 259.3, "exercisePrice": 58500, "apyDisplay": 401, "settled": true },
+    { "buyLowCount": 3, "lostShareCount": 0, "shareCount": 268.3, "exercisePrice": 58000, "apyDisplay": 407, "settled": true }
   ],
   "investCurrencyList": [
-    {
-      "investCurrency": "DOGE",
-      "exerciseCurrency": "USDT",
-      "perValue": "1.0000000000",
-      "apyDisplay": 97.85,
-      "deliveryTime": 1727596800,
-      "planType": "sell_high",
-      "exercisePrice": "0.106"
-    }
+    { "sellHighCount": 1, "lostShareCount": 1.25, "shareCount": 156.78, "exercisePrice": 59500, "apyDisplay": 435, "settled": true },
+    { "sellHighCount": 2, "lostShareCount": 0, "shareCount": 0, "exercisePrice": 59000, "apyDisplay": 237, "settled": false },
+    { "sellHighCount": 3, "lostShareCount": 0, "shareCount": 0, "exercisePrice": 58500, "apyDisplay": 182, "settled": false },
+    { "sellHighCount": 4, "lostShareCount": 0, "shareCount": 0, "exercisePrice": 58000, "apyDisplay": 182, "settled": false }
   ]
 }

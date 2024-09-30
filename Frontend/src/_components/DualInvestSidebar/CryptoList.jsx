@@ -1,24 +1,41 @@
 import React from "react";
-import CryptoItem from "./CryptoItem";
+import { useSelector, useDispatch } from "react-redux";
+import { updateSelectedCrypto } from "../../_store/duals.slice";
 
-const CryptoList = ({ cryptos, selectedCrypto, onCryptoClick }) => {
+const CryptoList = () => {
+  const selectedCrypto = useSelector((state) => state.duals.selectedCrypto);
+  const dispatch = useDispatch();
+
+  const cryptoList = [
+    "ETH",
+    "BTC",
+    "DOGS",
+    "DOGE",
+    "GMX",
+    "APT",
+    "ARB",
+    "SOL",
+    "PEPE",
+  ];
+
+  const handleCryptoClick = (crypto) => {
+    dispatch(updateSelectedCrypto(crypto));
+  };
   return (
-    <div className="flex border-b border-stone-500 pt-4 w-full items-end">
-      <div className="flex flex-row flex-wrap justify-around">
-        {cryptos.map((crypto) => (
-          <CryptoItem
-            key={crypto.name}
-            crypto={crypto}
-            selectedCrypto={selectedCrypto}
-            onClick={onCryptoClick}
-          />
-        ))}
-      </div>
-      <div className="text-sm text-white w-1/3 ml-auto mb-2">
-        <span className="pr-10 pl-4">Strike</span>
-        <span className="pr-10">Apr</span>
-        <span className="pr-10">Term</span>
-      </div>
+    <div className="inline-flex flex-wrap w-[487px] justify-between items-center py-2 bg-[#24282E] font-inter-medium border-b border-[#857F76] rounded-sm">
+      {cryptoList.map((crypto, index) => (
+        <button
+          key={crypto}
+          onClick={() => handleCryptoClick(crypto)}
+          className={`text-xxs font-inter-medium rounded transition-colors ${
+            selectedCrypto === crypto
+              ? "text-[#15FF00]"
+              : "text-[#FFFFFF] hover:text-[#15FF00]"
+          } ${index !== 0 && index !== cryptoList.length - 1 ? "mx-2" : ""}`}
+        >
+          {crypto}
+        </button>
+      ))}
     </div>
   );
 };

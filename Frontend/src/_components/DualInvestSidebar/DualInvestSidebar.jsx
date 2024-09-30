@@ -3,30 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { useWindowDimensions } from "_components";
 import styles from "./styles";
 import DualSwitch from "_components/DualInvestSidebar/DualSwitch";
-import cryptos from "./cryptos.json";
 import CryptoList from "./CryptoList";
 import DualTrade from "./DualTrade";
 import {
   fetchInvestmentsByCurrency,
   fetchSpotPrice,
   fetchSpotBalances,
-  updateSelectedCrypto,
   fetchOpenedDuals,
 } from "_store/duals.slice";
 import BuyAPR from "./BuyAPR";
 import SellAPR from "./SellAPR";
-import BuyLowInfo from "./BuyLowInfo";
-import SellHighInfo from "./SellHighInfo";
-import backgroundImage from "../../_assets/chartCurve.svg";
+import Curve from "../../_assets/Group454.svg";
 
 const DualInvestSidebar = ({ show, dark }) => {
   const { user: authUser } = useSelector((x) => x.auth);
-  const exerciseCurrencyList = useSelector(
-    (state) => state.duals.dualInvestments?.exerciseCurrencyList || []
-  );
-  const investCurrencyList = useSelector(
-    (state) => state.duals.dualInvestments?.investCurrencyList || []
-  );
   const spotPrice = useSelector((state) => state.duals.spotPrice);
   const usdtBalance = useSelector((state) => state.duals.usdtBalance);
   const cryptoBalance = useSelector((state) => state.duals.cryptoBalance);
@@ -36,7 +26,7 @@ const DualInvestSidebar = ({ show, dark }) => {
   const aprToOpen = useSelector((state) => state.duals.aprToOpen);
   const buyLowPerShare = useSelector((state) => state.duals.buyLowPerShare);
   const sellHighPerShare = useSelector((state) => state.duals.sellHighPerShare);
-  
+
   const dispatch = useDispatch();
   const customStyles = dark ? styles.dark : styles.light;
   let screenWidth = useWindowDimensions().width;
@@ -55,39 +45,22 @@ const DualInvestSidebar = ({ show, dark }) => {
     }
   }, [selectedCrypto, dispatch, authUser]);
 
-  const handleCryptoClick = (cryptoName) => {
-    dispatch(updateSelectedCrypto(cryptoName));
-  };
-
   return (
     <div
       style={{
         ...customStyles,
+        height: "493px",
       }}
       className={`${
         show ? "right-0" : "hidden"
-      } bg-[#fef6e6] md:w-[${screenWidth}px] min-h-full px-4 py-3 z-30 transition-transform text-xs dark:bg-[transparent] dark:border-[#6D6D6D] bg-zinc-800 rounded-[25px] font-inter text-white flex flex-col justify-between`}
+      } bg-[#fef6e6] md:w-[${screenWidth}px] px-5 py-4 text-xs dark:bg-[transparent] dark:border-[#6D6D6D] rounded-[25px] font-inter text-white flex flex-col justify-between bg-[url('/_assets/Line 207.svg')] bg-no-repeat bg-center`}
     >
       <div>
-        <CryptoList
-          cryptos={cryptos}
-          selectedCrypto={selectedCrypto}
-          onCryptoClick={handleCryptoClick}
-        />
-        <div className="w-1/2 flex flex-row items-center px-8 py-4">
-          <span className="mr-4">Dual-Invest auto on/off</span>
-          <DualSwitch />
-        </div>
+        <CryptoList />
+        <DualSwitch />
       </div>
       <div
-        className="flex flex-row ml-8"
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-          backgroundPosition: "left center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "auto",
-          height: "50vh",
-        }}
+        className="flex flex-row w-full items-center justify-between bg-line207"
       >
         <DualTrade
           buyLowPerShare={buyLowPerShare}
@@ -100,13 +73,11 @@ const DualInvestSidebar = ({ show, dark }) => {
           sellHighAmount={sellHighAmount}
           aprToOpen={aprToOpen}
         />
-        <div className="flex flex-col justify-around w-1/3 ml-auto">
-          <BuyLowInfo availableAmount={usdtBalance} />
-          <SellHighInfo availableAmount={cryptoBalance} />
-        </div>
-        <div className="flex flex-col justify-around w-1/3 ml-auto">
-          <BuyAPR items={exerciseCurrencyList} />
-          <SellAPR items={investCurrencyList} />
+        <img src={Curve} alt="Curve illustration" />
+        <div className="flex flex-col ml-auto h-full justify-between">
+          <BuyAPR />
+          <span className="font-inter-semibold text-xxs self-end">BTC Last Price:</span>
+          <SellAPR />
         </div>
       </div>
     </div>
