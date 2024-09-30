@@ -1,6 +1,5 @@
 import { BotCell } from "_components/BotCell/Botcell";
 import Divider from "_components/Divider/Divider";
-import WalletBox from "_components/WalletBox/WalletBox";
 import { fetchWrapper } from "_helpers";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -16,7 +15,6 @@ const DetailsSideBar = ({ user, dark }) => {
         const response = await fetchWrapper.post(baseUrl + "/get-balances", {
           subClientId: authUser[1].id,
         });
-        // console.log("API response:", response);
         setBalances(
           response.map((balance) =>
             parseFloat(
@@ -27,7 +25,6 @@ const DetailsSideBar = ({ user, dark }) => {
           )
         );
         if (response.status === 200) {
-          // console.log("Balances:", response.balances); // access balances directly from response
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -35,25 +32,9 @@ const DetailsSideBar = ({ user, dark }) => {
     };
 
     fetchData();
-    // console.log("Balances", balances);
-  }, []);
+  }, [authUser]);
 
-  const calculateAPM = () => {
-    const totalAssets = balances[1] + balances[0];
-    const beginDate = new Date(user.beginDate); // Convert beginDate string to Date object
-    const currentDate = new Date();
-    const daysElapsed = Math.ceil(
-      (currentDate - beginDate) / (1000 * 60 * 60 * 24)
-    );
-    const dailyProfit = (totalAssets - user.investment) / daysElapsed; // Daily profit
-    const monthlyProfit = dailyProfit * 30;
-    const profitAPM = ((monthlyProfit / user.investment) * 100)
-      .toFixed(2)
-      .replace(/[.,]00$/, ""); // Annualized Percentage Yield (APM) rounded to 2 decimal places
-
-    // Return the calculated APM
-    return parseFloat(profitAPM);
-  };
+  
   return (
     <div className="w-full">
       <div className="space-y-[8px] w-full">
