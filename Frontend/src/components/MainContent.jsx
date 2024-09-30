@@ -44,29 +44,27 @@ export function MainContent({
   };
 
   return (
-    <div className={`xl:w-full lg:w-1/2 block`}>
-      <div className="flex flex-col xs:bg-gray-50 w-full justify-start space-y-12 h-full">
-        <div
-          style={{
-            width: "100%",
-            height:
-              currentView === "chart" && window.innerWidth > 1024
-                ? "500px"
-                : "100%",
-          }}
-        >
-          {window.innerWidth > 1024 && currentView === "chart" && (
-            <Chart dark={dark} />
-          )}
-          {renderSidebar()}
-        </div>
-        <Footer
-          currentView={currentView}
-          setCurrentView={setCurrentView}
-          authUser={authUser}
-          dark={dark}
-        />
+    <div className="flex flex-col xs:bg-gray-50 w-full justify-start space-y-12 h-full xl:w-full lg:w-1/2">
+      <div
+        style={{
+          width: "100%",
+          height:
+            currentView === "chart" && window.innerWidth > 1024
+              ? "500px"
+              : "100%",
+        }}
+      >
+        {window.innerWidth > 1024 && currentView === "chart" && (
+          <Chart dark={dark} />
+        )}
+        {renderSidebar()}
       </div>
+      <Footer
+        currentView={currentView}
+        setCurrentView={setCurrentView}
+        authUser={authUser}
+        dark={dark}
+      />
     </div>
   );
 }
