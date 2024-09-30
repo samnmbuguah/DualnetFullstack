@@ -32,7 +32,7 @@ async function fetchInvestmentsByCurrency(currency) {
         },
       },
       order: [["apyDisplay", "DESC"]],
-      limit: 1,
+      limit: 4,
     });
     
     // Query for records where investCurrency matches the given currency and updatedAt is within the last 1 minute
@@ -45,7 +45,7 @@ async function fetchInvestmentsByCurrency(currency) {
         },
       },
       order: [["apyDisplay", "DESC"]],
-      limit: 1,
+      limit: 4,
     });
 
     // Return the filtered lists
