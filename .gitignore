@@ -9,3 +9,4 @@ dumpfile.sql
 backup.sql
 .vscode/settings.json
 backup.dump
+.cursorignore
