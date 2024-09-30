@@ -6,7 +6,6 @@ import { useUserSelection } from "../hooks/useUserSelection";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 import { MainContent } from "../components/MainContent";
-import { Footer } from "../components/Footer";
 
 function Home({ dark, infoType, currentView, setCurrentView }) {
   const dispatch = useDispatch();
@@ -26,7 +25,6 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
     setLoggedInUser(JSON.parse(localStorage.getItem("user"))[1]);
     setIsSuperAdmin(loggedInUser.user_roles === "super_admin");
   }, [authUser, dispatch, loggedInUser.user_roles]);
-
 
   const logout = () => {
     dispatch(authActions.logout());
@@ -58,12 +56,6 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
           infoType={infoType}
         />
       </div>
-      <Footer
-        currentView={currentView}
-        setCurrentView={setCurrentView}
-        authUser={authUser[1]}
-        dark={dark}
-      />
     </div>
   );
 }
