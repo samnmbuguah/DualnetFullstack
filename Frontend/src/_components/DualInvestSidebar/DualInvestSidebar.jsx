@@ -50,7 +50,8 @@ const DualInvestSidebar = ({ show, dark }) => {
       style={{
         ...customStyles,
         height: "493px",
-        width: "100%", // Set width to 100%
+        width: "100%",
+        minWidth: "650px",
       }}
       className={`${
         show ? "right-0" : "hidden"
@@ -72,13 +73,13 @@ const DualInvestSidebar = ({ show, dark }) => {
           sellHighAmount={sellHighAmount}
           aprToOpen={aprToOpen}
         />
-        <img src={Curve} alt="Curve illustration" />
-        <div className="flex flex-col ml-auto h-full justify-between">
-          <BuyAPR />
+        <img src={Curve} alt="Curve illustration" className="hidden 2xl:block" />
+        <div className="flex flex-col ml-auto h-full justify-between min-w-fit overflow-hidden">
+          <BuyAPR/>
           <span className="font-inter-semibold text-xxs self-end">
-            BTC Last Price:
+            BTC Last Price: {spotPrice}
           </span>
-          <SellAPR />
+          <SellAPR/>
         </div>
       </div>
     </div>

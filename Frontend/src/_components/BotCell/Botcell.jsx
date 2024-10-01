@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { MdInfo } from "react-icons/md";
 
-function BotCell({
+const BotCell = ({
     title,
     titleStyle,
     ValueColor,
@@ -9,38 +9,36 @@ function BotCell({
     subValue,
     valueStyle,
     showHelpIcon,
-    onHelpIconClick // New prop to handle help icon click
-}) {
-    const [helpIconClicked, setHelpIconClicked] = useState(false);
+    onHelpIconClick
+}) => {
+    const renderTitle = () => {
+        return (
+            <div className={`flex items-center font-normal font-[inter] ${titleStyle}`}>
+                {title}
+                {showHelpIcon && (
+                    <sup onClick={onHelpIconClick} style={{ cursor: 'pointer' }}>
+                        <MdInfo className="text-sm ml-1"/>
+                    </sup>
+                )}
+            </div>
+        );
+    };
 
-    const renderHTML = (htmlString) => ({ __html: htmlString });
-
-    const handleHelpIconClick = () => {
-        // Update the state or trigger any action
-        setHelpIconClicked(!helpIconClicked);
-        // Call the function passed through props
-        if (onHelpIconClick) {
-            onHelpIconClick();
-        }
+    const renderValue = () => {
+        return (
+            <div className={`font-normal text-right ${ValueColor || 'dark:text-white'} font-[inter] ${valueStyle}`}>
+                {value}
+                {subValue && <sub className="bottom-0 ml-2">{subValue}%</sub>}
+            </div>
+        );
     };
 
     return (
         <div className="flex justify-between items-center">
-            <div className={`flex items-center font-normal font-[inter] ${titleStyle}`}>
-                <span dangerouslySetInnerHTML={renderHTML(title)} />
-                {/* Conditionally render the help icon */}
-                {showHelpIcon && (
-                    <sup onClick={handleHelpIconClick} style={{ cursor: 'pointer' }}>
-                        <MdInfo  className="text-sm ml-1"/>
-                    </sup>
-                )}
-            </div>
-            <div className={`font-normal text-right ${ValueColor ? ValueColor : 'dark:text-white '}  font-[inter] ${valueStyle}`} dangerouslySetInnerHTML={renderHTML(value)}>
-                {/* {value} */}
-                {subValue && <sub className="bottom-0 ml-2">{subValue + "%"}</sub>}
-            </div>
+            {renderTitle()}
+            {renderValue()}
         </div>
     );
-}
+};
 
 export { BotCell };

@@ -103,8 +103,8 @@ export function App() {
   );
 
   return (
-    <div className={`flex flex-col w-full ${isDarkMode ? "dark" : "light"} block md:grid max-w-[vw] overflow-hidden place-items-center ${screenWidth > 1500 && "md:pt-0"} min-h-screen py-0`}>
-      <div className={`flex flex-col items-center w-full h-full ${screenWidth > 1900 ? "px-[100px]" : "sm:px-32 lg:px-16 sm:pb-10 p-8 pt-0"}`}>
+    <div className={`flex flex-col w-full ${isDarkMode ? "dark" : "light"} block md:grid max-w-[vw] overflow-hidden place-items-center ${screenWidth > 1500 && "md:pt-0"} max-h-screen py-0`}>
+      <div className={`flex flex-col items-center w-full h-full ${screenWidth > 1900 ? "px-[100px]" : "sm:px-32 lg:px-16 sm:pb-10"}`}>
         {renderHeader()}
         {renderContent()}
       </div>

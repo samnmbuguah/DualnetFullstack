@@ -7,7 +7,7 @@ const SellAPR = () => {
   );
 
   return (
-    <div className="font-inter-medium bg-transparent text-white font-medium rounded-none w-auto h-auto text-[11px] mt-2">
+    <div className="font-inter-medium bg-transparent text-white font-medium rounded-none w-auto h-auto text-[11px] mt-3">
       <div className="grid grid-cols-5 gap-2 mb-2">
         <span className="font-inter-medium text-xs text-[#EA5F00] mr-1 flex items-center justify-center">
           Sell High
@@ -26,7 +26,7 @@ const SellAPR = () => {
         </span>
       </div>
       {investCurrencyList.slice(0, 4).map((item, index) => (
-        <div key={index} className="grid grid-cols-5 gap-2 mb-2">
+        <div key={index} className="grid grid-cols-5 gap-2 mb-4">
           {item.sellHighCount > 0 && (
             <span
               className={`font-inter-extrabold mr-1 hover:border-[0.3px] hover:border-[#9A9898] hover:shadow-md w-[30px] h-[15px] rounded-[4px] flex items-center justify-center ${
