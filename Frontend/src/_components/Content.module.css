@@ -1,0 +1,27 @@
+.contentContainer {
+  @apply w-full flex flex-col justify-center;
+}
+
+.content {
+  @apply bg-cover bg-center bg-blend-color-dodge bg-no-repeat overflow-y-auto opacity-80 rounded-[25px] shadow-inner;
+}
+
+.authRoute {
+  @apply h-full;
+}
+
+.authLogo {
+  @apply w-[365px] mb-3;
+}
+
+@screen lg {
+  .content {
+    @apply p-12 pb-4;
+  }
+}
+
+@screen 2xl {
+  .content {
+    @apply pt-16 pb-8 px-32;
+  }
+}

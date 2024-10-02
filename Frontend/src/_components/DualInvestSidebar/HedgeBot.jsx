@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setStrikePrice, addShortBot, updateShortSize } from "_store/duals.slice";
-import quantoMultipliers from "./quantoMultipliers.json"; // Import the JSON file
+import quantoMultipliers from "./quantoMultipliers.json"; 
 
 function HedgeBot() {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function HedgeBot() {
       }
       setMultiples(generatedMultiples);
     } else {
-      setMultiples([]); // Clear multiples if quantoMultiplier is undefined
+      setMultiples([]); 
     }
   }, [selectedCrypto]);
 

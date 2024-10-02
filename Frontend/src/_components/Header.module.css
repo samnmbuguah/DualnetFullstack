@@ -1,0 +1,39 @@
+.header {
+  @apply flex justify-between w-full py-[12px] items-end;
+}
+
+.logo {
+  @apply w-[365px] mb-3;
+}
+
+.headerControls {
+  @apply flex justify-end -mb-4 h-[25px];
+}
+
+.modeToggle {
+  @apply mr-5 inline-flex items-center cursor-pointer;
+}
+
+.headerLink {
+  @apply mr-5 inline-flex items-center cursor-pointer;
+}
+
+.logoutButton {
+  @apply flex;
+}
+
+.logoutButton img {
+  @apply w-[60px];
+}
+
+@screen lg {
+  .header {
+    @apply px-12;
+  }
+}
+
+@screen 2xl {
+  .header {
+    @apply px-32;
+  }
+}
