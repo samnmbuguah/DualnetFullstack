@@ -15,14 +15,13 @@ export const Chart = memo(({ dark }) => {
   }, []);
 
   return (
-    <div ref={container} className="w-full h-full">
+    <div ref={container} className="w-full h-auto">
       <gecko-coin-price-chart-widget 
         locale="en" 
         transparent-background="true" 
         coin-id="bitcoin" 
         initial-currency="usd" 
-        width="100%" 
-        height="100%"
+        width="100%"    
       />
     </div>
   );

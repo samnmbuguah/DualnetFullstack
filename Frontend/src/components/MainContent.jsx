@@ -44,7 +44,7 @@ export function MainContent({
   };
 
   return (
-    <div className="flex flex-col xs:bg-gray-50 w-full justify-start space-y-12 h-full xl:w-full lg:w-1/2">
+    <div className="flex flex-col xs:bg-gray-50 w-full justify-start h-full xl:w-full lg:w-1/2">
       <div
         style={{
           width: "100%",

@@ -36,8 +36,8 @@ const DetailsSideBar = ({ user, dark }) => {
 
   
   return (
-    <div className="w-full p-4">
-      <div className="space-y-[8px] w-full">
+    <div className="w-full">
+      <div className="w-full">
         <BotCell
           title={`INVESTMENT`}
           titleStyle="text-[#D7AD7D] dark:text-[#D9CFBF] font-[syncopate-bold] text-xl"
@@ -46,7 +46,7 @@ const DetailsSideBar = ({ user, dark }) => {
           ValueColor="text-[#D7AD7D]"
         />
         <small className="font-[inter] text-[#6C6A66] dark:text-white m-0">
-          Since: {user.beginDate}
+          Since: 21.10.2023
         </small>
         <BotCell
           title={`Assets USDT`}
@@ -63,7 +63,7 @@ const DetailsSideBar = ({ user, dark }) => {
           ValueColor="text-[#D7AD7D]"
         />
         <Divider />
-        <label className="text-[#D7AD7D] dark:text-[#D9CFBF] font-[syncopate-bold] text-xl mt-4 block">
+        <label className="text-[#D7AD7D] dark:text-[#D9CFBF] font-[syncopate-bold] text-xl block">
           Profit
         </label>
       </div>

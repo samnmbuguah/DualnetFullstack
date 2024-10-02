@@ -22,7 +22,6 @@ export const SmallChart = memo(({ dark }) => {
         coin-id="bitcoin" 
         initial-currency="usd" 
         width="480" 
-        height="340"
       />
     </div>
   );
