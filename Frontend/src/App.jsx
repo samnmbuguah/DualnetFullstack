@@ -9,8 +9,6 @@ import { Header } from "./_components/Header";
 import { Content } from "./_components/Content";
 import { useDarkMode } from "./_hooks/useDarkMode";
 
-import styles from "./App.module.css";
-
 export function App() {
   const [currentView, setCurrentView] = useState("chart");
   const [infoType, setInfoType] = useState(null);
@@ -36,26 +34,26 @@ export function App() {
   const isAuthRoute = location.pathname === "/login" || location.pathname === "/signup";
 
   return (
-    <div className={`${styles.appContainer} ${isDarkMode ? "dark" : "light"}`}>
-      <div className={styles.contentWrapper}>
-        <Header
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
-          showInfo={showInfo}
-          logout={logout}
-          isAuthRoute={isAuthRoute}
-          screenWidth={screenWidth}
-          authUser={authUser}
-        />
-        <Content
-          isDarkMode={isDarkMode}
-          currentView={currentView}
-          setCurrentView={setCurrentView}
-          infoType={infoType}
-          isAuthRoute={isAuthRoute}
-          screenWidth={screenWidth}
-        />
-      </div>
+    <div
+      className={`flex flex-col w-full h-auto ${isDarkMode ? "dark" : "light"}`}
+    >
+      <Header
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        showInfo={showInfo}
+        logout={logout}
+        isAuthRoute={isAuthRoute}
+        screenWidth={screenWidth}
+        authUser={authUser}
+      />
+      <Content
+        isDarkMode={isDarkMode}
+        currentView={currentView}
+        setCurrentView={setCurrentView}
+        infoType={infoType}
+        isAuthRoute={isAuthRoute}
+        screenWidth={screenWidth}
+      />
     </div>
   );
 }
