@@ -53,7 +53,6 @@ export function Footer({ authUser, dark }) {
             {isAdmin && renderAdminLinks()}
             <FooterLink to="/exchange" label="Exchange" className="lg:flex" />
             <FooterLink to="/wallet" label="Wallet" className="lg:flex" />
-            <FooterLink to="/chart" label="Chart" className="lg:flex" />
             {isClient && renderClientLinks()}
           </div>
         </div>
