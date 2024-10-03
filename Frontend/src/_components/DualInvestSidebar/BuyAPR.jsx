@@ -30,7 +30,7 @@ const BuyAPR = ({ dark }) => {
         <div key={index} className="grid grid-cols-5 gap-2 mb-4">
           {item.buyLowCount > 0 && (
             <span
-              className={`font-inter-extrabold mr-1 hover:border-[0.3px] hover:border-[#9A9898] hover:shadow-md w-[30px] h-[15px] rounded-[4px] flex items-center justify-center ${
+              className={`font-inter-extrabold text-white mr-1 hover:border-[0.3px] hover:border-[#9A9898] hover:shadow-md w-[30px] h-[15px] rounded-[4px] flex items-center justify-center ${
                 item.lostShareCount < 0 ? "bg-[#EA5F00]" : "bg-[#02855F]"
               }`}
             >
