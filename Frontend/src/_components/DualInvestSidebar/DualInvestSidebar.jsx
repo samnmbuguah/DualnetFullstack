@@ -63,6 +63,7 @@ const DualInvestSidebar = ({ show, dark }) => {
       </div>
       <div className="flex flex-row w-full items-center justify-between bg-line207">
         <DualTrade
+          dark={dark}
           buyLowPerShare={buyLowPerShare}
           sellHighPerShare={sellHighPerShare}
           currentPrice={spotPrice}

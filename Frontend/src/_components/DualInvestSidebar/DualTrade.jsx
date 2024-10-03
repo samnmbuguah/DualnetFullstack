@@ -12,6 +12,7 @@ import AvailableBalance from "./DualTrade/AvailableBalance";
 import AprSellInput from "./DualTrade/AprSellInput";
 
 const DualTrade = ({
+  dark,
   buyLowPerShare = 0.63785,
   sellHighPerShare = 0.0001,
   currentPrice = "58222",
@@ -24,6 +25,10 @@ const DualTrade = ({
   aprToSell = 400,
 }) => {
   const dispatch = useDispatch();
+  const textColor = dark ? "text-[#01D497]" : "text-[#857F76]";
+  const textColor2 = dark ? "text-[#FFFFFF]" : "text-[#857F76]";
+  const textColor3 = dark ? "text-[#EA5F00]" : "text-[#857F76]";
+  const textColor4 = dark ? "text-[#FFFFFF]" : "text-[#857F76]";
 
   return (
     <div className="flex flex-col items-start justify-center w-auto h-auto bg-transparent rounded-lg">
@@ -41,7 +46,9 @@ const DualTrade = ({
       <div className="flex justify-between w-full">
         <ShareInput
           label="share"
-          labelColor="text-[#01D497]"
+          dark={dark}
+          labelType="buy"
+          textColor={textColor}
           value={buyLowAmount / buyLowPerShare}
           onChange={(value) =>
             dispatch(updateBuyLowAmount(value * buyLowPerShare))
@@ -49,7 +56,9 @@ const DualTrade = ({
         />
         <ShareInput
           label="$"
-          labelColor="text-[#01D497]"
+          dark={dark}
+          labelType="buy"
+          textColor={textColor2}
           value={buyLowAmount}
           onChange={(value) => dispatch(updateBuyLowAmount(Number(value)))}
         />
@@ -58,7 +67,9 @@ const DualTrade = ({
       <div className="flex justify-between w-full">
         <ShareInput
           label="share"
-          labelColor="text-[#EA5F00]"
+          dark={dark}
+          labelType="sell"
+          textColor={textColor3}
           value={sellHighAmount / sellHighPerShare}
           onChange={(value) =>
             dispatch(updateSellHighAmount(value * sellHighPerShare))
@@ -66,7 +77,9 @@ const DualTrade = ({
         />
         <ShareInput
           label={selectedCrypto}
-          labelColor="text-[#EA5F00]"
+          dark={dark}
+          labelType="sell"
+          textColor={textColor4}
           value={sellHighAmount}
           onChange={(value) => dispatch(updateSellHighAmount(Number(value)))}
         />

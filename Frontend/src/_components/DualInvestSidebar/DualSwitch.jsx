@@ -16,7 +16,7 @@ const DualSwitch = ({ dark }) => {
         DUAL-INVESTMENT
       </h1>
       <div className="flex flex-row items-center w-full">
-        <span className="mr-4 font-inter-medium text-xxs">Dual-Invest auto on/off</span>
+        <span className={`mr-4 font-inter-medium text-xxs ${dark ? 'text-[#ffffff]' : 'text-[#979191]'}`}>Dual-Invest auto on/off</span>
         <label className="themeSwitcherTwo relative inline-flex cursor-pointer select-none items-center">
           <input
             type="checkbox"
