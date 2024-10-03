@@ -32,13 +32,13 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen px-4 bg-[#25292F] rounded-[25px]">
+    <div className="flex flex-col w-full min-h-fit px-4 bg-[#25292F] rounded-[25px] justify-center mb-4">
       <Header
         username={selectedUser.current.username}
         onLogout={logout}
         dark={dark}
       />
-      <div className="flex flex-row">
+      <div className="flex flex-row justify-center">
         <Sidebar user={selectedUser.current} dark={dark} />
         <MainContent
           className="flex-grow"

@@ -83,7 +83,7 @@ const DetailsSideBar = ({ user, dark }) => {
           </div>
           <div className="text-[#C6BDAF] !font-bold">125.66%</div>
         </div>
-        <Divider />
+        <hr className="bg-[#98938A] border-0 h-[0.3px]"/>
       </div>
       <SmallChart dark={dark} />
     </div>
