@@ -7,6 +7,7 @@ import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 import { MainContent } from "../components/MainContent";
 
+// Add setCurrentView to the component props
 function Home({ dark, infoType, currentView, setCurrentView }) {
   const dispatch = useDispatch();
   const { user: authUser } = useSelector((x) => x.auth);
@@ -28,7 +29,6 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
 
   const logout = () => {
     dispatch(authActions.logout());
-    setCurrentView("chart");
   };
 
   return (
