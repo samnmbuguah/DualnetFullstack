@@ -7,7 +7,7 @@
   src: url(../public/fonts/Syncopate-Bold.ttf);
 }
 @font-face {
-  font-family: "syncopate-light";
+  font-family: "syncopate-regular";
   src: url(../public/fonts/Syncopate-Regular.ttf);
 }
 
@@ -57,17 +57,27 @@
   src: url(../public/fonts/Inter/static/Inter-ExtraBold.ttf);
 }
 
+@font-face {
+  font-family: "inter-light";
+  src: url(../public/fonts/Inter/static/Inter-Light.ttf);
+}
+
 body {
   font-family: syncopate-bold;
 }
 
+.dark-appContainer {
+  background-color: #24282E;
+}
+.light-appContainer {
+  background-color: #FFF4E4;
+}
+
 .dark {
-  background-color: #212429;
-  color: #dddddd42;
+  background-color: #25292F;
 }
 .light {
-  background-color: #E1DAD2;
-  color: rgba(0, 0, 0, 0.5);
+  background-color: #FFF4E4;
 }
 
 .dark .box {

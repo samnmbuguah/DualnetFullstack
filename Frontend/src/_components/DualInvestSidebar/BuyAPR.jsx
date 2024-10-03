@@ -9,7 +9,7 @@ const BuyAPR = () => {
 
   return (
     <div className="font-inter-medium bg-transparent text-white font-medium rounded-none w-auto h-auto text-[11px] mb-3">
-      <div className="grid grid-cols-5 gap-2 mb-2">
+      <div className="grid grid-cols-5 gap-1 mb-1">
         <span className="font-inter-medium text-xs text-[#1D886A] mr-1 flex items-center justify-center">
           Buy Low
         </span>

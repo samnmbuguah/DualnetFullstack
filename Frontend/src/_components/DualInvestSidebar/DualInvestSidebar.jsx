@@ -55,7 +55,7 @@ const DualInvestSidebar = ({ show, dark }) => {
       }}
       className={`${
         show ? "right-0" : "hidden"
-      } bg-[#fef6e6] px-5 py-4 text-xs dark:bg-[transparent] dark:border-[#6D6D6D] rounded-[25px] font-inter text-white flex flex-col justify-between bg-[url('/_assets/Line 207.svg')] bg-no-repeat bg-center`}
+      } bg-[#24282E] px-8 text-xs dark:bg-[transparent] dark:border-[#6D6D6D] rounded-[25px] font-inter text-white flex flex-col justify-between bg-[url('/_assets/Line 207.svg')] bg-no-repeat bg-center`}
     >
       <div>
         <CryptoList />
@@ -73,13 +73,17 @@ const DualInvestSidebar = ({ show, dark }) => {
           sellHighAmount={sellHighAmount}
           aprToOpen={aprToOpen}
         />
-        <img src={Curve} alt="Curve illustration" className="hidden 2xl:block" />
+        <img
+          src={Curve}
+          alt="Curve illustration"
+          className="hidden 2xl:block"
+        />
         <div className="flex flex-col ml-auto h-full justify-between min-w-fit overflow-hidden">
-          <BuyAPR/>
+          <BuyAPR />
           <span className="font-inter-semibold text-xxs self-end">
             BTC Last Price: {spotPrice}
           </span>
-          <SellAPR/>
+          <SellAPR />
         </div>
       </div>
     </div>

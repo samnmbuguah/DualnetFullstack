@@ -15,13 +15,14 @@ export const SmallChart = memo(({ dark }) => {
   }, []);
 
   return (
-    <div ref={container} >
-      <gecko-coin-price-chart-widget 
-        locale="en" 
-        transparent-background="true" 
-        coin-id="bitcoin" 
-        initial-currency="usd" 
-        width="480" 
+    <div ref={container} className="text-black">
+      <gecko-coin-price-chart-widget
+        locale="de"
+        transparent-background="true"
+        coin-id="bitcoin"
+        initial-currency="usd"
+        dark-mode={dark ? "true" : "false"}
+        width="480"
       />
     </div>
   );

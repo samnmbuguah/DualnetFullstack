@@ -22,7 +22,7 @@ const CryptoList = () => {
     dispatch(updateSelectedCrypto(crypto));
   };
   return (
-    <div className="inline-flex flex-wrap w-[487px] justify-between items-center py-2 bg-[#24282E] font-inter-medium border-b border-[#857F76] rounded-sm">
+    <div className="inline-flex flex-wrap w-[487px] justify-between items-center pt-4 bg-transparent font-inter-medium border-b border-[#857F76] rounded-sm">
       {cryptoList.map((crypto, index) => (
         <button
           key={crypto}

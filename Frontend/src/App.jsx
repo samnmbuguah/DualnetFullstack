@@ -35,7 +35,7 @@ export function App() {
 
   return (
     <div
-      className={`flex flex-col w-full h-auto ${isDarkMode ? "dark" : "light"}`}
+      className={`flex flex-col w-full px-10 ${isDarkMode ? "dark-appContainer" : "light-appContainer"}`}
     >
       <Header
         isDarkMode={isDarkMode}

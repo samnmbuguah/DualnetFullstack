@@ -8,7 +8,7 @@ const SellAPR = () => {
 
   return (
     <div className="font-inter-medium bg-transparent text-white font-medium rounded-none w-auto h-auto text-[11px] mt-3">
-      <div className="grid grid-cols-5 gap-2 mb-2">
+      <div className="grid grid-cols-5 gap-1 mb-1">
         <span className="font-inter-medium text-xs text-[#EA5F00] mr-1 flex items-center justify-center">
           Sell High
         </span>

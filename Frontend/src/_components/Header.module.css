@@ -1,39 +1,41 @@
 .header {
-  @apply flex justify-between w-full py-[12px] items-end;
+  @apply flex justify-between w-full items-start;
 }
 
-.logo {
-  @apply w-[365px] mb-3;
+@media (max-width: 768px) {
+  .header {
+    @apply flex-col items-center;
+  }
 }
 
-.headerControls {
-  @apply flex justify-end -mb-4 h-[25px];
+.headerNav {
+  @apply flex justify-between items-center text-xl text-[#DDDDDD] self-end min-w-fit w-[437px] h-[45px] flex-shrink-0;
+}
+
+.headerText {
+  @apply opacity-30 transition-opacity duration-300 ease-in-out;
+}
+
+.headerText:hover {
+  @apply opacity-50;
 }
 
 .modeToggle {
-  @apply mr-5 inline-flex items-center cursor-pointer;
+  @apply inline-flex cursor-pointer items-center;
+}
+
+.toggleButton {
+  @apply w-[21px] h-[21px] ml-2;
 }
 
 .headerLink {
-  @apply mr-5 inline-flex items-center cursor-pointer;
+  @apply inline-flex cursor-pointer;
 }
 
-.logoutButton {
-  @apply flex;
+.faq {
+  @apply inline-flex cursor-pointer mr-6;
 }
 
-.logoutButton img {
-  @apply w-[60px];
-}
-
-@screen lg {
-  .header {
-    @apply px-12;
-  }
-}
-
-@screen 2xl {
-  .header {
-    @apply px-32;
-  }
+.logo {
+  @apply w-[358px] h-[111px] pb-[14px];
 }
