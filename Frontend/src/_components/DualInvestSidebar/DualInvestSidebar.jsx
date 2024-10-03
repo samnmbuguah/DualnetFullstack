@@ -58,7 +58,7 @@ const DualInvestSidebar = ({ show, dark }) => {
       } bg-[#24282E] px-8 text-xs dark:bg-[transparent] dark:border-[#6D6D6D] rounded-[25px] font-inter text-white flex flex-col justify-between bg-[url('/_assets/Line 207.svg')] bg-no-repeat bg-center`}
     >
       <div>
-        <CryptoList />
+        <CryptoList dark={dark} />
         <DualSwitch />
       </div>
       <div className="flex flex-row w-full items-center justify-between bg-line207">
