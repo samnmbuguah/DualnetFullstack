@@ -1,14 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-const BuyAPR = () => {
+const BuyAPR = ({ dark }) => {
 
   const exerciseCurrencyList = useSelector(
     (state) => state.duals.dualInvestments?.exerciseCurrencyList || []
   );
 
   return (
-    <div className="font-inter-medium bg-transparent text-white font-medium rounded-none w-auto h-auto text-[11px] mb-3">
+    <div className={`font-inter-medium bg-transparent font-medium rounded-none w-auto h-auto text-[11px] mb-3 ${dark ? 'text-white' : 'text-[#979191]'}`}>
       <div className="grid grid-cols-5 gap-1 mb-1">
         <span className="font-inter-medium text-xs text-[#1D886A] mr-1 flex items-center justify-center">
           Buy Low
