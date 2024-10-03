@@ -1,0 +1,14 @@
+{
+  "exerciseCurrencyList": [
+    { "buyLowCount": 4, "lostShareCount": 0, "shareCount": 99999, "exercisePrice": 59500, "apyDisplay": 435, "settled": false },
+    { "buyLowCount": 1, "lostShareCount": -2.59, "shareCount": 156.78, "exercisePrice": 59000, "apyDisplay": 419, "settled": true },
+    { "buyLowCount": 2, "lostShareCount": 0, "shareCount": 259.3, "exercisePrice": 58500, "apyDisplay": 401, "settled": true },
+    { "buyLowCount": 3, "lostShareCount": 0, "shareCount": 268.3, "exercisePrice": 58000, "apyDisplay": 407, "settled": true }
+  ],
+  "investCurrencyList": [
+    { "sellHighCount": 1, "lostShareCount": 1.25, "shareCount": 156.78, "exercisePrice": 59500, "apyDisplay": 435, "settled": true },
+    { "sellHighCount": 2, "lostShareCount": 0, "shareCount": 0, "exercisePrice": 59000, "apyDisplay": 237, "settled": false },
+    { "sellHighCount": 3, "lostShareCount": 0, "shareCount": 0, "exercisePrice": 58500, "apyDisplay": 182, "settled": false },
+    { "sellHighCount": 4, "lostShareCount": 0, "shareCount": 0, "exercisePrice": 58000, "apyDisplay": 182, "settled": false }
+  ]
+}

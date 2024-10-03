@@ -1,57 +1,11 @@
-const DualPlans = require("../../models/DualPlansModel.js");
-const { Op } = require("sequelize");
+const defaultAprData = require("./DefaultApr.json");
 
 async function fetchInvestmentsByCurrency(currency) {
   try {
-    // Get the current date and time
-    const now = new Date();
-    const unixNow = Math.floor(Date.now() / 1000);
-    const oneMinuteAgo = new Date(now.getTime() - 2 * 60 * 1000);
-    const twoDaysFromNow = unixNow + 2 * 24 * 60 * 60;
-
-    // Define the attributes to be selected
-    const attributes = [
-      "investCurrency",
-      "exerciseCurrency",
-      "perValue",
-      "apyDisplay",
-      "deliveryTime",
-      "endTime",
-      "planType",
-      "exercisePrice",
-      "id",
-    ];
-
-    // Query for records where exerciseCurrency matches the given currency and updatedAt is within the last 1 minute
-    const exerciseCurrencyList = await DualPlans.findAll({
-      attributes,
-      where: {
-        exerciseCurrency: currency,
-        updatedAt: {
-          [Op.gt]: oneMinuteAgo,
-        },
-      },
-      order: [["apyDisplay", "DESC"]],
-      limit: 4,
-    });
-    
-    // Query for records where investCurrency matches the given currency and updatedAt is within the last 1 minute
-    const investCurrencyList = await DualPlans.findAll({
-      attributes,
-      where: {
-        investCurrency: currency,
-        updatedAt: {
-          [Op.gt]: oneMinuteAgo,
-        },
-      },
-      order: [["apyDisplay", "DESC"]],
-      limit: 4,
-    });
-
-    // Return the filtered lists
+    // Return the default data from the local DefaultApr.json
     return {
-      exerciseCurrencyList: exerciseCurrencyList,
-      investCurrencyList: investCurrencyList,
+      exerciseCurrencyList: defaultAprData.exerciseCurrencyList,
+      investCurrencyList: defaultAprData.investCurrencyList,
     };
   } catch (error) {
     console.error("Error fetching investments:", error);
@@ -61,7 +15,7 @@ async function fetchInvestmentsByCurrency(currency) {
 
 module.exports = fetchInvestmentsByCurrency;
 
-// // Example usage
+// Example usage (commented out)
 // const currency = 'PEPE';
 // fetchInvestmentsByCurrency(currency)
 //   .then(({ exerciseCurrencyList, investCurrencyList }) => {
