@@ -56,7 +56,7 @@ function Users({setCurrentView}) {
     }
 
     return (
-        <div className="h-[40rem] overflow-y-auto">
+        <div className="h-[40rem] overflow-y-auto text-white">
             <div className="py-4 mx-24">
                 <img width={96} height={96} src={logo} className="pb-3" alt=""  />
                 <div className="flex gap-6 justify-between items-center">
@@ -67,14 +67,14 @@ function Users({setCurrentView}) {
                     </div>
                     <NavLink to="/" className="flex items-center gap-3 font-syn-regular">
                         <img width={150}  height={100} src={goYourChart}  className=" inline-block dark:hidden" alt="go your chart" property="true" />
-                        <span className='hidden text-[12px] text-white dark:block dark:text-dark-text'>Go your Chart </span>{' '} <img width={30} src={darkChart} className='hidden dark:block' alt="power" />
+                        <span className='hidden text-[12px] text-white dark:block'>Go your Chart </span>{' '} <img width={30} src={darkChart} className='hidden dark:block' alt="power" />
                     </NavLink>
                     <button className="ml-10 inline-flex items-center text-xs bg-gradient-to-r from-[#777] to-[#0094FF] from-10% to-100% text-transparent bg-clip-text" onClick={()=>logout()}>
                         Logout<img height={37} width={29} src={power} alt="power" />
                     </button>
                 </div>
 
-                <div className="grid grid-cols-1 mt-8 w-full">
+                <div className="grid grid-cols-1 mt-8 w-full text-white">
                 { 
                     usersDetail && usersDetail.rows && usersDetail.rows.map((e) => {
                         return <AdminRow editUser={editUser} deleteUser={deleteUser} key={e.id} data={e} details={usersDetail.rows}/>;
