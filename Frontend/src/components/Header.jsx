@@ -5,7 +5,7 @@ export function Header({ username, onLogout }) {
   return (
     <div className="flex flex-row items-center px-8 ">
       <div className="flex-grow border-b-[0.3px] border-[#857F76] mb-3">
-        <span className="lg:text-[35px] font-bold text-[#A3A2A2] block w-full flex-shrink-1">
+        <span className="text-[35px] font-bold text-[#A3A2A2] block w-full flex-shrink-1 shadow-inner">
           {username}
         </span>
       </div>
