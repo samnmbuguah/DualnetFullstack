@@ -27,9 +27,10 @@ function BotSideBar({ show, setShow, dark, width, setChartShow }) {
       ? "wss://dualnet-production.up.railway.app"
       : "ws://localhost:3042";
 
-  const { topScans, updateTopScans, updatedBotData } = useTopScansWebSocket(ws_url);
+  const { topScans, updateTopScans, updatedBotData } =
+    useTopScansWebSocket(ws_url);
   const [balances, setBalances] = useState([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {

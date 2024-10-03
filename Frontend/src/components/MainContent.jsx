@@ -1,6 +1,6 @@
 import React from 'react';
 import { Chart, ClientSideBar, ExchangeSideBar, WalletSideBar, InformationBar } from "_components";
-import BotSideBar from "_components/BotSideBar/BotSideBar";
+import BotSideBar from "../_components/BotSideBar/BotSideBar";
 import { ChartSideBar } from "_components/ChartSideBar/ChartSideBar";
 import DualInvestSidebar from "_components/DualInvestSidebar/DualInvestSidebar";
 import { Footer } from "./Footer";
