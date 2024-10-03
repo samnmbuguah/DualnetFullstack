@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import settingIcon from "../_assets/setting.png";
 
-export function Footer({ currentView, setCurrentView, authUser, dark }) {
+export function Footer({ authUser, dark }) {
   const isAdmin =
     authUser.user_roles === "admin" || authUser.user_roles === "super_admin";
   const isSuperAdmin = authUser.user_roles === "super_admin";
@@ -18,31 +18,9 @@ export function Footer({ currentView, setCurrentView, authUser, dark }) {
           Admin
         </NavLink>
       )}
-      <FooterLink
-        onClick={() =>
-          setCurrentView((x) =>
-            x === "dualInvestSidebar" ? "chart" : "dualInvestSidebar"
-          )
-        }
-        isActive={currentView === "dualInvestSidebar"}
-        label="DUAL-INVEST"
-      />
-      <FooterLink
-        onClick={() =>
-          setCurrentView((x) => (x === "botSideBar" ? "chart" : "botSideBar"))
-        }
-        isActive={currentView === "botSideBar"}
-        label="Bot"
-      />
-      <FooterLink
-        onClick={() =>
-          setCurrentView((x) =>
-            x === "clientSideBar" ? "chart" : "clientSideBar"
-          )
-        }
-        isActive={currentView === "clientSideBar"}
-        label="Sub-Clients"
-      />
+      <FooterLink to="/dual-invest" label="DUAL-INVEST" />
+      <FooterLink to="/bot" label="Bot" />
+      <FooterLink to="/clients" label="Sub-Clients" />
     </>
   );
 
@@ -73,16 +51,9 @@ export function Footer({ currentView, setCurrentView, authUser, dark }) {
         <div className="flex place-items-baseline justify-between space-x-4">
           <div className="p flex justify-center">
             {isAdmin && renderAdminLinks()}
-            <FooterLink
-              onClick={() =>
-                setCurrentView((x) =>
-                  x === "exchangeSidebar" ? "chart" : "exchangeSidebar"
-                )
-              }
-              isActive={false}
-              label="Exchange"
-              className="lg:flex"
-            />
+            <FooterLink to="/exchange" label="Exchange" className="lg:flex" />
+            <FooterLink to="/wallet" label="Wallet" className="lg:flex" />
+            <FooterLink to="/chart" label="Chart" className="lg:flex" />
             {isClient && renderClientLinks()}
           </div>
         </div>
@@ -91,13 +62,15 @@ export function Footer({ currentView, setCurrentView, authUser, dark }) {
   );
 }
 
-const FooterLink = ({ onClick, isActive, label, className = "" }) => (
-  <span
-    onClick={onClick}
-    className={`flex items-center mr-4 text-xxs cursor-pointer ${
-      isActive ? "text-[#15FF00]" : "text-[#A3A2A2]"
-    } ${className}`}
+const FooterLink = ({ to, label, className = "" }) => (
+  <NavLink
+    to={to}
+    className={({ isActive }) =>
+      `flex items-center mr-4 text-xxs cursor-pointer ${
+        isActive ? "text-[#15FF00]" : "text-[#A3A2A2]"
+      } ${className}`
+    }
   >
     {label}
-  </span>
+  </NavLink>
 );

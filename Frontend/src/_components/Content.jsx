@@ -9,8 +9,6 @@ import styles from "./Content.module.css";
 
 export function Content({
   isDarkMode,
-  currentView,
-  setCurrentView,
   infoType,
   isAuthRoute,
   screenWidth,
@@ -46,8 +44,7 @@ export function Content({
                 <Home
                   dark={isDarkMode}
                   infoType={infoType}
-                  currentView={currentView}
-                  setCurrentView={setCurrentView}
+                  currentView="chart"
                 />
               </PrivateRoute>
             }
@@ -56,7 +53,91 @@ export function Content({
             path="/admin"
             element={
               <PrivateRoute>
-                <Users setCurrentView={setCurrentView} />
+                <Users />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/clients"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="clientSideBar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/exchange"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="exchangeSidebar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/wallet"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="walletSidebar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/bot"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="botSideBar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/chart"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="chartSideBar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/info"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="infoSidebar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dual-invest"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="dualInvestSidebar"
+                />
               </PrivateRoute>
             }
           />
