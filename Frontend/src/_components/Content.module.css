@@ -1,5 +1,5 @@
 .contentContainer {
-  @apply w-full flex flex-col justify-center min-h-screen;
+  @apply w-full flex flex-col justify-center items-center min-h-screen;
 }
 
 .content {
