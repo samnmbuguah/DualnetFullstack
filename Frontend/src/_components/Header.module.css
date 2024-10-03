@@ -9,15 +9,27 @@
 }
 
 .headerNav {
-  @apply flex justify-between items-center text-xl text-[#DDDDDD] self-end min-w-fit w-[437px] h-[45px] flex-shrink-0;
+  @apply flex justify-between items-center text-xl self-end min-w-fit w-[437px] h-[45px] flex-shrink-0;
 }
 
 .headerText {
-  @apply opacity-30 transition-opacity duration-300 ease-in-out;
+  @apply transition-opacity duration-300 ease-in-out;
 }
 
-.headerText:hover {
+.darkModeText {
+  @apply text-[#DDDDDD] opacity-30;
+}
+
+.darkModeText:hover {
   @apply opacity-50;
+}
+
+.lightModeText {
+  @apply text-[#979191] opacity-100;
+}
+
+.lightModeText:hover {
+  @apply opacity-100;
 }
 
 .modeToggle {
@@ -38,4 +50,18 @@
 
 .logo {
   @apply w-[358px] h-[111px] pb-[14px];
+}
+
+/* Add these new styles at the end of the file */
+:global(.light) .headerText {
+  color: #979191;
+  opacity: 1;
+}
+
+:global(.light) .headerText:hover {
+  opacity: 1;
+}
+
+:global(.dark) .headerText {
+  color: #DDDDDD;
 }
