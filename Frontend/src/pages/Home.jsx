@@ -32,7 +32,7 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
   };
 
   return (
-    <div className={`flex flex-col w-full min-h-screen px-4 ${dark ? 'bg-[#25292F]' : 'bg-transparent'} rounded-[25px] justify-center mb-4`}>
+    <div className={`flex flex-col w-full px-4 ${dark ? 'bg-[#25292F]' : 'bg-transparent'} rounded-[25px] justify-center mb-4`}>
       <Header
         username={selectedUser.current.username}
         onLogout={logout}
