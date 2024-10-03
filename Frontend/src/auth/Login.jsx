@@ -80,7 +80,7 @@ function Login() {
 
               <div
                 style={{ fontFamily: "'tomorrow-light', sans-serif" }}
-                className="mt-10 w-full flex justify-center items-center flex-col"
+                className="my-12 w-full flex justify-center items-center flex-col"
               >
                 <input
                   className={`bg-transparent border-b-[1px] border-black font-tomorrow-light outline-none p-2 text-lg text-[#887F6F] placeholder:text-[rgb(107,102,109)] w-auto ${
