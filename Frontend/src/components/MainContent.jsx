@@ -44,7 +44,7 @@ export function MainContent({
   };
 
   return (
-    <div className="flex flex-col w-full justify-start h-full items-center">
+    <div className="flex flex-col w-full justify-start h-full">
       <div>
         {window.innerWidth > 1024 && currentView === "chart" && (
           <Chart dark={dark} />
