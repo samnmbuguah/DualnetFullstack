@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions, userActions } from "_store";
-import { useSocketConnection } from "../hooks/useSocketConnection";
 import { useUserSelection } from "../hooks/useUserSelection";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
@@ -32,7 +31,7 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
   };
 
   return (
-    <div className={`flex flex-col w-full px-4 ${dark ? 'bg-[#25292F]' : 'bg-transparent'} rounded-[25px] justify-center mb-4`}>
+    <div className={`flex flex-col w-full px-4 ${dark ? 'bg-[#25292F]' : 'bg-transparent'} rounded-[25px] justify-center pb-10`}>
       <Header
         username={selectedUser.current.username}
         onLogout={logout}

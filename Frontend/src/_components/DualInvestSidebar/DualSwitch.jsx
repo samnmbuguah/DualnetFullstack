@@ -12,18 +12,30 @@ const DualSwitch = ({ dark }) => {
 
   return (
     <div className="flex flex-col w-[420px] pt-2">
-      <h1 className={`font-syn-bold text-3xl ${dark ? 'text-[#505050]' : 'text-[#A3A2A2]'} shadow-inner`}>
-        DUAL-INVESTMENT
+      <h1
+        className={`font-syn-bold text-3xl ${
+          dark ? "text-[#A3A2A2]" : "text-[#A3A2A2]"
+        }`}
+      >
+        <span style={{ textShadow: "0 4px 4px rgba(0,0,0,0.25)" }}>
+          DUAL-INVESTMENT
+        </span>
       </h1>
       <div className="flex flex-row items-center w-full">
-        <span className={`mr-4 font-inter-medium text-xxs ${dark ? 'text-[#ffffff]' : 'text-[#979191]'}`}>Dual-Invest auto on/off</span>
+        <span
+          className={`mr-4 font-inter-medium text-xxs ${
+            dark ? "text-[#ffffff]" : "text-[#979191]"
+          }`}
+        >
+          Dual-Invest auto on/off
+        </span>
         <label className="themeSwitcherTwo relative inline-flex cursor-pointer select-none items-center">
           <input
             type="checkbox"
             checked={isChecked}
             onChange={handleCheckboxChange}
             className="sr-only"
-            style={{ width: '26px', height: '13.42px' }}
+            style={{ width: "26px", height: "13.42px" }}
           />
           <span
             className={`slider flex h-[13.42px] w-[26px] items-center rounded-full duration-200 ${

@@ -3,8 +3,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { PrivateRoute } from "_components";
 import { Users, Home } from "pages";
 import { Login, Signup } from "auth";
-import lightLogo from "../_assets/logo light mode.png";
-import darkLogo from "../_assets/logo_dark_mode.png";
 import styles from "./Content.module.css";
 
 export function Content({

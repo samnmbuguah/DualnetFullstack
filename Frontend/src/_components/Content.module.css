@@ -1,5 +1,5 @@
 .contentContainer {
-  @apply w-full flex flex-col items-center rounded-[25px] border-solid py-4 px-2;
+  @apply w-full flex flex-col items-center rounded-[25px] border-solid py-6 px-2;
 }
 
 .contentLight {

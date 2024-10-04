@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useWindowDimensions } from "_components";
 import styles from "./styles";
 import DualSwitch from "_components/DualInvestSidebar/DualSwitch";
 import CryptoList from "./CryptoList";
