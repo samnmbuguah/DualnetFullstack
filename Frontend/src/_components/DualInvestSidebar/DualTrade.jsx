@@ -13,14 +13,13 @@ import AprSellInput from "./DualTrade/AprSellInput";
 
 const DualTrade = ({
   dark,
-  buyLowPerShare = 0.63785,
-  sellHighPerShare = 0.0001,
-  currentPrice = "58222",
+  buyLowPerShare = 156,
+  sellHighPerShare = 156,
   selectedCrypto = "BTC",
   usdtBalance = 22.589,
   cryptoBalance = 0.0,
-  buyLowAmount,
-  sellHighAmount,
+  buyLowAmount = 100,
+  sellHighAmount = 0.00156,
   aprToBuy = 400,
   aprToSell = 400,
 }) => {
@@ -49,7 +48,7 @@ const DualTrade = ({
           dark={dark}
           labelType="buy"
           textColor={textColor}
-          value={buyLowAmount / buyLowPerShare}
+          value={buyLowPerShare}
           onChange={(value) =>
             dispatch(updateBuyLowAmount(value * buyLowPerShare))
           }
@@ -70,7 +69,7 @@ const DualTrade = ({
           dark={dark}
           labelType="sell"
           textColor={textColor3}
-          value={sellHighAmount / sellHighPerShare}
+          value={sellHighPerShare}
           onChange={(value) =>
             dispatch(updateSellHighAmount(value * sellHighPerShare))
           }
