@@ -15,7 +15,7 @@ export const Chart = memo(({ dark }) => {
   }, []);
 
   return (
-    <div ref={container} className="w-full text-black">
+    <div ref={container} className="w-full text-black min-w-[420px]">                                                               
       <gecko-coin-price-chart-widget 
         locale="en" 
         transparent-background="true" 
