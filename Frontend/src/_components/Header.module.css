@@ -1,5 +1,5 @@
 .header {
-  @apply flex justify-between w-full items-center flex-shrink max-w-[1440px];
+  @apply flex justify-between w-full items-center flex-shrink px-14;
 }
 
 @media (max-width: 768px) {
