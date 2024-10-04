@@ -264,26 +264,11 @@ body {
   height: 100%;
 }
 
-@media (max-width: 768px) {
-  .bg-line207 {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .bg-line207 > div:last-child {
-    margin-left: 0;
-    margin-top: 1rem;
-  }
+.bg-line208 {
+  background-image: url(./_assets/Line208.svg);
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: auto;
+  height: 100%;
 }
 
-@media (max-width: 1200px) {
-  .bg-line207 {
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: space-between;
-  }
-
-  .bg-line207 > div:last-child {
-    margin-left: 1rem;
-  }
-}

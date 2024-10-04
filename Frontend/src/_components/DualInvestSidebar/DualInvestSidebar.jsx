@@ -60,7 +60,7 @@ const DualInvestSidebar = ({ show, dark }) => {
         <CryptoList dark={dark} />
         <DualSwitch dark={dark} />
       </div>
-      <div className="flex flex-row w-full items-center justify-between bg-line207">
+      <div className={`flex flex-row w-full items-center justify-between ${dark ? 'bg-line207' : 'bg-line208'}`}>
         <DualTrade
           dark={dark}
           buyLowPerShare={buyLowPerShare}
