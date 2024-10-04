@@ -1,10 +1,16 @@
 .contentContainer {
-  @apply w-full flex flex-col items-center;
+  @apply w-full flex flex-col items-center rounded-[25px] border-solid py-4 px-2;
 }
 
-.content {
-  @apply bg-[#25292F] opacity-80 rounded-[25px] shadow-inner;
+.contentLight {
+  @apply bg-[#FFF4E4] border-[#C3C3C3];
+  box-shadow: 1px 4px 4px #C3C3C3 inset;
 }
+
+.contentDark {
+  @apply bg-[#25292F] border-[#2B3036];
+  box-shadow: 1px 4px 4px #151515 inset;
+}         
 
 .authRoute {
   @apply h-full;

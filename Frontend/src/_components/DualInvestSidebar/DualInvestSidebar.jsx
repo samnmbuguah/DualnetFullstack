@@ -29,7 +29,6 @@ const DualInvestSidebar = ({ show, dark }) => {
 
   const dispatch = useDispatch();
   const customStyles = dark ? styles.dark : styles.light;
-  let screenWidth = useWindowDimensions().width;
 
   useEffect(() => {
     if (selectedCrypto) {
