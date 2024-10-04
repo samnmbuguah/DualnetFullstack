@@ -51,8 +51,8 @@ export function Footer({ authUser, dark }) {
         <div className="flex place-items-baseline justify-between space-x-4">
           <div className="p flex justify-center">
             {isAdmin && renderAdminLinks()}
+            <FooterLink to="/wallet" label="Statement" className="lg:flex" />
             <FooterLink to="/exchange" label="Exchange" className="lg:flex" />
-            <FooterLink to="/wallet" label="Wallet" className="lg:flex" />
             {isClient && renderClientLinks()}
           </div>
         </div>
