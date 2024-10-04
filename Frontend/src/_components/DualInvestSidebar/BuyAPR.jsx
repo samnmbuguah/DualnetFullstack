@@ -2,14 +2,23 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const BuyAPR = ({ dark }) => {
-
   const exerciseCurrencyList = useSelector(
     (state) => state.duals.dualInvestments?.exerciseCurrencyList || []
   );
 
   return (
-    <div className={`font-inter-medium bg-transparent font-medium rounded-none w-auto h-auto text-[11px] mb-3 ${dark ? 'text-white' : 'text-[#979191]'}`}>
-      <div className="grid grid-cols-5 gap-1 mb-1">
+    <div
+      className={`font-inter-medium bg-transparent font-medium rounded-none w-auto h-auto text-[11px] mb-3 ${
+        dark ? "text-white" : "text-[#979191]"
+      }`}
+    >
+      <div
+        className={`grid grid-cols-5 gap-1 mb-1 pb-1 ${
+          dark
+            ? "border-b border-[#E2E2E2] border-opacity-30"
+            : "border-b border-[#857F76] border-opacity-30"
+        }`}
+      >
         <span className="font-inter-medium text-xs text-[#1D886A] mr-1 flex items-center justify-center">
           Buy Low
         </span>
