@@ -80,7 +80,7 @@ const DualInvestSidebar = ({ show, dark }) => {
         />
         <div className={`flex flex-col ml-auto h-full justify-between min-w-fit overflow-hidden ${dark ? 'text-white' : 'text-[#979191]'}`}>
           <BuyAPR dark={dark} />
-          <span className="font-inter-semibold text-xxs self-end">
+          <span className="font-inter-semibold text-xxs self-end mr-5">
             BTC Last Price: {spotPrice}
           </span>
           <SellAPR dark={dark} />

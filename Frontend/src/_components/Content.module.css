@@ -3,7 +3,7 @@
 }
 
 .contentLight {
-  @apply bg-[#FFF4E4] border-[#696767] border-[1px];
+  @apply bg-[#FFF4E4] border-[#C3C3C3] border-[1px];
 }
 
 .contentDark {

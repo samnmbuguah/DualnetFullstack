@@ -34,11 +34,13 @@ const DetailsSideBar = ({ user, dark }) => {
     fetchData();
   }, [authUser]);
 
+  const innerShadowClass = "text-shadow-[0_4px_4px_rgba(0,0,0,0.25)]";
+
   return (
     <div className="w-full">
       <div className="w-full">
         <div className="flex justify-between items-center">
-          <div className="text-[#D9CFBF] font-[syncopate-bold] text-xl shadow-inner">
+          <div className={`text-[#D9CFBF] font-[syncopate-bold] text-xl ${innerShadowClass}`}>
             INVESTMENT
           </div>
           <div className="text-[#D7AD7D] font-[syncopate-regular] !font-bold text-lg">
@@ -52,9 +54,9 @@ const DetailsSideBar = ({ user, dark }) => {
         >
           Since: 21.10.2023
         </small>
-        <Divider />
+        <Divider dark={dark} />
         <div className="flex justify-between items-center">
-          <div className="text-[#D9CFBF] font-[syncopate-bold] text-xl shadow-inner">
+          <div className={`text-[#D9CFBF] font-[syncopate-bold] text-xl ${innerShadowClass}`}>
             Assets USDT
             <span className="text-xs"> FUTURE</span>
           </div>
@@ -67,7 +69,7 @@ const DetailsSideBar = ({ user, dark }) => {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <div className="text-[#D9CFBF] font-[syncopate-bold] text-xl shadow-inner">
+          <div className={`text-[#D9CFBF] font-[syncopate-bold] text-xl ${innerShadowClass}`}>
             Assets USDT
             <span className="text-xs font-[inter-bold]"> Spot</span>
           </div>
@@ -79,8 +81,8 @@ const DetailsSideBar = ({ user, dark }) => {
             {balances[0]}
           </div>
         </div>
-        <Divider />
-        <div className="text-[#D9CFBF] font-[syncopate-bold] text-xl block shadow-inner">
+        <Divider dark={dark} />
+        <div className={`text-[#D9CFBF] font-[syncopate-bold] text-xl block ${innerShadowClass}`}>
           Profit
         </div>
         <div className="flex justify-between items-center font-[syncopate-regular] text-sm">
@@ -103,7 +105,7 @@ const DetailsSideBar = ({ user, dark }) => {
             125.66%
           </div>
         </div>
-        <hr className="bg-[#98938A] border-0 h-[0.3px]" />
+        <Divider dark={dark} />
       </div>
       <SmallChart dark={dark} />
     </div>

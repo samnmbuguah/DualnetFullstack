@@ -18,7 +18,7 @@ export function Content({
     <div className={contentClasses}>
       <Routes>
         <Route
-          path="/"
+          path="/chart"
           element={
             <PrivateRoute>
               <Home dark={isDarkMode} infoType={infoType} currentView="chart" />
@@ -106,7 +106,7 @@ export function Content({
           }
         />
         <Route
-          path="/dual-invest"
+          path="/"
           element={
             <PrivateRoute>
               <Home

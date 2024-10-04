@@ -18,7 +18,7 @@ export function Footer({ authUser, dark }) {
           Admin
         </NavLink>
       )}
-      <FooterLink to="/dual-invest" label="DUAL-INVEST" />
+      <FooterLink to="/" label="DUAL-INVEST" />
       <FooterLink to="/bot" label="Bot" />
       <FooterLink to="/clients" label="Sub-Clients" />
     </>
@@ -45,13 +45,13 @@ export function Footer({ authUser, dark }) {
   );
 
   return (
-    <div className="flex pt-4 justify-between pr-24">
+    <div className="flex pt-4 justify-between pr-20">
       <div className="flex justify-between w-full items-center text-[11px]">
         <div className="flex space-x-4 cursor-pointer"></div>
         <div className="flex place-items-baseline justify-between space-x-4">
           <div className="p flex justify-center">
             {isAdmin && renderAdminLinks()}
-            <FooterLink to="/wallet" label="Statement" className="lg:flex" />
+            <FooterLink to="/statement" label="Statement" className="lg:flex" />
             <FooterLink to="/exchange" label="Exchange" className="lg:flex" />
             {isClient && renderClientLinks()}
           </div>

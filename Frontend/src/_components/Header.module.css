@@ -33,7 +33,7 @@
 }
 
 .modeToggle {
-  @apply inline-flex cursor-pointer items-center;
+  @apply inline-flex cursor-pointer items-center justify-center;
 }
 
 .toggleButton {
