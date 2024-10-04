@@ -66,8 +66,9 @@ function Users({ setCurrentView, isDarkMode }) {
                         </p>
                     </div>
                     <NavLink to="/" className="flex items-center gap-3 font-syn-regular">
-                        <img width={150}  height={100} src={goYourChart}  className=" inline-block dark:hidden" alt="go your chart" property="true" />
-                        <span className='hidden text-[12px] text-white dark:block'>Go your Chart </span>{' '} <img width={30} src={darkChart} className='hidden dark:block' alt="power" />
+                        <img width={150} height={100} src={goYourChart} className={`inline-block ${isDarkMode ? 'hidden' : ''}`} alt="go to your chart" property="true" />
+                        <span className={`text-[12px] ${isDarkMode ? 'text-white' : 'hidden'}`}>Go to your Chart</span>{' '}
+                        <img width={30} src={darkChart} className={isDarkMode ? 'inline-block' : 'hidden'} alt="chart" />
                     </NavLink>
                     <button className="ml-10 inline-flex items-center text-xs bg-gradient-to-r from-[#777] to-[#0094FF] from-10% to-100% text-transparent bg-clip-text" onClick={()=>logout()}>
                         Logout<img height={37} width={29} src={power} alt="power" />

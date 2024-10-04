@@ -73,9 +73,7 @@ function AdminRow(props) {
               <div key={index} className="grid grid-flow-col">
                 <div className="w-full grid grid-cols-3  border-r-0 border-[#999] border-solid border-b lg:p-1 lg:px-5 p-1 pl-2 text-xs ">
                   <span
-                    className={`font-syncopate-light ${
-                      isDarkMode ? 'text-white' : 'text-[#555]'
-                    }`}>
+                    className={`font-syncopate-light text-[#555]`}>
                     {field}
                   </span>
                   <div className="col-span-2">
