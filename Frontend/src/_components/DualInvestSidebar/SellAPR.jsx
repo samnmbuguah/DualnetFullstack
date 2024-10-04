@@ -8,7 +8,7 @@ const SellAPR = ({ dark }) => {
 
   return (
     <div className={`font-inter-medium bg-transparent font-medium rounded-none w-auto h-auto text-[11px] mt-3 ${dark ? 'text-white' : 'text-[#979191]'}`}>
-      <div className={`grid grid-cols-5 gap-1 mb-1 pb-1 ${dark ? 'border-b border-[#E2E2E2]' : 'border-b border-[#857F76]'} border-opacity-30`}>
+      <div className={`grid grid-cols-5 gap-1 pb-1 mb-4 ${dark ? 'border-b border-[#E2E2E2]' : 'border-b border-[#857F76]'} border-opacity-30`}>
         <span className="font-inter-medium text-xs text-[#EA5F00] mr-1 flex items-center justify-center">
           Sell High
         </span>

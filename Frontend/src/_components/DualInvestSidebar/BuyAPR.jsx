@@ -13,7 +13,7 @@ const BuyAPR = ({ dark }) => {
       }`}
     >
       <div
-        className={`grid grid-cols-5 gap-1 mb-1 pb-1 ${
+        className={`grid grid-cols-5 gap-1 pb-1 mb-4 ${
           dark
             ? "border-b border-[#E2E2E2] border-opacity-30"
             : "border-b border-[#857F76] border-opacity-30"

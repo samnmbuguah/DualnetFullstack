@@ -49,7 +49,7 @@
 }
 
 .logo {
-  @apply w-[358px] h-[111px];
+  @apply w-[358px] h-[111px] pb-[14px];
 }
 
 /* Add these new styles at the end of the file */
