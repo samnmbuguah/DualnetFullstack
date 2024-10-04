@@ -54,7 +54,7 @@ const DualInvestSidebar = ({ show, dark }) => {
       }}
       className={`${
         show ? "right-0" : "hidden"
-      } bg-[#24282E] px-8 text-xs dark:bg-[transparent] dark:border-[#6D6D6D] rounded-[25px] font-inter text-white flex flex-col justify-between bg-[url('/_assets/Line 207.svg')] bg-no-repeat bg-center`}
+      } bg-[#24282E] px-8 text-xs dark:bg-[transparent] dark:border-[#6D6D6D] rounded-[25px] font-inter text-white flex flex-col justify-between`}
     >
       <div>
         <CryptoList dark={dark} />
