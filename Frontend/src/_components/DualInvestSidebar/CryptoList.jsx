@@ -37,8 +37,8 @@ const CryptoList = ({ dark }) => {
           } ${index !== 0 && index !== cryptoList.length - 1 ? "mx-2" : ""}`}
           style={{
             textShadow: dark
-              ? "0px 0px 0.3px rgba(255, 255, 255, 0.5)"
-              : "0px 0px 0.3px rgba(0, 0, 0, 0.5)",
+              ? "inset 0px 0px 0.3px rgba(255, 255, 255, 0.5)"
+              : "inset 0px 0px 0.3px rgba(0, 0, 0, 0.5)",
           }}
         >
           {crypto}

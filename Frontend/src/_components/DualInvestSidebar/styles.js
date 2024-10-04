@@ -5,7 +5,7 @@ const styles = {
   },
   light: {
     background: "#FEF6E6",
-    border: "1px #C9C5C5 solid",
+    border: "1px #C3C3C3 solid",
   },
 };
 

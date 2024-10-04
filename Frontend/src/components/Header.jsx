@@ -8,7 +8,7 @@ export function Header({ username, onLogout }) {
         <span 
           className="text-[35px] font-[syncopate-bold] text-[#A3A2A2] block w-full flex-shrink-1"
         >
-          <span style={{ textShadow: '0 4px 4px rgba(0,0,0,0.25)' }}>
+          <span style={{ textShadow: 'inset 0 4px 4px rgba(0,0,0,0.25)' }}>
             {username}
           </span>
         </span>

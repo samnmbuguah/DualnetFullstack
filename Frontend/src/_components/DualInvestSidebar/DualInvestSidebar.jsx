@@ -50,6 +50,7 @@ const DualInvestSidebar = ({ show, dark }) => {
         height: "493px",
         width: "100%",
         minWidth: "650px",
+        maxWidth: "1024px",
       }}
       className={`${
         show ? "right-0" : "hidden"

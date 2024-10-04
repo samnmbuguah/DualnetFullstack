@@ -17,7 +17,7 @@ const DualSwitch = ({ dark }) => {
           dark ? "text-[#A3A2A2]" : "text-[#A3A2A2]"
         }`}
       >
-        <span style={{ textShadow: "0 4px 4px rgba(0,0,0,0.25)" }}>
+        <span style={{ textShadow: "inset 0 4px 4px rgba(0,0,0,0.25)" }}>
           DUAL-INVESTMENT
         </span>
       </h1>

@@ -3,8 +3,7 @@
 }
 
 .contentLight {
-  @apply bg-[#FFF4E4] border-[#C3C3C3];
-  box-shadow: 1px 4px 4px #C3C3C3 inset;
+  @apply bg-[#FFF4E4] border-[#696767];
 }
 
 .contentDark {
