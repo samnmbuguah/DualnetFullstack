@@ -11,7 +11,7 @@ import goYourChart from '../_assets/goYourChart.svg';
 import power from '../_assets/log-out.png';
 import darkChart from '../_assets/dark-sub-client.png';
 
-function Users({setCurrentView}) {
+function Users({ setCurrentView, isDarkMode }) {
 
     const dispatch = useDispatch();
     const { user: authUser } = useSelector(x => x.auth);
@@ -77,7 +77,7 @@ function Users({setCurrentView}) {
                 <div className="grid grid-cols-1 mt-8 w-full text-white">
                 { 
                     usersDetail && usersDetail.rows && usersDetail.rows.map((e) => {
-                        return <AdminRow editUser={editUser} deleteUser={deleteUser} key={e.id} data={e} details={usersDetail.rows}/>;
+                        return <AdminRow editUser={editUser} deleteUser={deleteUser} key={e.id} data={e} details={usersDetail.rows} isDarkMode={isDarkMode}/>;
                     })
                 }
                 </div>

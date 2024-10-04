@@ -52,7 +52,7 @@ export function Content({
             path="/admin"
             element={
               <PrivateRoute>
-                <Users />
+                <Users isDarkMode={isDarkMode} />
               </PrivateRoute>
             }
           />

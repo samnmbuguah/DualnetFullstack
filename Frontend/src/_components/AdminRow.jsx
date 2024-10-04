@@ -3,7 +3,7 @@ import { FaEdit, FaTrashAlt, FaSave } from "react-icons/fa";
 import Swal from 'sweetalert2';
 
 function AdminRow(props) {
-  const { data, editUser, deleteUser, details} = props;
+  const { data, editUser, deleteUser, details, isDarkMode } = props;
   const [editFlag, setEditFlag] = useState(0);
   let userData = {
     Admin_id:data.Admin_id,
@@ -73,11 +73,23 @@ function AdminRow(props) {
               <div key={index} className="grid grid-flow-col">
                 <div className="w-full grid grid-cols-3  border-r-0 border-[#999] border-solid border-b lg:p-1 lg:px-5 p-1 pl-2 text-xs ">
                   <span
-                    className={`font-syncopate-light text-[#555] dark:text-dark-text`}>
+                    className={`font-syncopate-light ${
+                      isDarkMode ? 'text-white' : 'text-[#555]'
+                    }`}>
                     {field}
                   </span>
                   <div className="col-span-2">
-                    <input type={ ['wallet' ,'investment', 'Net_client_share_in_percent', 'account_no'].includes(field)?'number':(field==='begin_date'?'date':'text') } className="font-syncopate-light text-[#555] w-[400px] dark:text-dark-text dark:focus:bg-[#454545] dark:bg-[#454545]" onChange={(e)=>onChangeData(e,field)} disabled={!editFlag} defaultValue={data[field]} />
+                    <input 
+                      type={ ['wallet' ,'investment', 'Net_client_share_in_percent', 'account_no'].includes(field)?'number':(field==='begin_date'?'date':'text') } 
+                      className={`font-syncopate-light w-[400px] ${
+                        isDarkMode
+                          ? 'text-white bg-[#454545] focus:bg-[#454545]'
+                          : 'text-[#555]'
+                      }`} 
+                      onChange={(e)=>onChangeData(e,field)} 
+                      disabled={!editFlag} 
+                      defaultValue={data[field]} 
+                    />
                   </div>
                 </div>
               </div> 
