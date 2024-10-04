@@ -56,7 +56,7 @@ function Users({setCurrentView}) {
     }
 
     return (
-        <div className="h-[40rem] overflow-y-auto text-white">
+        <div className="h-auto overflow-y-auto text-white">
             <div className="py-4 mx-24">
                 <img width={96} height={96} src={logo} className="pb-3" alt=""  />
                 <div className="flex gap-6 justify-between items-center">

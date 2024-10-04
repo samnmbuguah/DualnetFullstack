@@ -1,15 +1,15 @@
 .header {
-  @apply flex justify-between w-full items-start;
+  @apply flex justify-between w-full items-center flex-shrink max-w-[1440px];
 }
 
 @media (max-width: 768px) {
   .header {
-    @apply flex-col items-center;
+    @apply flex-col items-center justify-center;
   }
 }
 
 .headerNav {
-  @apply flex justify-between items-center text-xl self-end min-w-fit w-[437px] h-[45px] flex-shrink-0;
+  @apply flex justify-between items-center text-xl self-end min-w-fit w-[437px] h-[45px] flex-shrink;
 }
 
 .headerText {

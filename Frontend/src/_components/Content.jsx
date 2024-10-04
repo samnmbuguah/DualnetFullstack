@@ -11,7 +11,6 @@ export function Content({
   isDarkMode,
   infoType,
   isAuthRoute,
-  screenWidth,
 }) {
   const contentStyle = {
     boxShadow: isDarkMode
