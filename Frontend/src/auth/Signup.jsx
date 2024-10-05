@@ -74,7 +74,7 @@ function Signup() {
                     className="mt-3 md:mt-10 w-full flex justify-center items-center flex-col">
                     <input
                         required
-                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base  text-[#887F6F] placeholder:text-[#887F6F] w-full md:w-auto dark:placeholder:text-[#887F6F] dark:border-orange-300"
+                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
                         name="email" 
                         type="email" 
                         {...register('email')}
@@ -84,7 +84,7 @@ function Signup() {
                     <div className="text-red-500 text-xs h-3">{errors.email?.message}</div>
                     <input
                         required
-                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base  text-[#887F6F] placeholder:text-[#887F6F] w-full md:w-auto dark:placeholder:text-[#887F6F] dark:border-orange-300"
+                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
                         name="username" 
                         type="text" 
                         {...register('username')}
@@ -95,7 +95,7 @@ function Signup() {
                     
                     <input
                         required
-                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base  text-[#887F6F] placeholder:text-[#887F6F] mt-2 w-full md:w-auto dark:placeholder:text-[#887F6F] dark:border-orange-300"
+                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] mt-2 w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
                         name="password" 
                         type="password" 
                         {...register('password')}
@@ -105,7 +105,7 @@ function Signup() {
                     <div className="text-red-500 text-xs h-3">{errors.password?.message}</div>
                     <input
                         required
-                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base  text-[#887F6F] placeholder:text-[#887F6F] mt-2 w-full md:w-auto dark:placeholder:text-[#887F6F] dark:border-orange-300"
+                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] mt-2 w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
                         name="repassword" 
                         type="password" 
                         {...register('repassword')}
@@ -122,7 +122,7 @@ function Signup() {
                             <input type="checkbox" name="confirm" id="confirm" {...register("confirm")}/>{" "}
                             <span 
                             data-tooltip-id="disclaimerTooltip"
-                            className="text-[rgb(105,105,105) text-sm dark:text-[#887F6F]">
+                            className="text-[rgb(105,105,105)] text-sm dark:text-white">
                             I accept Terms of Service**
                             </span>
                             <ReactTooltip id="disclaimerTooltip" place='right' type="light" style={{ width: '400px',color: '#D6AC7C',textAlign:'left' }}>
@@ -148,8 +148,7 @@ function Signup() {
                         </div>
                         <button
                             disabled={formState.isSubmitting}
-                            className="text-[#887F6F] bg-neutral-800 border border-orange-300 w-full md:px-20 py-1 rounded-3xl mb-5 whitespace-nowrap"
-                            >
+                            className="text-[#887F6F] bg-neutral-800 border border-orange-300 w-full md:px-20 py-1 rounded-3xl mb-5 whitespace-nowrap dark:text-white dark:bg-neutral-700">
                             {formState.isSubmitting && <span className="spinner-border spinner-border-sm me-1"></span>}Sign up
                         </button>
                     </div>
@@ -157,7 +156,7 @@ function Signup() {
                     <div
                     style={{ fontFamily: "'tomorrow-medium', sans-serif" }}
                     className="mt-3 text-center">
-                    <span className="text-[rgb(105,105,105)  text-base dark:text-[#887F6F]">
+                    <span className="text-[rgb(105,105,105)] text-sm dark:text-white">
                         Already have an account?{" "}
                     </span>
                     <NavLink
