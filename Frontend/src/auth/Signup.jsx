@@ -74,7 +74,7 @@ function Signup() {
                     className="mt-3 md:mt-10 w-full flex justify-center items-center flex-col">
                     <input
                         required
-                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
+                        className="bg-transparent border-b-2 border-[#544A4A] outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
                         name="email" 
                         type="email" 
                         {...register('email')}
@@ -84,7 +84,7 @@ function Signup() {
                     <div className="text-red-500 text-xs h-3">{errors.email?.message}</div>
                     <input
                         required
-                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
+                        className="bg-transparent border-b-2 border-[#544A4A] outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
                         name="username" 
                         type="text" 
                         {...register('username')}
@@ -95,7 +95,7 @@ function Signup() {
                     
                     <input
                         required
-                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] mt-2 w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
+                        className="bg-transparent border-b-2 border-[#544A4A] outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] mt-2 w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
                         name="password" 
                         type="password" 
                         {...register('password')}
@@ -105,7 +105,7 @@ function Signup() {
                     <div className="text-red-500 text-xs h-3">{errors.password?.message}</div>
                     <input
                         required
-                        className="bg-transparent border-b-2 border-black outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] mt-2 w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
+                        className="bg-transparent border-b-2 border-[#544A4A] outline-none p-1 md:p-2 text-sm md:text-base text-[#887F6F] placeholder:text-[#887F6F] mt-2 w-full md:w-auto dark:border-orange-300 dark:text-white dark:placeholder:text-gray-400"
                         name="repassword" 
                         type="password" 
                         {...register('repassword')}
