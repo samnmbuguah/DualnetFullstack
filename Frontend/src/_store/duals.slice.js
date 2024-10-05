@@ -152,6 +152,18 @@ const dualsSlice = createSlice({
     updateShortSize: (state, action) => {
       state.shortSize = action.payload;
     },
+    updateInvestCurrencyShare: (state, action) => {
+      const { index, value } = action.payload;
+      if (state.dualInvestments.investCurrencyList[index]) {
+        state.dualInvestments.investCurrencyList[index].shareCount = value;
+      }
+    },
+    updateExerciseCurrencyShare: (state, action) => {
+      const { index, value } = action.payload;
+      if (state.dualInvestments.exerciseCurrencyList[index]) {
+        state.dualInvestments.exerciseCurrencyList[index].shareCount = value;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -285,5 +297,7 @@ export const {
   updateSelectedCrypto,
   setStrikePrice,
   updateShortSize,
+  updateInvestCurrencyShare,
+  updateExerciseCurrencyShare,
 } = dualsSlice.actions;
 export const dualsReducer = dualsSlice.reducer;

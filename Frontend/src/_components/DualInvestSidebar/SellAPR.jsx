@@ -1,10 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateInvestCurrencyShare } from "../../_store/duals.slice";
 
 const SellAPR = ({ dark }) => {
+  const dispatch = useDispatch();
   const investCurrencyList = useSelector(
     (state) => state.duals.dualInvestments?.investCurrencyList || []
   );
+
+  const handleShareChange = (index, value) => {
+    dispatch(updateInvestCurrencyShare({ index, value }));
+  };
 
   return (
     <div className={`font-inter-medium bg-transparent font-medium rounded-none w-auto h-auto text-[11px] mt-3 ${dark ? 'text-white' : 'text-[#979191]'}`}>
@@ -48,7 +54,12 @@ const SellAPR = ({ dark }) => {
                 : ""
             } hover:border-[0.3px] hover:border-[#9A9898] hover:rounded-[3px] hover:shadow-md h-[15px] flex items-center justify-center`}
           >
-            {item.shareCount}
+            <input
+              type="number"
+              value={item.shareCount}
+              onChange={(e) => handleShareChange(index, e.target.value)}
+              className="bg-transparent w-[35px] text-center outline-none p-0 m-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            />
           </span>
           <span
             className={`${
