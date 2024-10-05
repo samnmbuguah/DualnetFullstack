@@ -37,7 +37,7 @@
 }
 
 .toggleButton {
-  @apply w-[21px] h-[21px] ml-2;
+  @apply w-[21px] h-[21px] ml-2 mb-[1px];
 }
 
 .headerLink {

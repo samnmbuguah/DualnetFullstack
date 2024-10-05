@@ -11,7 +11,7 @@ export function Header({ isDarkMode, toggleDarkMode, showInfo, logout, isAuthRou
 
   return (
     <header className={styles.header}>
-      <img className={styles.logo} src={isDarkMode ? darkLogo : lightLogo} alt="logo" />
+      <img className={styles.logo} src={isDarkMode ? darkLogo : lightLogo} alt="logo"/>
       <div className={`${styles.headerNav}`}>
         <span className={styles.modeToggle} onClick={toggleDarkMode}>
           <span className={headerTextClass}>MODE</span>
