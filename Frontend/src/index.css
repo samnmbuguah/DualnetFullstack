@@ -272,3 +272,9 @@ body {
   height: 100%;
 }
 
+@layer base {
+  .dark {
+    @apply bg-gray-900 text-white;
+  }
+}
+
