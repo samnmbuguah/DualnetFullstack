@@ -37,13 +37,7 @@ class PollPrices {
           ticker
         );
 
-        // Skip to the next ticker if liquidity is insufficient
-        if (!futuresResponse || !spotResponse) {
-          console.log(
-            `Skipping ticker ${ticker} due to insufficient liquidity`
-          );
-          continue;
-        }
+        // Remove the check for insufficient liquidity
         const spotPrice = parseFloat(spotResponse.asks[0][0]);
         const futuresPrice = parseFloat(futuresResponse.bids[0].p);
 

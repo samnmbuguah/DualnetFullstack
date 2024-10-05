@@ -14,18 +14,7 @@ async function listFuturesOrderBook(settle, contract, opts = defaultOpts) {
     const value = await api.listFuturesOrderBook(settle, contract, opts);
     const { asks, bids } = value.body;
 
-    // Calculate spread as a percentage
-    const bidPrice = parseFloat(bids[0].p);
-    const askPrice = parseFloat(asks[0].p);
-    const spreadPercent = ((askPrice - bidPrice) / askPrice) * 100;
-
-    // Check spread
-    if (spreadPercent < 0.5) {
-      console.log(`Spread for ${contract} is too low: ${spreadPercent}%`);
-      return null; // Skip further calculations
-    }
-
-    // Proceed with other calculations if spread is sufficient
+    // Return the order book data without any checks
     return { asks, bids };
   } catch (error) {
     console.error(error);

@@ -9,30 +9,11 @@ const defaultOpts = {
 };
 
 async function listOrderBook(currencyPair, opts = defaultOpts) {
-  const defaultOpts = {
-    interval: "0", // string | Interval of order depth data
-    limit: 1, // number | Maximum number of order depth data in asks or bids
-    withId: false,
-  };
-
   try {
     const value = await api.listOrderBook(currencyPair, opts);
     const { asks, bids } = value.body;
 
-    // Calculate spread
-    const bidPrice = parseFloat(bids[0][0]);
-    const askPrice = parseFloat(asks[0][0]);
-    const spread = askPrice - bidPrice;
-    const spreadPercent = ((askPrice - bidPrice) / askPrice) * 100;
-
-    // Check spread
-    if (spreadPercent > 0.5) {
-      console.log(`Spread for ${currencyPair} is too low: ${spread}`);
-      return null; // Skip further calculations
-    }
-
-    // Proceed with other calculations if liquidity is sufficient
-    const lowestAsk = asks[0];
+    // Return the order book data without any checks
     return { asks, bids };
   } catch (error) {
     console.error(error);
