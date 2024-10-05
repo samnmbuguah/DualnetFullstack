@@ -37,6 +37,7 @@ let corsOptions = {
     "http://172.16.5.4:3000",
     "https://dualnet.ch",
     "http://dualnet.ch",
+    "https://<your-codespace-url>-3000.app.github.dev",  // Add this line
   ],
 };
 
@@ -74,9 +75,10 @@ app.use((err, req, res, next) => {
 const io = socketIO(server, { cors: corsOptions });
 
 io.on("connection", (socket) => {
-  // When a client connects, they should emit a 'join' event with their userId
+  console.log("New client connected:", socket.id);
+
   socket.on("join", (userId) => {
-    // The client joins a room with a name equal to their userId
+    console.log(`User ${userId} joined room`);
     socket.join(userId);
   });
 
@@ -95,10 +97,14 @@ io.on("connection", (socket) => {
       }
     }
   });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected:", socket.id);
+  });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running at port ${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running at http://0.0.0.0:${PORT}`);
   StreamPrices(io); // Start streaming prices after the server has started
 });
 
