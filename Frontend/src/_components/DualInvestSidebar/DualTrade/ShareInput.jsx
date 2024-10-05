@@ -17,12 +17,20 @@ const ShareInput = ({ label, dark, labelType, textColor = "text-white", value, o
     }
   };
 
-  const getBorderColor = () => {
-    return dark ? "border-white" : "border-[#857F76]";
+  const getStrokeColor = () => {
+    return dark ? "#FFFFFF" : "#C3C3C3";
   };
 
   return (
-    <div className={`flex items-center justify-between font-inter-medium text-sm leading-normal w-[136px] h-[29px] my-2 p-2 rounded-lg ${getBorderColor()} mr-4 shadow-[inset_0_0_0_1px_#454A57] drop-shadow-md ${getBackgroundColor()}`}>
+    <div className={`
+      flex items-center justify-between 
+      font-inter-medium text-sm leading-normal 
+      w-[136px] h-[29px] my-2 p-2 
+      rounded-lg mr-4 
+      ${getBackgroundColor()}
+      shadow-[inset_0_0_0_1px_${getStrokeColor()}]
+      drop-shadow-md
+    `}>
       <span className={getLabelColor()}>{label}</span>
       <input
         type="number"
