@@ -56,5 +56,3 @@ async function autoBot(
     return false;
   }
 }
-
-module.exports = autoBot;
