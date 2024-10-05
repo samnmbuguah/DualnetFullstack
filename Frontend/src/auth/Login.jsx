@@ -62,18 +62,18 @@ function Login() {
             <form
               method="post"
               onSubmit={handleSubmit(onSubmit)}
-              className="w-auto h-full flex justify-center items-center flex-col px-10 py-8 dark:from-[rgb(147, 39, 232)] dark:to-[#454555] dark:from-0 dark:to-90%"
+              className="w-auto h-full flex justify-center items-center flex-col px-10 py-8  from-[rgb(147, 39, 232)]  to-[#454555]  from-0  to-90%"
             >
               <h1
                 style={{ fontFamily: "'tomorrow-medium', sans-serif" }}
-                className="drop-shadow-xl text-center text-3xl leading-7 whitespace-nowrap text-[#887F6F] dark:from-[#3A3737] dark:to-[#44AAFF]"
+                className="drop-shadow-xl text-center text-3xl leading-7 whitespace-nowrap text-[#887F6F]  from-[#3A3737]  to-[#44AAFF]"
               >
                 Welcome into <br /> dualnet
               </h1>
 
               <div
                 style={{ fontFamily: "'tomorrow-medium', sans-serif" }}
-                className="text-center font-medium mt-8 tracking-[0.48] text-[#7c7c7c] dark:text-[#887F6F]"
+                className="text-center font-medium mt-8 tracking-[0.48] text-[#887F6F]"
               >
                 <h1 className="text-3xl">Sign in</h1>
               </div>
@@ -85,7 +85,7 @@ function Login() {
                 <input
                   className={`bg-transparent border-b-[1px] border-black font-tomorrow-light outline-none p-2 text-lg text-[#887F6F] placeholder:text-[rgb(107,102,109)] w-auto ${
                     errors.email ? "is-invalid" : ""
-                  } dark:placeholder:text-[#887F6F] dark:border-orange-300`}
+                  }  placeholder:text-[#887F6F]  border-orange-300`}
                   type="email"
                   name="email"
                   id="email"
@@ -99,7 +99,7 @@ function Login() {
                   <input
                     className={`bg-transparent border-b-[1px] border-black outline-none p-2 text-lg font-syncopate-light text-[#887F6F] placeholder:text-[rgb(107,102,109)] mt-5 w-auto ${
                       errors.password ? "is-invalid" : ""
-                    } dark:placeholder:text-[#887F6F] dark:border-orange-300`}
+                    }  placeholder:text-[#887F6F]  border-orange-300`}
                     type={isEye ? "password" : "text"}
                     name="password"
                     id="password"
@@ -131,7 +131,7 @@ function Login() {
                   />{" "}
                   <span
                     data-tooltip-id="disclaimerTooltip"
-                    className="text-[rgb(105,105,105) text-sm dark:text-[#887F6F]"
+                    className="text-[rgb(105,105,105) text-sm  text-[#887F6F]"
                   >
                     I accept Terms of Service**
                   </span>
@@ -208,7 +208,7 @@ function Login() {
 
               <NavLink
                 style={{ fontFamily: "'tomorrow-medium', sans-serif" }}
-                className="text-base mt-5 text-center whitespace-nowrap dark:text-[#887F6F] underline"
+                className="text-base mt-5 text-center whitespace-nowrap  text-[#887F6F] underline"
                 to="/signup"
               >
                 not a member? Sign up now!
@@ -223,9 +223,9 @@ function Login() {
             <form
               method="post"
               onSubmit={handleSubmit(onSubmit)}
-              className="w-auto h-full flex justify-center items-center flex-col pt-[35px] pb-[115px] dark:from-[rgb(147, 39, 232)]"
+              className="w-auto h-full flex justify-center items-center flex-col pt-[35px] pb-[115px]  from-[rgb(147, 39, 232)]"
             >
-              <h1 className="login-title text-center text-base whitespace-nowrap bg-gradient-to-r from-[#483e4e] to-[#7df04a] from-10% to-100% text-transparent bg-clip-text dark:text-[#887F6F]">
+              <h1 className="login-title text-center text-base whitespace-nowrap bg-gradient-to-r from-[#483e4e] to-[#7df04a] from-10% to-100% text-transparent bg-clip-text  text-[#887F6F]">
                 Welcome into <br /> dualnet
               </h1>
 
@@ -279,7 +279,7 @@ function Login() {
                   />{" "}
                   <span
                     data-tooltip-id="disclaimerTooltip"
-                    className="text-[rgb(105,105,105) text-sm dark:text-[#887F6F]"
+                    className="text-[rgb(105,105,105) text-sm  text-[#887F6F]"
                   >
                     I accept Terms of Service**
                   </span>
