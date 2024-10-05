@@ -3,8 +3,6 @@ import { useDispatch } from "react-redux";
 import {
   updateBuyLowAmount,
   updateSellHighAmount,
-  updateAprToBuy,
-  updateAprToSell,
 } from "_store/duals.slice";
 import AprBuyInput from "./DualTrade/AprBuyInput";
 import ShareInput from "./DualTrade/ShareInput";
@@ -20,8 +18,6 @@ const DualTrade = ({
   cryptoBalance = 0.0,
   buyLowAmount = 100,
   sellHighAmount = 0.00156,
-  aprToBuy = 400,
-  aprToSell = 400,
 }) => {
   const dispatch = useDispatch();
   const textColor = dark ? "text-[#01D497]" : "text-[#857F76]";
@@ -31,10 +27,7 @@ const DualTrade = ({
 
   return (
     <div className="flex flex-col items-start justify-center w-auto h-auto bg-transparent rounded-lg">
-      <AprBuyInput
-        aprToBuy={aprToBuy}
-        updateAprToBuy={(value) => dispatch(updateAprToBuy(value))}
-      />
+      <AprBuyInput />
 
       <AvailableBalance
         shareValue={buyLowPerShare}
@@ -90,10 +83,7 @@ const DualTrade = ({
         currency={selectedCrypto}
       />
 
-      <AprSellInput
-        aprToSell={aprToSell}
-        updateAprToSell={(value) => dispatch(updateAprToSell(value))}
-      />
+      <AprSellInput />
     </div>
   );
 };

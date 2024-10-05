@@ -13,7 +13,7 @@ const initialState = {
   cryptoBalance: 0.00,
   buyLowAmount: 100,
   sellHighAmount: 0.00156,
-  aprToBuy: 400,
+  aprToBuy: localStorage.getItem('aprToBuy') ? Number(localStorage.getItem('aprToBuy')) : 400,
   aprToSell: 400,
   status: "idle",
   error: null,
@@ -136,6 +136,7 @@ const dualsSlice = createSlice({
     },
     updateAprToBuy: (state, action) => {
       state.aprToBuy = action.payload;
+      localStorage.setItem('aprToBuy', action.payload);
     },
     updateAprToSell: (state, action) => { // Add this new reducer
       state.aprToSell = action.payload;
