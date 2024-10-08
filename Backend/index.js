@@ -37,15 +37,26 @@ let corsOptions = {
     "http://172.16.5.4:3000",
     "https://dualnet.ch",
     "http://dualnet.ch",
-    "https://<your-codespace-url>-3000.app.github.dev",  // Add this line
   ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 };
 
 if (process.env.ENVIRONMENT === "development") {
-  corsOptions = { origin: "*" }; // Allow all origins in development
+  corsOptions = { 
+    origin: "*",
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  }; // Allow all origins in development
 }
 
+// Use the cors middleware with the options
 app.use(cors(corsOptions));
+
+// Add a pre-flight route for OPTIONS requests
+app.options('*', cors(corsOptions));
 
 const populateTables = require("./jobs/PopulateTables.js");
 const StreamPrices = require("./services/StreamPrices.js");
@@ -68,6 +79,9 @@ if (process.env.ENVIRONMENT !== "development") {
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
+  res.header("Access-Control-Allow-Origin", corsOptions.origin);
+  res.header("Access-Control-Allow-Methods", corsOptions.methods.join(','));
+  res.header("Access-Control-Allow-Headers", corsOptions.allowedHeaders.join(','));
   res.status(500).send("Something broke!");
 });
 
