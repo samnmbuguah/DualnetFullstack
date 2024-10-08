@@ -1,9 +1,7 @@
 import { store, authActions } from '_store';
 import Swal from 'sweetalert2';
 
-export const api_url = process.env.REACT_APP_ENVIRONMENT === 'production' 
-    ? 'https://dualnet-production.up.railway.app' 
-    : 'http://localhost:3042';
+export const api_url = "http://localhost:3042";
 
 function request(method) {
     return async (url, body) => {
