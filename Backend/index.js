@@ -178,13 +178,18 @@ cron.schedule(
 cron.schedule('* * * * *', async () => {
     // Fetch all bots where isClose is false
     const bots = await Bots.findAll({ where: { isClose: false } });
-    if (bots.length) {
-        try {
-            await closeByProfit(io, bots);
-            console.log('Completed the Close By profit loop');
-        } catch (error) {
-            console.error('Error closing trades:', error);
+    
+    try {
+        const botDataForUsers = await closeByProfit(io, bots);
+        
+        if (Object.keys(botDataForUsers).length === 0) {
+            // If no active bots, emit an empty botDataForUsers object to all connected clients
+            io.emit("botData", {});
         }
+        
+        console.log('Completed the Close By profit loop');
+    } catch (error) {
+        console.error('Error in closeByProfit:', error);
     }
 });
 

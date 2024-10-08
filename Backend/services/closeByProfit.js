@@ -119,7 +119,10 @@ async function closeByProfit(io, bots) {
   for (const userId in botDataForUsers) {
     const userIdInt = parseInt(userId, 10);
     io.to(userIdInt).emit("botData", botDataForUsers[userId]);
-    // console.log("botDataForUsers", botDataForUsers[userId])
   }
+
+  // Return botDataForUsers, even if it's empty
+  return botDataForUsers;
 }
+
 module.exports = closeByProfit;
