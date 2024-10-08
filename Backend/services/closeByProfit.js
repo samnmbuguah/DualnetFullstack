@@ -2,9 +2,10 @@ const sellSpotAndLongFutures = require("./closeTrades");
 const fetchPosition = require("./getPosition");
 const fetchSpotBalance = require("./fetchSpotBalance");
 const Bots = require("../models/BotsModel.js");
-const getCurrentSpotPrice = require("./getCurrentSpotPrice");
+// Remove getCurrentSpotPrice import
 const listFuturesOrderBook = require("./listFuturesOrderBook.js");
-const getContractDetails = require("./getContractDetails.js")
+// Remove getContractDetails import
+const listSpotOrderBook = require("./listSpotOrderBook");
 const cron = require("node-cron");
 
 async function closeByProfit(io, bots) {
@@ -18,12 +19,28 @@ async function closeByProfit(io, bots) {
       bot.matchingPairId,
       bot.userId
     );
-    const futuresPrice = await getContractDetails(bot.settle, bot.matchingPairId);
+    
+    // Get spot order book and use the first bid as currentSpotPrice
+    const spotOrderBook = await listSpotOrderBook(bot.matchingPairId);
+    let currentSpotPrice = parseFloat(spotOrderBook.bids[0][0]);
+
+    // Get futures order book and use the first ask as futuresPrice
+    const futuresOrderBook = await listFuturesOrderBook(bot.settle, bot.matchingPairId);
+    let futuresPrice = parseFloat(futuresOrderBook.asks[0].p);
+
     const spotBalance = await fetchSpotBalance(bot.matchingPairId, bot.userId);
     let availableSpotBalance = parseFloat(spotBalance.available);
 
-    let currentSpotData = await getCurrentSpotPrice(bot.matchingPairId);
-    let currentSpotPrice = parseFloat(currentSpotData.highestBid);
+    // Check if both spot and futures positions are closed
+    if (currentFuturesPosition.size === 0) {
+      // Update the bot in the database to set isClose to true
+      await Bots.update(
+        { isClose: true, status: "Closed from exchange" },
+        { where: { positionId: bot.positionId } }
+      );
+      continue; // Skip to the next bot
+    }
+
     const spotSize = Math.min(
       Number(availableSpotBalance),
       Number(bot.spotSize)
@@ -71,6 +88,7 @@ async function closeByProfit(io, bots) {
     if (!botDataForUsers[bot.userId]) {
       botDataForUsers[bot.userId] = [];
     }
+    botDataForUsers[bot.userId].push(botData);
 
     if (percentagePnl > bot.profitThreshold || currentDifference > bot.closeByDeviation) {
       const reason = `Profit threshold of ${bot.profitThreshold} reached or deviation of ${bot.closeByDeviation} reached.`;
@@ -94,8 +112,6 @@ async function closeByProfit(io, bots) {
         adl: currentFuturesPosition.adlRanking,
         highestProfit: highestProfit,
       });
-
-      botDataForUsers[bot.userId].push(botData);
     }
   }
 
@@ -107,4 +123,3 @@ async function closeByProfit(io, bots) {
   }
 }
 module.exports = closeByProfit;
- 
