@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { PrivateRoute } from "_components";
 import { Users, Home } from "pages";
 import { Login, Signup } from "auth";
+import { FAQ, Whitepaper } from "pages"; // Import these new components
 import styles from "./Content.module.css";
 
 export function Content({
@@ -120,6 +121,23 @@ export function Content({
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<Navigate to="/" />} />
+        
+        <Route
+          path="/faq"
+          element={
+            <PrivateRoute>
+              <FAQ isDarkMode={isDarkMode} />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/whitepaper"
+          element={
+            <PrivateRoute>
+              <Whitepaper isDarkMode={isDarkMode} />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </div>
   );
