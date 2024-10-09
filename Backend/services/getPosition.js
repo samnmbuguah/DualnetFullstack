@@ -20,6 +20,12 @@ async function fetchPosition(settle, contract, subClientId) {
 
 module.exports = fetchPosition;
 
-// // Call the function
-// fetchPosition('usdt', 'MOVEZ_USDT',3)
-//     .then(() => console.log('Futures position fetched successfully'))
+// // Call the function inside an async function
+// (async () => {
+//     try {
+//         const position = await fetchPosition('usdt', 'ETH_USDT', 1);
+//         console.log(position);
+//     } catch (error) {
+//         console.error('Error fetching position:', error);
+//     }
+// })();
