@@ -41,7 +41,7 @@ async function checkTrades() {
       const percentageDifference = Math.abs((futuresFullSize - balance) / balance) * 100;
       const closingSize = positionSize * -1;
       // If the percentage difference is greater than 5%, call sellSpotPosition and closeShort
-      if (percentageDifference > 5) {
+      if (percentageDifference > 50) {
         console.log(
           "Selling spot and closing short due to percentage difference"
         );
