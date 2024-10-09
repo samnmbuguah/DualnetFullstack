@@ -28,7 +28,6 @@ async function checkTrades() {
     for (const bot of bots) {
       let balance = await fetchSpotBalance(bot.matchingPairId, bot.userId);
       balance = parseFloat(balance.available);
-      const balanceInUsdt = balance * bot.currentPrice;
       const position = await fetchPosition(
         bot.settle,
         bot.matchingPairId,
@@ -36,11 +35,11 @@ async function checkTrades() {
       );
 
        // If the position is undefined or null, continue to the next bot
-      if (position === undefined || position === null) {
+      if (position === undefined || position === null || balance === undefined || balance === null) {
         console.log(`Position is undefined or null for bot with positionId ${bot.positionId}. Skipping to next bot.`);
         continue;
       }
-
+      const balanceInUsdt = balance * bot.currentPrice;
       const positionSize = position.size;
       const futuresFullSize = -positionSize * bot.quantoMultiplier;
 
