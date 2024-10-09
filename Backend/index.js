@@ -29,10 +29,12 @@ try {
 
 console.log("IN", process.env.ENVIRONMENT, "ENVIRONMENT");
 const corsOptions = {
-  origin: ["http://localhost:3000", "http://dualnet.ch"],
+  origin: [
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
+    "http://dualnet.ch",
+  ],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
@@ -142,7 +144,7 @@ checkTrades();
 
 
 server
-  .listen(PORT, () => {
+  .listen(PORT, "0.0.0.0", () => {
     console.log(`Server running at http://localhost:${PORT}`);
     StreamPrices(io);
   })
