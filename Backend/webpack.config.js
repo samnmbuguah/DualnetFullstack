@@ -5,24 +5,24 @@ const port = process.env.PORT;
 
 let ENVIRONMENT_VARIABLES = {
   'process.env.ENVIRONMENT': JSON.stringify(environment || 'development'),
-  'process.env.PORT': JSON.stringify(port || '3042'),
+  'process.env.PORT': JSON.stringify(port),
 };
 console.log('environment:::::', environment);
 
 if (environment === 'test') {
   ENVIRONMENT_VARIABLES = {
     'process.env.ENVIRONMENT': JSON.stringify(environment),
-    'process.env.PORT': JSON.stringify(port || '3042'),
+    'process.env.PORT': JSON.stringify(port),
   };
 } else if (environment === 'production') {
   ENVIRONMENT_VARIABLES = {
     'process.env.ENVIRONMENT': JSON.stringify(environment),
-    'process.env.PORT': JSON.stringify(port || '3042'),
+    'process.env.PORT': JSON.stringify(port),
   };
 } else {
   ENVIRONMENT_VARIABLES = {
     'process.env.ENVIRONMENT': JSON.stringify(environment || 'development'),
-    'process.env.PORT': JSON.stringify(port || '3042'),
+    'process.env.PORT': JSON.stringify(port),
   };
 }
 

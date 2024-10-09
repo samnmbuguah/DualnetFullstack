@@ -76,8 +76,10 @@ function createExtraActions() {
       `${name}/signup`,
       async (data, { rejectWithValue }) => {
         try {
-          return await fetchWrapper.post(`${baseUrl}/register`, data);
+          const response = await fetchWrapper.post(`${baseUrl}/register`, data);
+          return response;
         } catch (error) {
+          console.error('Signup error:', error);
           return rejectWithValue(error.message || 'Signup failed');
         }
       }

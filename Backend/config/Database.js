@@ -40,3 +40,59 @@ try {
 }
 
 module.exports = db;
+
+
+// const { Sequelize } = require("sequelize");
+// const dotenv = require("dotenv");
+// dotenv.config();
+
+// let db;
+// try {
+//   if (process.env.ENVIRONMENT === "production") {
+//     db = new Sequelize(
+//       process.env.PROD_DB_NAME,
+//       process.env.PROD_DB_USER,
+//       process.env.PROD_DB_PASSWORD,
+//       {
+//         host: "127.0.0.1",
+//         dialect: "mysql",
+//         port: 3306, // explicitly set the port
+//       }
+//     );
+//   } else if (process.env.ENVIRONMENT === "development") {
+//     db = new Sequelize(
+//       process.env.DEV_DB_NAME,
+//       process.env.DEV_DB_USER,
+//       process.env.DEV_DB_PASSWORD,
+//       {
+//         host: "127.0.0.1",
+//         dialect: "mysql",
+//         port: 3306, // explicitly set the port
+//       }
+//     );
+//   } else {
+//     throw new Error(
+//       "Environment not set. Please set the ENVIRONMENT environment variable to either 'production' or 'development'."
+//     );
+//   }
+
+//   // Test the connection
+//   db.authenticate()
+//     .then(() =>
+//       console.log("Database connection has been established successfully.")
+//     )
+//     .catch((err) => console.error("Unable to connect to the database:", err));
+
+//   console.log(
+//     `Connected to database ${db.config.database} on ${db.config.host}:${db.config.port}`
+//   );
+// } catch (error) {
+//   console.error(
+//     "An error occurred while setting up the database connection:",
+//     error
+//   );
+//   process.exit(1);
+// }
+
+// module.exports = db;
+

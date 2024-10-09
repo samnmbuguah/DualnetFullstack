@@ -5,9 +5,9 @@
   "scripts": {
     "build": "npm run build --prefix Frontend",
     "prestart": "npm run build && npm run createTables && npm run populateTables",
-    "start": "node Backend/index.js",
+    "start": "node Backend/server.js",
     "predev-disabled": "npm start --prefix Frontend && npm run createTables && npm run populateTables",
-    "dev": "nodemon Backend/index.js",
+    "dev": "nodemon Backend/server.js",
     "startReact": "npm start --prefix Frontend",
     "testdb": "node Backend/config/Database.js",
     "createTables": "node Backend/config/Dbsync.js",
