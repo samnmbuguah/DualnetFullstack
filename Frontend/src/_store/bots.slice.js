@@ -44,22 +44,24 @@ const botsSlice = createSlice({
         return { payload: { userId, bot } };
       },
     },
-    addBots: {
+        addBots: {
       reducer(state, action) {
         const { userId, bots } = action.payload;
-        const incomingPositionIds = new Set(bots.map((bot) => bot.positionId));
+        const botsArray = Array.isArray(bots) ? bots : [];
+    
+        const incomingPositionIds = new Set(botsArray.map((bot) => bot.positionId));
         if (!Array.isArray(state.botsByUser[userId])) {
           state.botsByUser[userId] = [];
         }
         const filteredBots = state.botsByUser[userId].filter((bot) =>
           incomingPositionIds.has(bot.positionId)
         );
-
+    
         if (JSON.stringify(filteredBots) !== JSON.stringify(state.botsByUser[userId])) {
           state.botsByUser[userId] = filteredBots;
         }
-
-        bots.forEach((bot) => {
+    
+        botsArray.forEach((bot) => {
           const existingBotIndex = state.botsByUser[userId].findIndex(
             (b) => b.positionId === bot.positionId
           );
@@ -72,7 +74,7 @@ const botsSlice = createSlice({
             state.botsByUser[userId].unshift(bot);
           }
         });
-
+    
         state.botsByUser[userId].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
