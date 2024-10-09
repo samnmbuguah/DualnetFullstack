@@ -34,14 +34,21 @@ async function checkTrades() {
         bot.matchingPairId,
         bot.userId
       );
-      const positionSize =position ? position.size : 0; // Handle undefined position
+
+       // If the position is undefined or null, continue to the next bot
+      if (position === undefined || position === null) {
+        console.log(`Position is undefined or null for bot with positionId ${bot.positionId}. Skipping to next bot.`);
+        continue;
+      }
+
+      const positionSize = position.size;
       const futuresFullSize = -positionSize * bot.quantoMultiplier;
 
       // Calculate the percentage difference between futuresFullSize and balance
       const percentageDifference = Math.abs((futuresFullSize - balance) / balance) * 100;
       const closingSize = positionSize * -1;
       // If the percentage difference is greater than 5%, call sellSpotPosition and closeShort
-      if (percentageDifference > 50) {
+      if (percentageDifference > 70) {
         console.log(
           "Selling spot and closing short due to percentage difference"
         );
