@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node index.js",
     "populateTables": "node -e 'const populateTables = require(\"./jobs/PopulateTables\"); populateTables();'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build --prefix ../Frontend",
-    "prestart": "npm run build && npm run createTables && npm run populateTables",
+    "prestart": "npm run createTables && npm run populateTables",
     "predev-disabled": "npm start --prefix ../Frontend && npm run createTables && npm run populateTables",
     "dev": "nodemon index.js",
     "startReact": "npm start --prefix ../Frontend",

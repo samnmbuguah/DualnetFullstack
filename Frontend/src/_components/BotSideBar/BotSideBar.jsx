@@ -21,7 +21,7 @@ function BotSideBar({ show, setShow, dark, width, setChartShow }) {
   const [selectedScan, setSelectedScan] = useState(null);
 
   const bots = useSelector((state) => state.bots.botsByUser[authUser[1].id]);
-  const ws_url = "ws://dualnet.ch";
+  const ws_url = "wss://dualnet.ch";
 
   const { topScans, updateTopScans, updatedBotData } =
     useTopScansWebSocket(ws_url);

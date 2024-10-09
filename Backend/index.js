@@ -20,12 +20,6 @@ const hedgeDuals = require("./services/dualinvestment/hedgeDuals.js");
 const closeHedges = require("./services/dualinvestment/closeHedges.js");
 const manageShortBots = require("./services/dualinvestment/shortBot.js");
 
-// Check for required environment variables
-if (!process.env.PORT) {
-  console.error("Missing PORT environment variable. Please check your .env file");
-  process.exit(1);
-}
-
 try {
   db.authenticate();
   console.log("Connected to database");
@@ -96,17 +90,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-  StreamPrices(io);
-}).on('error', (err) => {
-  if (err.code === 'EADDRINUSE') {
-    console.error(`Port ${PORT} is already in use. Please choose a different port or close the application using this port.`);
-  } else {
-    console.error('An error occurred while starting the server:', err);
-  }
-  process.exit(1);
-});
 
 // Schedule cron jobs
 cron.schedule("* * * * *", async () => {
@@ -156,3 +139,20 @@ cron.schedule('0 0 * * *', populateTables);
 cron.schedule('0 */8 * * *', updateAccumulatedFunding);
 cron.schedule('*/10 * * * *', updateFundingRate);
 checkTrades();
+
+
+server
+  .listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+    StreamPrices(io);
+  })
+  .on("error", (err) => {
+    if (err.code === "EADDRINUSE") {
+      console.error(
+        `Port ${PORT} is already in use. Please choose a different port or close the application using this port.`
+      );
+    } else {
+      console.error("An error occurred while starting the server:", err);
+    }
+    process.exit(1);
+  });
