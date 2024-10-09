@@ -241,21 +241,6 @@ const SpotBot = ({
       <Divider className="my-1" />
 
       <BotCell
-        title={`Funding rate`}
-        titleStyle="text-[#7C7C7C] dark:text-[#696969] text-xs italic"
-        value={`${
-          scanData.fundingRate ? scanData.fundingRate : ""
-        } <span style="color: #D7AD7D;"> (${
-          nextApply ? nextApply : ""
-        })</span>`}
-        valueStyle="font-medium text-xs italic"
-        ValueColor={"text-[#7c7c7c]"}
-        showHelpIcon={true}
-        onHelpIconClick={() => {
-          setShow("chartSideBar");
-        }}
-      />
-      <BotCell
         title={`current deviation`}
         titleStyle="text-[#7C7C7C] dark:text-[#696969] text-xs"
         value={`${
