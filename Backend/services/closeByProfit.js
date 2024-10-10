@@ -30,16 +30,17 @@ async function closeByProfit(io, bots) {
 
     const spotBalance = await fetchSpotBalance(bot.matchingPairId, bot.userId);
     let availableSpotBalance = parseFloat(spotBalance.available);
+    let usdtBalance = (availableSpotBalance * currentSpotPrice);
 
-    // Check if both spot and futures positions are closed
-    if (currentFuturesPosition.size === 0) {
-      // Update the bot in the database to set isClose to true
-      await Bots.update(
-        { isClose: true, status: "Closed from exchange" },
-        { where: { positionId: bot.positionId } }
-      );
-      continue; // Skip to the next bot
-    }
+    // // Check if both spot and futures positions are closed
+    // if (currentFuturesPosition.size === 0 && usdtBalance < 1) {
+    //   // Update the bot in the database to set isClose to true
+    //   await Bots.update(
+    //     { isClose: true, status: "Closed from exchange" },
+    //     { where: { positionId: bot.positionId } }
+    //   );
+    //   continue; // Skip to the next bot
+    // }
 
     const spotSize = Math.min(
       Number(availableSpotBalance),
