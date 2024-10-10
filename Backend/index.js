@@ -20,6 +20,10 @@ const settleRecords = require("./services/dualinvestment/settle.js");
 const hedgeDuals = require("./services/dualinvestment/hedgeDuals.js");
 const closeHedges = require("./services/dualinvestment/closeHedges.js");
 const manageShortBots = require("./services/dualinvestment/shortBot.js");
+const populateTables = require("./jobs/PopulateTables.js");
+const StreamPrices = require("./services/StreamPrices.js");
+const router = require("./routes/Routes.js");
+const PORT = process.env.PORT;
 
 try {
   db.authenticate();
@@ -43,12 +47,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
-
-const populateTables = require("./jobs/PopulateTables.js");
-const StreamPrices = require("./services/StreamPrices.js");
-const router = require("./routes/Routes.js");
-const PORT = process.env.PORT;
-
 app.use(express.json());
 app.use("/api", router);
 
@@ -91,8 +89,8 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("disconnect", () => {
-    console.log("Client disconnected:", socket.id);
+  socket.on("disconnect", (reason) => {
+    console.log("Client disconnected:", socket.id, "Reason:", reason);
   });
 });
 
