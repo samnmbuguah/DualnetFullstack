@@ -23,7 +23,7 @@ function BotSideBar({ show, setShow, dark, width, setChartShow }) {
   const bots = useSelector((state) => state.bots.botsByUser[authUser[1].id]);
 
   const environment = process.env.REACT_APP_ENVIRONMENT;
-  const ws_url = environment === "production" ? "wss://dualnet.ch" : "ws://localhost:3042";
+  const ws_url = environment === "production" ? "ws://dualnet.ch" : "ws://localhost:3042";
 
   const { topScans, updateTopScans } =
     useTopScansWebSocket(ws_url);
