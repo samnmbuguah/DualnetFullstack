@@ -65,7 +65,7 @@ const DetailsSideBar = ({ user, dark }) => {
               dark ? "text-[#C6BDAF]" : "text-[#979191]"
             } !font-bold font-[syncopate-regular] text-lg`}
           >
-            {balances[1]}
+          {balances[1] !== undefined && !isNaN(balances[1]) ? balances[1].toFixed(2) : balances[1]}
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -78,8 +78,7 @@ const DetailsSideBar = ({ user, dark }) => {
               dark ? "text-[#C6BDAF]" : "text-[#979191]"
             } !font-bold font-[syncopate-regular] text-lg`}
           >
-            {balances[0]}
-          </div>
+          {balances[0] !== undefined && !isNaN(balances[0]) ? balances[0].toFixed(2) : balances[0]}          </div>
         </div>
         <Divider dark={dark} />
         <div className={`text-[#D9CFBF] font-[syncopate-bold] text-xl block ${innerShadowClass}`}>
