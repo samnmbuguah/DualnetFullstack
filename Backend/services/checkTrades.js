@@ -34,7 +34,7 @@ async function checkTrades() {
         bot.userId
       );
 
-       // If the position is undefined or null, continue to the next bot
+      // If the position is undefined or null, continue to the next bot
       if (position === undefined || position === null || balance === undefined || balance === null) {
         console.log(`Position is undefined or null for bot with positionId ${bot.positionId}. Skipping to next bot.`);
         continue;
@@ -46,8 +46,8 @@ async function checkTrades() {
       // Calculate the percentage difference between futuresFullSize and balance
       const percentageDifference = Math.abs((futuresFullSize - balance) / balance) * 100;
       const closingSize = positionSize * -1;
-      // If the percentage difference is greater than 5%, call sellSpotPosition and closeShort
-      if (percentageDifference > 70) {
+      // If the percentage difference is greater than 13%, call sellSpotPosition and closeShort
+      if (percentageDifference > 13) {
         console.log(
           "Selling spot and closing short due to percentage difference"
         );
@@ -108,10 +108,9 @@ async function checkTrades() {
   } catch (error) {
     console.error("Error in cron job:", error);
   }
-  setTimeout(checkTrades, 1000);
 }
-
-module.exports = checkTrades;
 
 // // Schedule the task to run every minute
 // cron.schedule('* * * * *', checkTrades);
+
+module.exports = checkTrades;
