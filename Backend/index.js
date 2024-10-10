@@ -46,7 +46,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.options("*", cors(corsOptions));
+
 app.use(express.json());
 app.use("/api", router);
 
@@ -60,8 +61,11 @@ if (process.env.ENVIRONMENT !== "development") {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.header("Access-Control-Allow-Origin", corsOptions.origin);
-  res.header("Access-Control-Allow-Methods", corsOptions.methods.join(','));
-  res.header("Access-Control-Allow-Headers", corsOptions.allowedHeaders.join(','));
+  res.header("Access-Control-Allow-Methods", corsOptions.methods.join(","));
+  res.header(
+    "Access-Control-Allow-Headers",
+    corsOptions.allowedHeaders.join(",")
+  );
   res.status(500).send("Something broke!");
 });
 
@@ -98,11 +102,12 @@ const logActiveRooms = () => {
   const rooms = io.sockets.adapter.rooms;
   const userIds = [];
   rooms.forEach((sockets, room) => {
-    if (!rooms.get(room).has(room)) { // This check ensures it's a user room, not a socket room
+    if (!rooms.get(room).has(room)) {
+      // This check ensures it's a user room, not a socket room
       userIds.push(room);
     }
   });
-  console.log('Active userIds in rooms:', userIds);
+  console.log("Active userIds in rooms:", userIds);
   return userIds;
 };
 
@@ -125,17 +130,21 @@ cron.schedule("* * * * *", async () => {
   }
 });
 
-cron.schedule("0 8 * * *", async () => {
-  try {
-    await settleRecords();
-    console.log("Executed settleRecords");
-  } catch (error) {
-    console.error("Error executing settleRecords:", error);
+cron.schedule(
+  "0 8 * * *",
+  async () => {
+    try {
+      await settleRecords();
+      console.log("Executed settleRecords");
+    } catch (error) {
+      console.error("Error executing settleRecords:", error);
+    }
+  },
+  {
+    scheduled: true,
+    timezone: "Etc/UTC",
   }
-}, {
-  scheduled: true,
-  timezone: "Etc/UTC",
-});
+);
 
 cron.schedule("* * * * * *", async () => {
   const bots = await Bots.findAll({ where: { isClose: false } });
@@ -147,30 +156,33 @@ cron.schedule("* * * * * *", async () => {
 
     // Find users with an active room but without any bots where isClose is false
     const usersWithoutOpenBots = await Bots.findAll({
-      attributes: ['userId'],
+      attributes: ["userId"],
       where: {
-        userId: activeUserIds
+        userId: activeUserIds,
       },
-      group: ['userId'],
-      having: Sequelize.literal('SUM(CASE WHEN "isClose" = false THEN 1 ELSE 0 END) = 0')
+      group: ["userId"],
+      having: Sequelize.literal(
+        'SUM(CASE WHEN "isClose" = false THEN 1 ELSE 0 END) = 0'
+      ),
     });
 
-    const userIdsWithoutOpenBots = usersWithoutOpenBots.map(bot => bot.userId);
+    const userIdsWithoutOpenBots = usersWithoutOpenBots.map(
+      (bot) => bot.userId
+    );
 
     // Emit botData event for those users
-    userIdsWithoutOpenBots.forEach(userId => {
+    userIdsWithoutOpenBots.forEach((userId) => {
       io.to(userId).emit("botData", {});
     });
-
   } catch (error) {
     console.error("Error in closeByProfit:", error);
   }
 });
 
-cron.schedule('0 0 * * *', populateTables);
-cron.schedule('0 */8 * * *', updateAccumulatedFunding);
-cron.schedule('*/10 * * * *', updateFundingRate);
-cron.schedule('* * * * * *', checkTrades);
+cron.schedule("0 0 * * *", populateTables);
+cron.schedule("0 */8 * * *", updateAccumulatedFunding);
+cron.schedule("*/10 * * * *", updateFundingRate);
+cron.schedule("* * * * * *", checkTrades);
 
 server
   .listen(PORT, "0.0.0.0", () => {
