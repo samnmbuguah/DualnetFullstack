@@ -12,3 +12,6 @@ backup.dump
 .cursorignore
 Backend/.mysql.39609
 Backend/.my.cnf.39609
+Backend/build
+Backend.zip
+Backend/Lets_Encrypt_dualnet.ch.pem
