@@ -34,6 +34,9 @@ const corsOptions = {
     "http://127.0.0.1:3000",
     "http://localhost:3000",
     "http://dualnet.ch",
+    "https://dualnet.ch",
+    "wss://dualnet.ch",
+    "ws://dualnet.ch",
   ],
   credentials: true,
 };
