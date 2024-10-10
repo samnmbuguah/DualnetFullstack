@@ -8,7 +8,6 @@ const useTopScansWebSocket = (url) => {
   const [socket, setSocket] = useState(null);
   const [topScans, setTopScans] = useState([]);
   const { user: authUser } = useSelector((x) => x.auth);
-  const [updatedBotData, setUpdatedBotData] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,7 +30,6 @@ const useTopScansWebSocket = (url) => {
     });
 
     socketIO.on("botData", (data) => {
-      setUpdatedBotData(data);
       dispatch(addBots(authUser[1].id, data));
       console.log(data, "botData");
     });
@@ -58,7 +56,7 @@ const useTopScansWebSocket = (url) => {
     }
   };
 
-  return { topScans, updateTopScans,getOpenBots, updatedBotData };
+  return { topScans, updateTopScans,getOpenBots };
 };
 
 export default useTopScansWebSocket;

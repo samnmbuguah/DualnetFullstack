@@ -25,7 +25,7 @@ function BotSideBar({ show, setShow, dark, width, setChartShow }) {
   const environment = process.env.REACT_APP_ENVIRONMENT;
   const ws_url = environment === "production" ? "wss://dualnet.ch" : "ws://localhost:3042";
 
-  const { topScans, updateTopScans, updatedBotData } =
+  const { topScans, updateTopScans } =
     useTopScansWebSocket(ws_url);
   const [balances, setBalances] = useState([]);
 
@@ -128,7 +128,7 @@ function BotSideBar({ show, setShow, dark, width, setChartShow }) {
         </div>
         <div className="flex flex-col px-4">
           <div className="flex-1">
-            <OpenBots bots={bots} updatedBotData={updatedBotData} />
+            <OpenBots bots={bots} />
           </div>
         </div>
       </div>

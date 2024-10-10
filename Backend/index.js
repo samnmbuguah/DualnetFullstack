@@ -8,6 +8,7 @@ const socketIO = require("socket.io");
 const db = require("./config/Database.js");
 const http = require("http");
 const server = http.createServer(app);
+const { Sequelize } = require("sequelize");
 const checkTrades = require("./services/checkTrades.js");
 const closeByProfit = require("./services/closeByProfit.js");
 const updateFundingRate = require("./services/getFundingRate.js");
@@ -92,6 +93,17 @@ io.on("connection", (socket) => {
   });
 });
 
+const logActiveRooms = () => {
+  const rooms = io.sockets.adapter.rooms;
+  const userIds = [];
+  rooms.forEach((sockets, room) => {
+    if (!rooms.get(room).has(room)) { // This check ensures it's a user room, not a socket room
+      userIds.push(room);
+    }
+  });
+  console.log('Active userIds in rooms:', userIds);
+  return userIds;
+};
 
 // Schedule cron jobs
 cron.schedule("* * * * *", async () => {
@@ -124,17 +136,34 @@ cron.schedule("0 8 * * *", async () => {
   timezone: "Etc/UTC",
 });
 
-cron.schedule('* * * * *', async () => {
-    const bots = await Bots.findAll({ where: { isClose: false } });
-    try {
-        const botDataForUsers = await closeByProfit(io, bots);
-        if (Object.keys(botDataForUsers).length === 0) {
-            io.emit("botData", {});
-        }
-        console.log('Completed the Close By profit loop');
-    } catch (error) {
-        console.error('Error in closeByProfit:', error);
-    }
+cron.schedule("* * * * * *", async () => {
+  const bots = await Bots.findAll({ where: { isClose: false } });
+  try {
+    await closeByProfit(io, bots);
+    console.log("Completed the Close By profit loop");
+
+    const activeUserIds = logActiveRooms();
+
+    // Find users with an active room but without any bots where isClose is false
+    const usersWithoutOpenBots = await Bots.findAll({
+      attributes: ['userId'],
+      where: {
+        userId: activeUserIds
+      },
+      group: ['userId'],
+      having: Sequelize.literal('SUM(CASE WHEN "isClose" = false THEN 1 ELSE 0 END) = 0')
+    });
+
+    const userIdsWithoutOpenBots = usersWithoutOpenBots.map(bot => bot.userId);
+
+    // Emit botData event for those users
+    userIdsWithoutOpenBots.forEach(userId => {
+      io.to(userId).emit("botData", {});
+    });
+
+  } catch (error) {
+    console.error("Error in closeByProfit:", error);
+  }
 });
 
 cron.schedule('0 0 * * *', populateTables);

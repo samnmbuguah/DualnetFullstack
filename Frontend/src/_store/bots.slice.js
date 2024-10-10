@@ -31,20 +31,7 @@ const botsSlice = createSlice({
   name: "bots",
   initialState,
   reducers: {
-    addBot: {
-      reducer(state, action) {
-        const { userId, bot } = action.payload;
-        if (!state.botsByUser[userId]) {
-          state.botsByUser[userId] = [bot];
-        } else {
-          state.botsByUser[userId].push(bot);
-        }
-      },
-      prepare(userId, bot) {
-        return { payload: { userId, bot } };
-      },
-    },
-        addBots: {
+    addBots: {
       reducer(state, action) {
         const { userId, bots } = action.payload;
         const botsArray = Array.isArray(bots) ? bots : [];
@@ -137,5 +124,5 @@ const botsSlice = createSlice({
 });
 
 // Export actions and reducer
-export const { addBot, removeBot, addBots } = botsSlice.actions;
+export const { removeBot, addBots } = botsSlice.actions;
 export const botsReducer = botsSlice.reducer;
