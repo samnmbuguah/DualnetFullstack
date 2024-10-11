@@ -7,7 +7,6 @@ const cron = require("node-cron");
 const socketIO = require("socket.io");
 const db = require("./config/Database.js");
 const http = require("http");
-const server = http.createServer(app);
 const { Sequelize } = require("sequelize");
 const checkTrades = require("./services/checkTrades.js");
 const closeByProfit = require("./services/closeByProfit.js");
@@ -51,6 +50,7 @@ app.options("*", cors(corsOptions));
 app.use(express.json());
 app.use("/api", router);
 
+// Serve static files from the React app
 if (process.env.ENVIRONMENT !== "development") {
   app.use(express.static(path.join(__dirname, "build")));
   app.get("*", (req, res) => {
@@ -58,19 +58,10 @@ if (process.env.ENVIRONMENT !== "development") {
   });
 }
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.header("Access-Control-Allow-Origin", corsOptions.origin);
-  res.header("Access-Control-Allow-Methods", corsOptions.methods.join(","));
-  res.header(
-    "Access-Control-Allow-Headers",
-    corsOptions.allowedHeaders.join(",")
-  );
-  res.status(500).send("Something broke!");
-});
+const server = http.createServer(app); // Create HTTP server
+const io = socketIO(server, { cors: corsOptions }); // Initialize Socket.IO with the server
 
-const io = socketIO(server, { cors: corsOptions });
-
+// WebSocket connection handling
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
@@ -97,19 +88,6 @@ io.on("connection", (socket) => {
     console.log("Client disconnected:", socket.id, "Reason:", reason);
   });
 });
-
-const logActiveRooms = () => {
-  const rooms = io.sockets.adapter.rooms;
-  const userIds = [];
-  rooms.forEach((sockets, room) => {
-    if (!rooms.get(room).has(room)) {
-      // This check ensures it's a user room, not a socket room
-      userIds.push(room);
-    }
-  });
-  console.log("Active userIds in rooms:", userIds);
-  return userIds;
-};
 
 // Schedule cron jobs
 cron.schedule("* * * * *", async () => {
@@ -145,6 +123,18 @@ cron.schedule(
     timezone: "Etc/UTC",
   }
 );
+const logActiveRooms = () => {
+  const rooms = io.sockets.adapter.rooms;
+  const userIds = [];
+  rooms.forEach((sockets, room) => {
+    if (!rooms.get(room).has(room)) {
+      // This check ensures it's a user room, not a socket room
+      userIds.push(room);
+    }
+  });
+  console.log("Active userIds in rooms:", userIds);
+  return userIds;
+};
 
 cron.schedule("* * * * * *", async () => {
   const bots = await Bots.findAll({ where: { isClose: false } });
@@ -184,18 +174,16 @@ cron.schedule("0 */8 * * *", updateAccumulatedFunding);
 cron.schedule("*/10 * * * *", updateFundingRate);
 cron.schedule("* * * * * *", checkTrades);
 
-server
-  .listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-    StreamPrices(io);
-  })
-  .on("error", (err) => {
-    if (err.code === "EADDRINUSE") {
-      console.error(
-        `Port ${PORT} is already in use. Please choose a different port or close the application using this port.`
-      );
-    } else {
-      console.error("An error occurred while starting the server:", err);
-    }
-    process.exit(1);
-  });
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+  StreamPrices(io); // Pass the io instance to StreamPrices
+}).on("error", (err) => {
+  if (err.code === "EADDRINUSE") {
+    console.error(
+      `Port ${PORT} is already in use. Please choose a different port or close the application using this port.`
+    );
+  } else {
+    console.error("An error occurred while starting the server:", err);
+  }
+  process.exit(1);
+});
