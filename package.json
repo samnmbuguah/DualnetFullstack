@@ -67,6 +67,7 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "moment-timezone": "^0.5.45",
+    "socket.io": "^4.8.0",
     "uuid": "^9.0.1"
   }
 }

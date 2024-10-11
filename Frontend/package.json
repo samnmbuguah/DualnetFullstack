@@ -14,13 +14,14 @@
     "react-scripts": "^5.0.1",
     "react-tooltip": "^5.22.0",
     "react-ts-tradingview-widgets": "^1.2.5",
+    "socket.io": "^4.8.0",
     "socket.io-client": "^4.5.4",
     "state-pool": "^0.10.0",
-    "sweetalert2": "^11.6.13",
+    "sweetalert2": "^11.14.2",
     "tailwindcss": "^3.4.3",
     "web3": "^4.7.0",
-    "yup": "^0.32.11",
-    "winston": "^3.14.2"
+    "winston": "^3.14.2",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false react-scripts start",
@@ -45,6 +46,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "json-loader": "^0.5.4",
+    "null-loader": "^0.1.1",
+    "webpack": "^5.95.0"
   }
 }

@@ -45,7 +45,7 @@ async function updateTickersAndPrecisions(pollPrices) {
   const records = await MatchingPairs.findAll({
     attributes: ["id", "precision", "fundingRate"],
     order: [["fundingRate", "DESC"]],
-    limit: 1000,
+    limit: 10,
   });
 
   if (!records || records.length === 0) {

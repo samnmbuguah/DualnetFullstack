@@ -21,6 +21,7 @@ const closeHedges = require("./services/dualinvestment/closeHedges.js");
 const manageShortBots = require("./services/dualinvestment/shortBot.js");
 const populateTables = require("./jobs/PopulateTables.js");
 const StreamPrices = require("./services/StreamPrices.js");
+const logActiveRooms = require("./services/logActiveRooms.js");
 const router = require("./routes/Routes.js");
 const PORT = process.env.PORT;
 
@@ -123,18 +124,6 @@ cron.schedule(
     timezone: "Etc/UTC",
   }
 );
-const logActiveRooms = () => {
-  const rooms = io.sockets.adapter.rooms;
-  const userIds = [];
-  rooms.forEach((sockets, room) => {
-    if (!rooms.get(room).has(room)) {
-      // This check ensures it's a user room, not a socket room
-      userIds.push(room);
-    }
-  });
-  console.log("Active userIds in rooms:", userIds);
-  return userIds;
-};
 
 cron.schedule("* * * * * *", async () => {
   const bots = await Bots.findAll({ where: { isClose: false } });
@@ -148,28 +137,7 @@ cron.schedule("* * * * * *", async () => {
 
 cron.schedule("* * * * * *", async () => {
   try {
-    const activeUserIds = logActiveRooms();
-
-    // Find users with an active room but without any bots where isClose is false
-    const usersWithoutOpenBots = await Bots.findAll({
-      attributes: ["userId"],
-      where: {
-        userId: activeUserIds,
-      },
-      group: ["userId"],
-      having: Sequelize.literal(
-        'SUM(CASE WHEN "isClose" = false THEN 1 ELSE 0 END) = 0'
-      ),
-    });
-
-    const userIdsWithoutOpenBots = usersWithoutOpenBots.map(
-      (bot) => bot.userId
-    );
-
-    // Emit botData event for those users
-    userIdsWithoutOpenBots.forEach((userId) => {
-      io.to(userId).emit("botData", {});
-    });
+    logActiveRooms(io);
   } catch (error) {
     console.error("Error in emitting botData:", error);
   }
@@ -180,16 +148,18 @@ cron.schedule("0 */8 * * *", updateAccumulatedFunding);
 cron.schedule("*/10 * * * *", updateFundingRate);
 cron.schedule("* * * * * *", checkTrades);
 
-server.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-  StreamPrices(io); // Pass the io instance to StreamPrices
-}).on("error", (err) => {
-  if (err.code === "EADDRINUSE") {
-    console.error(
-      `Port ${PORT} is already in use. Please choose a different port or close the application using this port.`
-    );
-  } else {
-    console.error("An error occurred while starting the server:", err);
-  }
-  process.exit(1);
-});
+server
+  .listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+    StreamPrices(io); // Pass the io instance to StreamPrices
+  })
+  .on("error", (err) => {
+    if (err.code === "EADDRINUSE") {
+      console.error(
+        `Port ${PORT} is already in use. Please choose a different port or close the application using this port.`
+      );
+    } else {
+      console.error("An error occurred while starting the server:", err);
+    }
+    process.exit(1);
+  });

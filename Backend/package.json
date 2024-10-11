@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "populateTables": "node -e 'const populateTables = require(\"./jobs/PopulateTables\"); populateTables();'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build --prefix ../Frontend",
     "prestart": "npm run createTables && npm run populateTables",
-    "predev-disabled": "npm start --prefix ../Frontend && npm run createTables && npm run populateTables",
+    "predev": "npm run createTables && npm run populateTables",
     "dev": "nodemon index.js",
     "startReact": "npm start --prefix ../Frontend",
     "testdb": "node config/Database.js",
@@ -80,15 +80,14 @@
     "webpack-cli": "^5.0.1",
     "winston": "^3.14.2",
     "ws": "^8.16.0",
-    "socket.io-client": "^4.7.5"
+    "socket.io-client": "^4.7.5",
+    "nodemon": "^3.0.1"
   },
   "keywords": [],
   "description": "",
   "devDependencies": {
     "chai": "^5.1.0",
-    "mocha": "^10.4.0",
-    "nodemon": "^3.0.1",
-    "socket.io-client": "^4.7.5"
+    "mocha": "^10.4.0"
   },
   "repository": {
     "type": "git",

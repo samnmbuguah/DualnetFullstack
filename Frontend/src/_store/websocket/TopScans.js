@@ -41,8 +41,8 @@ const useTopScansWebSocket = (url) => {
     };
 
     const handleBotData = (data) => {
-      dispatch(addBots(authUser[1].id, data));
       console.log(data, "botData");
+      dispatch(addBots(authUser[1].id, data));
     };
 
     socketIO.on("connect", handleConnect);
