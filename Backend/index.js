@@ -141,7 +141,13 @@ cron.schedule("* * * * * *", async () => {
   try {
     await closeByProfit(io, bots);
     console.log("Completed the Close By profit loop");
+  } catch (error) {
+    console.error("Error in closeByProfit:", error);
+  }
+});
 
+cron.schedule("* * * * * *", async () => {
+  try {
     const activeUserIds = logActiveRooms();
 
     // Find users with an active room but without any bots where isClose is false
@@ -165,7 +171,7 @@ cron.schedule("* * * * * *", async () => {
       io.to(userId).emit("botData", {});
     });
   } catch (error) {
-    console.error("Error in closeByProfit:", error);
+    console.error("Error in emitting botData:", error);
   }
 });
 
