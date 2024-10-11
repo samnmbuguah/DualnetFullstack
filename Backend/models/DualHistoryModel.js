@@ -7,7 +7,6 @@ const DualHistory = db.define(
     orderId: {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: true,
     },
     dualId: {
       type: Sequelize.STRING,

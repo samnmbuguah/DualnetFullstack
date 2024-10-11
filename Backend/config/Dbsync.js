@@ -26,7 +26,7 @@ Users.sync()
   })
   .then(() => {
     console.log("UserPDFs table has been synced");
-    return Bots.sync();
+    return Bots.sync({force: true});
   })
   .then(() => {
     console.log("Bots table has been synced");
@@ -38,7 +38,7 @@ Users.sync()
   })
   .then(() => {
     console.log("DualPlans table has been synced");
-    return DualHistory.sync({ alter: true });
+    return DualHistory.sync({ force: true });
   })
   .then(() => {
     console.log("DualHistory table has been synced");
