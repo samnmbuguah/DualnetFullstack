@@ -23,7 +23,7 @@ const CryptoList = ({ dark }) => {
   };
 
   return (
-    <div className={`inline-flex flex-wrap w-[389px] justify-between items-center pt-4 bg-transparent font-inter-medium border-b ${dark ? 'border-[#857F76]' : 'border-[#C3C3C3]'} rounded-sm`}>
+    <div className={`inline-flex flex-wrap w-[389px] pt-1 justify-between items-center bg-transparent font-inter-medium border-b ${dark ? 'border-[#484746]' : 'border-[#C3C3C3]'} rounded-sm`}>
       {cryptoList.map((crypto, index) => (
         <button
           key={crypto}

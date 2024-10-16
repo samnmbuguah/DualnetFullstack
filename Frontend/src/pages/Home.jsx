@@ -31,13 +31,13 @@ function Home({ dark, infoType, currentView, setCurrentView }) {
   };
 
   return (
-    <div className={`flex flex-col w-full px-4 ${dark ? 'bg-[#25292F]' : 'bg-transparent'} rounded-[25px] justify-center pb-10`}>
+    <div className={`flex flex-col w-full px-4 ${dark ? 'bg-[transparent]' : 'bg-transparent'} rounded-[25px] justify-center pb-10`}>
       <Header
         username={selectedUser.current.username}
         onLogout={logout}
         dark={dark}
       />
-      <div className="flex flex-row justify-center">
+      <div className="flex flex-row justify-center px-8">
         <Sidebar user={selectedUser.current} dark={dark} />
         <MainContent
           className="flex-grow"

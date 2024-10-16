@@ -44,19 +44,21 @@ export function MainContent({
   };
 
   return (
-    <div className="flex flex-col w-full justify-start h-full">
-      <div>
-        {window.innerWidth > 1024 && currentView === "chart" && (
-          <Chart dark={dark} />
-        )}
-        {renderSidebar()}
+    <div className="flex flex-col w-full h-full">
+      <div className='ml-14 max-w-[1024px]'>
+        <div>
+          {window.innerWidth > 1024 && currentView === "chart" && (
+            <Chart dark={dark} />
+          )}
+          {renderSidebar()}
+        </div>
+        <Footer
+          currentView={currentView}
+          setCurrentView={setCurrentView}
+          authUser={authUser}
+          dark={dark}
+        />
       </div>
-      <Footer
-        currentView={currentView}
-        setCurrentView={setCurrentView}
-        authUser={authUser}
-        dark={dark}
-      />
     </div>
   );
 }
