@@ -13,6 +13,7 @@ import {
 import BuyAPR from "./BuyAPR";
 import SellAPR from "./SellAPR";
 import Curve from "../../_assets/Group454.svg";
+import CustomInput from "./CustomInput"
 
 const DualInvestSidebar = ({ show, dark }) => {
   const { user: authUser } = useSelector((x) => x.auth);
@@ -44,6 +45,7 @@ const DualInvestSidebar = ({ show, dark }) => {
   }, [selectedCrypto, dispatch, authUser]);
 
   return (
+    <div className="bg-investment max-w-[1024px] rounded-[25px]">
     <div
       style={{
         ...customStyles,
@@ -54,38 +56,58 @@ const DualInvestSidebar = ({ show, dark }) => {
       }}
       className={`${
         show ? "right-0" : "hidden"
-      } bg-[#24282E] px-8 text-xs dark:bg-[transparent] dark:border-[#6D6D6D] rounded-[25px] font-inter text-white flex flex-col justify-between`}
+      } bg-[#fef6e6d6] px-8 text-xs dark:bg-[#25292fd4] dark:border-[#6D6D6D] rounded-[25px] font-inter text-white flex`}
     >
-      <div>
-        <CryptoList dark={dark} />
-        <DualSwitch dark={dark} />
-      </div>
-      <div className={`flex flex-row w-full items-center justify-between ${dark ? 'bg-line207' : 'bg-line208'}`}>
-        <DualTrade
-          dark={dark}
-          buyLowPerShare={buyLowPerShare}
-          sellHighPerShare={sellHighPerShare}
-          currentPrice={spotPrice}
-          selectedCrypto={selectedCrypto}
-          usdtBalance={usdtBalance}
-          cryptoBalance={cryptoBalance}
-          buyLowAmount={buyLowAmount}
-          sellHighAmount={sellHighAmount}
-          aprToOpen={aprToOpen}
-        />
-        <img
-          src={Curve}
-          alt="Curve illustration"
-          className="hidden 2xl:block"
-        />
-        <div className={`flex flex-col ml-auto h-full justify-between min-w-fit overflow-hidden ${dark ? 'text-white' : 'text-[#979191]'}`}>
-          <BuyAPR dark={dark} />
-          <span className="font-inter-semibold text-xxs self-end mr-5">
-            BTC Last Price: {spotPrice}
-          </span>
-          <SellAPR dark={dark} />
+      <div className="">
+        <div>
+          <CryptoList dark={dark} />
+          <DualSwitch dark={dark} />
+        </div>
+        <div className="flex h-[400px]">
+          <div className="my-auto">
+            <div>
+              <div className="!text-[#55A388] font-bold xl:text-lg lg:text-md">Buy low</div>
+              <div>Spot account 19.520 USDT</div>
+              <div className="flex items-center">Investment&nbsp;<CustomInput dark={dark} color={'#01D497'} styleObj={{width: '50px'}} type={1} /> USDT</div>
+            </div>
+            <div className="mt-4">
+              <div className="!text-[#55A388] font-bold xl:text-lg lg:text-md">Open</div>
+              <div className="flex items-center">{`ARP >`} <CustomInput dark={dark} color={'#01D497'} styleObj={{width: '33px'}} type={1} />%</div>
+              <div className="flex items-center">Closer strike <CustomInput dark={dark} color={'#01D497'} styleObj={{width: '33px'}} type={1} />S</div>
+              <div className="flex items-center">{`but ARP >`} <CustomInput dark={dark} color={'#01D497'} styleObj={{width: '33px'}} type={1} />%</div>
+              <div className="flex items-center">Scale by + <CustomInput dark={dark} color={'#01D497'} styleObj={{width: '33px'}} type={1} />%</div>
+            </div>
+          </div>
         </div>
       </div>
+      <div className={`flex flex-row w-full items-center justify-end min-h-full`}>
+        <table className="border-separate border-spacing-x-2 border-slate-400 mr-4">
+          <tbody>
+          <tr>
+            <td colSpan={5} >
+              <div className="flex justify-between"><span className="!text-[#55A388] font-bold text-md">BuyLow</span><span className="!text-[#EA5F00] font-bold text-md">Sell order</span></div>
+            </td>
+          </tr>
+          <tr>
+            <td className="text-center">APR%</td>
+            <td className="text-center">Strike</td>
+            <td className="text-center">Share</td>
+            <td className="text-center">Term</td>
+            <td className="text-center">Order</td>
+          </tr>
+          {new Array(15).fill(0).map((ele, index) => {
+            return (<tr key={index}>
+            <td className="text-center"></td>
+            <td className="font-medium text-md">65.000</td>
+            <td className="text-center"><CustomInput dark={dark} color={'#01D497'} /></td>
+            <td className="text-center"></td>
+            <td className="text-center"><CustomInput dark={dark} color={'#EA5F00'} /></td>
+          </tr>)
+          })}
+          </tbody>
+        </table>
+      </div>
+    </div>
     </div>
   );
 };

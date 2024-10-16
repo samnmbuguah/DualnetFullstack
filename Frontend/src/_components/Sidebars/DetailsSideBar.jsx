@@ -40,23 +40,23 @@ const DetailsSideBar = ({ user, dark }) => {
     <div className="w-full">
       <div className="w-full">
         <div className="flex justify-between items-center">
-          <div className={`text-[#D9CFBF] font-[syncopate-bold] text-xl ${innerShadowClass}`}>
+          <div className={`text-[#D5BEAB] font-[syncopate-bold] text-xl ${innerShadowClass}`}>
             INVESTMENT
           </div>
-          <div className="text-[#D7AD7D] font-[syncopate-regular] !font-bold text-lg">
+          <div className="text-[#D5BEAB] font-[syncopate-regular] !font-bold text-lg">
             {`${user.investment} USDT`}
           </div>
         </div>
         <small
           className={`font-[inter-light] ${
-            dark ? "text-[#FFFFFF]" : "text-[#777777]"
+            dark ? "text-[#777070]" : "text-[#777777]"
           } text-sm`}
         >
           Since: 21.10.2023
         </small>
         <Divider dark={dark} />
         <div className="flex justify-between items-center">
-          <div className={`text-[#D9CFBF] font-[syncopate-bold] text-xl ${innerShadowClass}`}>
+          <div className={`text-[#D5BEAB] font-[syncopate-bold] text-xl ${innerShadowClass}`}>
             Assets USDT
             <span className="text-xs"> FUTURE</span>
           </div>
@@ -65,11 +65,11 @@ const DetailsSideBar = ({ user, dark }) => {
               dark ? "text-[#C6BDAF]" : "text-[#979191]"
             } !font-bold font-[syncopate-regular] text-lg`}
           >
-          {balances[1] !== undefined && !isNaN(balances[1]) ? balances[1].toFixed(2) : balances[1]}
+          {balances[1] !== undefined && !isNaN(balances[1]) ? balances[1].toFixed(2) : 0}
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <div className={`text-[#D9CFBF] font-[syncopate-bold] text-xl ${innerShadowClass}`}>
+          <div className={`text-[#D5BEAB] font-[syncopate-bold] text-xl ${innerShadowClass}`}>
             Assets USDT
             <span className="text-xs font-[inter-bold]"> Spot</span>
           </div>
@@ -78,10 +78,10 @@ const DetailsSideBar = ({ user, dark }) => {
               dark ? "text-[#C6BDAF]" : "text-[#979191]"
             } !font-bold font-[syncopate-regular] text-lg`}
           >
-          {balances[0] !== undefined && !isNaN(balances[0]) ? balances[0].toFixed(2) : balances[0]}          </div>
+          {balances[0] !== undefined && !isNaN(balances[0]) ? balances[0].toFixed(2) : 0}          </div>
         </div>
         <Divider dark={dark} />
-        <div className={`text-[#D9CFBF] font-[syncopate-bold] text-xl block ${innerShadowClass}`}>
+        <div className={`text-[#D5BEAB] font-[syncopate-bold] text-xl block ${innerShadowClass}`}>
           Profit
         </div>
         <div className="flex justify-between items-center font-[syncopate-regular] text-sm">

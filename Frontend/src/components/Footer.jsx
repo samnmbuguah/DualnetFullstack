@@ -65,7 +65,7 @@ const FooterLink = ({ to, label, className = "" }) => (
     to={to}
     className={({ isActive }) =>
       `flex items-center mr-4 text-xxs cursor-pointer ${
-        isActive ? "text-[#15FF00]" : "text-[#A3A2A2]"
+        isActive ? "!text-[#30B58B]" : "!text-[#A3A2A2]"
       } ${className}`
     }
   >

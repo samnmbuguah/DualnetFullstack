@@ -14,18 +14,7 @@ const DualSwitch = ({ dark }) => {
     <div className="flex flex-col w-[420px] pt-2">
       <div className="relative">
         <h1 className="font-syn-bold text-3xl relative">
-          <span className="relative z-10 text-[#A3A2A2]">DUAL-INVESTMENT</span>
-          <span className="absolute inset-0 z-0 bg-gradient-to-r from-[#000000] to-25% to-[#A3A2A2] text-transparent bg-clip-text" aria-hidden="true">DUAL-INVESTMENT</span>
-          <span 
-            className="absolute inset-0 z-20 text-transparent bg-clip-text" 
-            style={{
-              textShadow: 'inset 0 4px 4px rgba(0, 0, 0, 0.25)',
-              WebkitTextStroke: '1px rgba(0, 0, 0, 0.1)'
-            }} 
-            aria-hidden="true"
-          >
-            DUAL-INVESTMENT
-          </span>
+          <span className="shadow-text">DUAL-INVESTMENT</span>
         </h1>
       </div>
       <div className="flex flex-row items-center w-full">

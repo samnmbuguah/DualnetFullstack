@@ -15,7 +15,7 @@
     "react-tooltip": "^5.22.0",
     "react-ts-tradingview-widgets": "^1.2.5",
     "socket.io": "^4.8.0",
-    "socket.io-client": "^4.8.0",
+    "socket.io-client": "^4.5.4",
     "state-pool": "^0.10.0",
     "sweetalert2": "^11.14.2",
     "tailwindcss": "^3.4.3",
@@ -24,8 +24,8 @@
     "yup": "^1.4.0"
   },
   "scripts": {
-    "start": "GENERATE_SOURCEMAP=false react-scripts start",
-    "build": "REACT_APP_ENVIRONMENT=production GENERATE_SOURCEMAP=false react-scripts build",
+    "start": "react-scripts start",
+    "build": "cross-env REACT_APP_ENVIRONMENT=production GENERATE_SOURCEMAP=false react-scripts build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "cross-env": "^7.0.3",
     "json-loader": "^0.5.4",
     "null-loader": "^0.1.1",
     "webpack": "^5.95.0"

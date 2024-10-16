@@ -23,17 +23,17 @@ const CryptoList = ({ dark }) => {
   };
 
   return (
-    <div className={`inline-flex flex-wrap w-[487px] justify-between items-center pt-4 bg-transparent font-inter-medium border-b ${dark ? 'border-[#857F76]' : 'border-[#C3C3C3]'} rounded-sm`}>
+    <div className={`inline-flex flex-wrap w-[389px] justify-between items-center pt-4 bg-transparent font-inter-medium border-b ${dark ? 'border-[#857F76]' : 'border-[#C3C3C3]'} rounded-sm`}>
       {cryptoList.map((crypto, index) => (
         <button
           key={crypto}
           onClick={() => handleCryptoClick(crypto)}
           className={`text-xxs font-inter-medium rounded transition-colors ${
             selectedCrypto === crypto
-              ? "text-[#15FF00]"
+              ? "!text-[#30B58B]"
               : dark
-              ? "text-[#FFFFFF] hover:text-[#15FF00]"
-              : "text-[#979191] hover:text-[#15FF00]"
+              ? "!text-[#FFFFFF] hover:text-[#30B58B]"
+              : "!text-[#979191] hover:text-[#30B58B]"
           } ${index !== 0 && index !== cryptoList.length - 1 ? "mx-2" : ""}`}
           style={{
             textShadow: dark
