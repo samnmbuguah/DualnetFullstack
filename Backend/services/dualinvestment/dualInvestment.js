@@ -13,11 +13,8 @@ async function listDualInvestmentPlans() {
     // Get the current time in Unix time
     const currentTime = Math.floor(Date.now() / 1000);
 
-    // Filter plans with apyDisplay greater than 0.42 and deliveryTime between 1 and 2 days from now
     const filteredPlans = plans.filter(plan => 
-      parseFloat(plan.apyDisplay) > 0.42 && 
-      (plan.deliveryTime - currentTime) >= 86400 && 
-      (plan.deliveryTime - currentTime) < 172800
+      (plan.deliveryTime - currentTime) >= 86400 
     );
 
     // Map through filtered plans
