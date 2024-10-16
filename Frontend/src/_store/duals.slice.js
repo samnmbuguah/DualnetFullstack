@@ -1,13 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchWrapper } from "_helpers";
-import data from "_components/DualInvestSidebar/DefaultApr.json";
 import Swal from "sweetalert2";
 
 const initialState = {
-  dualInvestments: {
-    exerciseCurrencyList: data.exerciseCurrencyList,
-    investCurrencyList: data.investCurrencyList,
-  },
+  dualInvestments: [],
   spotPrice: null,
   usdtBalance: 22.589,
   cryptoBalance: 0.00,
@@ -35,7 +31,8 @@ export const fetchInvestmentsByCurrency = createAsyncThunk(
     const response = await fetchWrapper.get(
       baseUrl + `/fetch-investments?currency=${currency}`
     );
-    return response;
+    console.log("response", response);
+    return response.investments;
   }
 );
 
@@ -153,18 +150,6 @@ const dualsSlice = createSlice({
     updateShortSize: (state, action) => {
       state.shortSize = action.payload;
     },
-    updateInvestCurrencyShare: (state, action) => {
-      const { index, value } = action.payload;
-      if (state.dualInvestments.investCurrencyList[index]) {
-        state.dualInvestments.investCurrencyList[index].shareCount = value;
-      }
-    },
-    updateExerciseCurrencyShare: (state, action) => {
-      const { index, value } = action.payload;
-      if (state.dualInvestments.exerciseCurrencyList[index]) {
-        state.dualInvestments.exerciseCurrencyList[index].shareCount = value;
-      }
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -173,27 +158,7 @@ const dualsSlice = createSlice({
       })
       .addCase(fetchInvestmentsByCurrency.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.dualInvestments = {
-          ...state.dualInvestments,
-          ...action.payload,
-        };
-
-        // Extract the first item from exerciseCurrencyList safely
-        const firstExerciseCurrency =
-          action.payload.exerciseCurrencyList?.[0] || {};
-
-        // Set buyLowPerShare based on exerciseCurrency
-        let buyLowPerShare = firstExerciseCurrency?.perValue ?? 0;
-        if (
-          firstExerciseCurrency.exerciseCurrency !== "BTC" &&
-          firstExerciseCurrency.exerciseCurrency !== "ETH"
-        ) {
-          buyLowPerShare = 1;
-        }
-
-        state.buyLowPerShare = buyLowPerShare;
-        state.sellHighPerShare =
-          action.payload.investCurrencyList?.[0]?.perValue ?? 0;
+        state.dualInvestments = action.payload;
       })
       .addCase(fetchInvestmentsByCurrency.rejected, (state, action) => {
         state.status = "failed";

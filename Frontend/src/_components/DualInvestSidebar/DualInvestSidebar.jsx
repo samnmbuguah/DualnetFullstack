@@ -3,29 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles";
 import DualSwitch from "_components/DualInvestSidebar/DualSwitch";
 import CryptoList from "./CryptoList";
-import DualTrade from "./DualTrade";
 import {
   fetchInvestmentsByCurrency,
   fetchSpotPrice,
   fetchSpotBalances,
   fetchOpenedDuals,
 } from "_store/duals.slice";
-import BuyAPR from "./BuyAPR";
-import SellAPR from "./SellAPR";
-import Curve from "../../_assets/Group454.svg";
 import CustomInput from "./CustomInput"
 
 const DualInvestSidebar = ({ show, dark }) => {
   const { user: authUser } = useSelector((x) => x.auth);
-  const spotPrice = useSelector((state) => state.duals.spotPrice);
-  const usdtBalance = useSelector((state) => state.duals.usdtBalance);
-  const cryptoBalance = useSelector((state) => state.duals.cryptoBalance);
   const selectedCrypto = useSelector((state) => state.duals.selectedCrypto);
-  const buyLowAmount = useSelector((state) => state.duals.buyLowAmount);
-  const sellHighAmount = useSelector((state) => state.duals.sellHighAmount);
-  const aprToOpen = useSelector((state) => state.duals.aprToOpen);
-  const buyLowPerShare = useSelector((state) => state.duals.buyLowPerShare);
-  const sellHighPerShare = useSelector((state) => state.duals.sellHighPerShare);
 
   const dispatch = useDispatch();
   const customStyles = dark ? styles.dark : styles.light;
