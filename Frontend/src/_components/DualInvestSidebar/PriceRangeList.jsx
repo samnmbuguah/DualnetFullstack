@@ -23,13 +23,13 @@ const PriceRangeList = ({
             if (intervalId) clearInterval(intervalId);
             intervalId = setInterval(() => {
                 dispatch(fetchInvestmentsByCurrency(selectedCrypto));
-            }, 5000); // 1 second interval
+            }, 3000); // 1 second interval
         }
 
         // Cleanup interval on component unmount or when selectedCrypto changes
         return () => {
             if (intervalId) {
-                console.log('clear------------------')
+                // console.log('clear------------------')
                 clearInterval(intervalId);
             }
         };
@@ -41,12 +41,12 @@ const PriceRangeList = ({
             <div className="grid-container w-[284px]">
                 <div className="grid-header w-[280px]">
                     <div className="flex justify-between w-[280px]">
-                        <span className="!text-[#55A388] font-bold text-md">BuyLow</span>
-                        <span className="!text-[#EA5F00] font-bold text-md">Sell order</span>
+                        <span className="!text-[#55A388] font-bold font-md">BuyLow</span>
+                        <span className="!text-[#EA5F00] font-bold font-md">Sell order</span>
                     </div>
                 </div>
-                <div className="flex grid-row">
-                    <div className="grid-cell w-[50px] text-center">APR%</div>
+                <div className="flex grid-row pt-3 pb-2">
+                    <div className="grid-cell w-[50px] text-right">APR%</div>
                     <div className="grid-cell w-[80px] text-center">Strike</div>
                     <div className="grid-cell w-[48px] text-center">Share</div>
                     <div className="grid-cell w-[48px] text-center">Term</div>
@@ -55,8 +55,8 @@ const PriceRangeList = ({
                 <div className='max-h-[400px] w-[284px] overflow-auto'>
                 {dualInvestments.length && dualInvestments.map((ele, index) => (
                     <div className="flex grid-row" key={index}>
-                        <div className="grid-cell w-[50px] text-center">{ele.apyDisplay || ''}</div>
-                        <div className="grid-cell w-[80px] text-center font-medium text-md">{ele.exercisePrice || 0}</div>
+                        <div className="grid-cell w-[50px] text-right color-[#01D497]">{ele.apyDisplay.toFixed(0) || ''}</div>
+                        {index === 15 ? <div className="grid-cell w-[80px] !text-[#1D8EFF] text-center font-medium text-md">{ele.exercisePrice || 0}</div> : <div className="grid-cell w-[80px] text-center font-medium text-md">{ele.exercisePrice || 0}</div>}
                         <div className="grid-cell w-[48px] text-center"><CustomInput dark={dark} color={'#01D497'} /></div>
                         <div className="grid-cell w-[48px] text-center">{ele.term || ''}</div>
                         <div className="grid-cell w-[48px] text-center"><CustomInput dark={dark} color={'#EA5F00'} /></div>
