@@ -13,7 +13,8 @@ const CustomInput = ({ dark, color, type=0, styleObj }) => {
 
   return (
     <span
-        className={type === 1 ? `focus:border-[1px] focus:border-[${color}] focus:rounded-[3px] focus:shadow-md flex items-center  h-[17px] justify-center` : `border-[1px] border-[${color}] rounded-[3px] shadow-md h-[17px] flex items-center justify-center`}
+        className={type === 1 ? `focus:border-[1px] focus:!border-[${color}] focus:rounded-[3px] focus:shadow-md flex items-center  h-[17px] justify-center` : `border-[1px] rounded-[3px] shadow-md h-[17px] flex items-center justify-center`}
+        style={{borderColor: color}}
         >
         <input
             type="number"

@@ -11,134 +11,135 @@ export function Content({
   infoType,
   isAuthRoute,
 }) {
-  const contentClasses = `${styles.contentContainer} ${
-    isDarkMode ? styles.contentDark : styles.contentLight
-  }`;
+  const contentClasses = `${styles.contentContainer} ${isDarkMode ? styles.contentDark : styles.contentLight
+    }`;
 
   return (
-    <div className={contentClasses}>
-      <Routes>
-        <Route
-          path="/chart"
-          element={
-            <PrivateRoute>
-              <Home dark={isDarkMode} infoType={infoType} currentView="chart" />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            <PrivateRoute>
-              <Users isDarkMode={isDarkMode} />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/clients"
-          element={
-            <PrivateRoute>
-              <Home
-                dark={isDarkMode}
-                infoType={infoType}
-                currentView="clientSideBar"
-              />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/exchange"
-          element={
-            <PrivateRoute>
-              <Home
-                dark={isDarkMode}
-                infoType={infoType}
-                currentView="exchangeSidebar"
-              />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/wallet"
-          element={
-            <PrivateRoute>
-              <Home
-                dark={isDarkMode}
-                infoType={infoType}
-                currentView="walletSidebar"
-              />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/bot"
-          element={
-            <PrivateRoute>
-              <Home
-                dark={isDarkMode}
-                infoType={infoType}
-                currentView="botSideBar"
-              />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/chart"
-          element={
-            <PrivateRoute>
-              <Home
-                dark={isDarkMode}
-                infoType={infoType}
-                currentView="chartSideBar"
-              />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/info"
-          element={
-            <PrivateRoute>
-              <Home
-                dark={isDarkMode}
-                infoType={infoType}
-                currentView="infoSidebar"
-              />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Home
-                dark={isDarkMode}
-                infoType={infoType}
-                currentView="dualInvestSidebar"
-              />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<Navigate to="/" />} />
-        
-        <Route
-          path="/faq"
-          element={
-            <PrivateRoute>
-              <FAQ isDarkMode={isDarkMode} />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/whitepaper"
-          element={
-            <PrivateRoute>
-              <Whitepaper isDarkMode={isDarkMode} />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
+    <div className={`${contentClasses} bg-investment rounded-[25px]`}>
+      <div className={`py-6 px-2 w-[100%] ${isDarkMode ? 'bg-[#25292feb]' : 'bg-[#fff4e4c7]'} rounded-[25px]`}>
+        <Routes>
+          <Route
+            path="/chart"
+            element={
+              <PrivateRoute>
+                <Home dark={isDarkMode} infoType={infoType} currentView="chart" />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute>
+                <Users isDarkMode={isDarkMode} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/clients"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="clientSideBar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/exchange"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="exchangeSidebar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/wallet"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="walletSidebar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/bot"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="botSideBar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/chart"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="chartSideBar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/info"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="infoSidebar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Home
+                  dark={isDarkMode}
+                  infoType={infoType}
+                  currentView="dualInvestSidebar"
+                />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<Navigate to="/" />} />
+
+          <Route
+            path="/faq"
+            element={
+              <PrivateRoute>
+                <FAQ isDarkMode={isDarkMode} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/whitepaper"
+            element={
+              <PrivateRoute>
+                <Whitepaper isDarkMode={isDarkMode} />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </div>
     </div>
   );
 }

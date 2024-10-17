@@ -11,11 +11,11 @@ export function Header({ username, onLogout, dark }) {
           <span className="shadow-text">{username}</span>
         </span>
       </div>
-      <hr className={`flex-grow mb-0 ml-6 border-b-[0.3px] ${
-          dark ? "border-[#857F76]" : "border-[#C3C3C3]"
+      <hr className={`flex-grow mb-0 ml-6 border-b-[0px] ${
+          dark ? "border-[#484746]" : "border-[#C3C3C3]"
         } `}></hr>
       <button
-        className="w-[36px] h-[40px] dark:text-stone-300 text-[15px] font-bold flex items-center mx-10"
+        className="w-[36px] h-[40px] dark:text-stone-300 text-[15px] font-bold flex items-center ml-10"
         onClick={onLogout}
       >
         <img src={power} alt="power" className="ml-1 w-fit h-fit" />

@@ -83,9 +83,8 @@ function Login() {
                 className="my-12 w-full flex justify-center items-center flex-col"
               >
                 <input
-                  className={`bg-transparent border-b-[1px] border-black font-tomorrow-light outline-none p-2 text-lg text-[#887F6F] placeholder:text-[rgb(107,102,109)] w-auto ${
-                    errors.email ? "is-invalid" : ""
-                  }  placeholder:text-[#887F6F]  border-orange-300`}
+                  className={`bg-transparent border-b-[1px] border-black font-tomorrow-light outline-none p-2 text-lg text-[#887F6F] placeholder:text-[rgb(107,102,109)] w-auto ${errors.email ? "is-invalid" : ""
+                    }  placeholder:text-[#887F6F]  border-orange-300`}
                   type="email"
                   name="email"
                   id="email"
@@ -97,9 +96,8 @@ function Login() {
                 </div>
                 <div className="relative">
                   <input
-                    className={`bg-transparent border-b-[1px] border-black outline-none p-2 text-lg font-syncopate-light text-[#887F6F] placeholder:text-[rgb(107,102,109)] mt-5 w-auto ${
-                      errors.password ? "is-invalid" : ""
-                    }  placeholder:text-[#887F6F]  border-orange-300`}
+                    className={`bg-transparent border-b-[1px] border-black outline-none p-2 text-lg font-syncopate-light text-[#887F6F] placeholder:text-[rgb(107,102,109)] mt-5 w-auto ${errors.password ? "is-invalid" : ""
+                      }  placeholder:text-[#887F6F]  border-orange-300`}
                     type={isEye ? "password" : "text"}
                     name="password"
                     id="password"
@@ -123,18 +121,20 @@ function Login() {
                   style={{ fontFamily: "'tomorrow-medium', sans-serif" }}
                   className="mt-4"
                 >
-                  <input
-                    type="checkbox"
-                    name="confirm"
-                    id="confirm"
-                    {...register("confirm")}
-                  />{" "}
-                  <span
-                    data-tooltip-id="disclaimerTooltip"
-                    className="text-[rgb(105,105,105) text-sm  text-[#887F6F]"
-                  >
-                    I accept Terms of Service**
-                  </span>
+                  <label htmlFor="confirm" className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="confirm"
+                      id="confirm"
+                      {...register("confirm")}
+                    />{" "}
+                    <span
+                      data-tooltip-id="disclaimerTooltip"
+                      className="text-[rgb(105,105,105) text-sm  text-[#887F6F]"
+                    >
+                      &nbsp; &nbsp;I accept Terms of Service**
+                    </span>
+                  </label>
                   <ReactTooltip
                     id="disclaimerTooltip"
                     place="right"
@@ -238,9 +238,8 @@ function Login() {
                   E-MAIL
                 </p>
                 <input
-                  className={`bg-transparent border-b-[1px] text-sm border-[#544A4A] font-roboto outline-none p-2 text-[#887F6F] placeholder:text-[rgb(107,102,109)] w-auto text-center ${
-                    errors.username ? "is-invalid" : ""
-                  }`}
+                  className={`bg-transparent border-b-[1px] text-sm border-[#544A4A] font-roboto outline-none p-2 text-[#887F6F] placeholder:text-[rgb(107,102,109)] w-auto text-center ${errors.username ? "is-invalid" : ""
+                    }`}
                   type="email"
                   name="email"
                   id="email"
@@ -254,9 +253,8 @@ function Login() {
                     PASSWORD
                   </p>
                   <input
-                    className={`bg-transparent border-b-[1px] text-sm	border-[#544A4A] font-roboto outline-none p-2 text-[#887F6F] placeholder:text-[rgb(107,102,109)] text-center w-auto ${
-                      errors.password ? "is-invalid" : ""
-                    }`}
+                    className={`bg-transparent border-b-[1px] text-sm	border-[#544A4A] font-roboto outline-none p-2 text-[#887F6F] placeholder:text-[rgb(107,102,109)] text-center w-auto ${errors.password ? "is-invalid" : ""
+                      }`}
                     type={isEye ? "password" : "text"}
                     name="password"
                     id="password"

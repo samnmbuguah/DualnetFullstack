@@ -35,7 +35,7 @@ export function App() {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center w-full min-h-screen px-10 ${
+      className={`flex flex-col justify-center items-center w-full min-h-screen pl-10 ${
         isDarkMode ? "dark dark-appContainer" : "light-appContainer"
       }`}
     >

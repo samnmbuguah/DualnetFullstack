@@ -45,7 +45,7 @@ export function Footer({ authUser, dark }) {
   );
 
   return (
-    <div className="flex pt-4 justify-between pr-20">
+    <div className="flex pt-4 justify-between">
       <div className="flex justify-between w-full items-center text-[11px]">
         <div className="flex space-x-4 cursor-pointer"></div>
         <div className="flex place-items-baseline justify-between space-x-4">
