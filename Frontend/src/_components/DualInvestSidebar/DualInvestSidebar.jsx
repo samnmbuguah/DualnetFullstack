@@ -71,10 +71,10 @@ const DualInvestSidebar = ({ show, dark }) => {
               </div>
               <div className="mt-4">
                 <div className="!text-[#55A388] font-bold xl:text-lg lg:text-md">Open</div>
-                <div className="flex items-center justify-between">{`APR >`} <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />%</span></div>
-                <div className="flex items-center justify-between">Closer strike <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />&nbsp;S</span></div>
-                <div className="flex items-center justify-between">{`but APR >`} <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />%</span></div>
-                <div className="flex items-center justify-between">Scale by + <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />%</span></div>
+                <div className="flex items-center justify-between">{`APR >`} <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '50px' }} type={1} />%</span></div>
+                <div className="flex items-center justify-between">Closer strike <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '50px' }} type={1} />&nbsp;$</span></div>
+                <div className="flex items-center justify-between">{`but APR >`} <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '50px' }} type={1} />%</span></div>
+                <div className="flex items-center justify-between">Scale by + <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '50px' }} type={1} />%</span></div>
               </div>
             </div>
           </div>

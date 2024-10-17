@@ -34,13 +34,13 @@ const DualSwitch = ({ dark }) => {
             style={{ width: "26px", height: "13.42px" }}
           />
           <span
-            className={`slider flex h-[13.42px] w-[26px] items-center rounded-full duration-200 ${
-              isChecked ? "bg-green-500" : "bg-[#50555F]"
+            className={`slider flex h-[13.42px] w-[26px] p-[1px] items-center rounded-full duration-200 ${
+              isChecked ? "bg-[#1D886A]" : "bg-[#50555F]"
             }`}
           >
             <span
               className={`dot h-[11.42px] w-[11.42px] rounded-full bg-white duration-200 ${
-                isChecked ? "translate-x-[18px]" : ""
+                isChecked ? "translate-x-[12px]" : ""
               }`}
             ></span>
           </span>
