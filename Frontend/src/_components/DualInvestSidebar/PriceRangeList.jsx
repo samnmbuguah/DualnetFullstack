@@ -11,7 +11,7 @@ import {
 const PriceRangeList = ({
     dark
 }) => {
-    const {selectedCrypto, dualInvestments} = useSelector((state) => state.duals);
+    const { selectedCrypto, dualInvestments } = useSelector((state) => state.duals);
     const { user: authUser } = useSelector((x) => x.auth);
     const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ const PriceRangeList = ({
 
         if (selectedCrypto) {
             // Set an interval to call fetchInvestmentsByCurrency every second
-            if(intervalId) clearInterval(intervalId);
+            if (intervalId) clearInterval(intervalId);
             intervalId = setInterval(() => {
                 dispatch(fetchInvestmentsByCurrency(selectedCrypto));
             }, 5000); // 1 second interval
@@ -37,37 +37,34 @@ const PriceRangeList = ({
 
     console.log(dualInvestments, 'dualInvestments')
     return (
-        <>
-            <table className="border-separate border-spacing-x-2 border-slate-400">
-                <tbody>
-                    <tr>
-                        <td colSpan={5} >
-                            <div className="flex justify-between">
-                                <span className="!text-[#55A388] font-bold text-md">BuyLow</span>
-                                <span className="!text-[#EA5F00] font-bold text-md">Sell order</span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="text-center">APR%</td>
-                        <td className="text-center">Strike</td>
-                        <td className="text-center">Share</td>
-                        <td className="text-center">Term</td>
-                        <td className="text-center">Order</td>
-                    </tr>
-                    {dualInvestments.length && dualInvestments.map((ele, index) => {
-                        if (index > 3 && index < 25) return (<tr key={index}>
-                                <td className="text-center">{ele.apyDisplay || ''}</td>
-                                <td className="font-medium text-md">{ele.exercisePrice || 0}</td>
-                                <td className="text-center"><CustomInput dark={dark} color={'#01D497'} /></td>
-                                <td className="text-center">{ele.term || ''}</td>
-                                <td className="text-center"><CustomInput dark={dark} color={'#EA5F00'} /></td>
-                            </tr>)
-                    })}
-                </tbody>
-            </table>
-
-        </>
+        <div className='flex jutify-end'>
+            <div className="grid-container w-[284px]">
+                <div className="grid-header w-[280px]">
+                    <div className="flex justify-between w-[280px]">
+                        <span className="!text-[#55A388] font-bold text-md">BuyLow</span>
+                        <span className="!text-[#EA5F00] font-bold text-md">Sell order</span>
+                    </div>
+                </div>
+                <div className="flex grid-row">
+                    <div className="grid-cell w-[50px] text-center">APR%</div>
+                    <div className="grid-cell w-[80px] text-center">Strike</div>
+                    <div className="grid-cell w-[48px] text-center">Share</div>
+                    <div className="grid-cell w-[48px] text-center">Term</div>
+                    <div className="grid-cell w-[48px] text-center">Order</div>
+                </div>
+                <div className='max-h-[400px] w-[284px] overflow-auto'>
+                {dualInvestments.length && dualInvestments.map((ele, index) => (
+                    <div className="flex grid-row" key={index}>
+                        <div className="grid-cell w-[50px] text-center">{ele.apyDisplay || ''}</div>
+                        <div className="grid-cell w-[80px] text-center font-medium text-md">{ele.exercisePrice || 0}</div>
+                        <div className="grid-cell w-[48px] text-center"><CustomInput dark={dark} color={'#01D497'} /></div>
+                        <div className="grid-cell w-[48px] text-center">{ele.term || ''}</div>
+                        <div className="grid-cell w-[48px] text-center"><CustomInput dark={dark} color={'#EA5F00'} /></div>
+                    </div>
+                ))}
+                </div>
+            </div>
+        </div>
     );
 };
 
