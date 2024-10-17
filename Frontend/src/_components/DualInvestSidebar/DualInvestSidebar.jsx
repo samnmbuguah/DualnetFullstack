@@ -33,7 +33,7 @@ const DualInvestSidebar = ({ show, dark }) => {
 
   useEffect(() => {
     if (selectedCrypto) {
-      dispatch(fetchInvestmentsByCurrency(selectedCrypto));
+      // dispatch(fetchInvestmentsByCurrency(selectedCrypto));
       dispatch(fetchSpotPrice(selectedCrypto + "_USDT"));
       dispatch(
         fetchSpotBalances({
@@ -66,15 +66,15 @@ const DualInvestSidebar = ({ show, dark }) => {
             <div className="my-auto">
               <div>
                 <div className="!text-[#55A388] font-bold xl:text-lg lg:text-md">Buy low</div>
-                <div>Spot account 19.520 USDT</div>
-                <div className="flex items-center">Investment&nbsp;<CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '50px' }} type={1} /> USDT</div>
+                <div className="flex justify-between">Spot account:&nbsp;&nbsp;  <span>19.520 USDT</span></div>
+                <div className="flex items-center justify-between">Investment&nbsp;<span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '50px' }} type={1} /> USDT</span></div>
               </div>
               <div className="mt-4">
                 <div className="!text-[#55A388] font-bold xl:text-lg lg:text-md">Open</div>
-                <div className="flex items-center">{`APR >`} <CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />%</div>
-                <div className="flex items-center">Closer strike <CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />S</div>
-                <div className="flex items-center">{`but APR >`} <CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />%</div>
-                <div className="flex items-center">Scale by + <CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />%</div>
+                <div className="flex items-center justify-between">{`APR >`} <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />%</span></div>
+                <div className="flex items-center justify-between">Closer strike <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />&nbsp;S</span></div>
+                <div className="flex items-center justify-between">{`but APR >`} <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />%</span></div>
+                <div className="flex items-center justify-between">Scale by + <span className="flex items-center"><CustomInput dark={dark} color={'#01D497'} styleObj={{ width: '33px' }} type={1} />%</span></div>
               </div>
             </div>
           </div>
