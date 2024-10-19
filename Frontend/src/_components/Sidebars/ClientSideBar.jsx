@@ -15,11 +15,11 @@ function ClientSideBar({
   width,
 }) {
   const customDarkStyles = {
-    boxShadow: '1px 4px 4px #151515 inset',
-    border: '1px #2B3036 solid'
+    // boxShadow: '1px 4px 4px #151515 inset',
+    border: '1px #484746 solid'
   };
   const customLightStyles = {
-    background: '#FEF6E6',
+    // background: '#FEF6E6',
     border: "1px #C9C5C5 solid"
   };
 
@@ -60,7 +60,7 @@ function ClientSideBar({
     <div
       style={dark ? customDarkStyles : customLightStyles}
       className={`${show ? "right-0" : "hidden"
-        } bg-[#fef6e6] md:w-[${width}px] h-full  px-5 py-3 z-30 transition-transform text-xs dark:bg-[transparent] dark:border-[#6D6D6D] bg-zinc-800 rounded-[25px]`}
+        } md:w-[${width}px] h-full  px-5 py-3 z-30 transition-transform text-xs dark:bg-[transparent] dark:border-[#6D6D6D] rounded-[25px]`}
     >
       <div
         className="h-[40px] md:h-auto menu mt-2 text-2xl w-full flex justify-start"

@@ -19,6 +19,8 @@ function BotSideBar({ show, setShow, dark, width, setChartShow }) {
   let screenWidth = useWindowDimensions().width;
 
   const [selectedScan, setSelectedScan] = useState(null);
+  const [selectTab, setSelectedTab] = useState(1)
+  const [balances, setBalances] = useState([]);
 
   const bots = useSelector((state) => state.bots.botsByUser[authUser[1].id]);
 
@@ -27,7 +29,6 @@ function BotSideBar({ show, setShow, dark, width, setChartShow }) {
 
   const { topScans, updateTopScans } =
     useTopScansWebSocket(ws_url);
-  const [balances, setBalances] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,32 +64,26 @@ function BotSideBar({ show, setShow, dark, width, setChartShow }) {
     setSelectedScan(scan);
   };
 
+  const tabMenuList = ['KuCoin', 'Gate.io', 'ByBit', 'Binance'];
+
   return (
     <div
       style={customStyles}
       className={`${
         show ? "right-0" : "hidden"
-      } bg-[#fef6e6] md:w-[${width}px] h-full  px-5 py-3 z-30 transition-transform text-xs dark:bg-[transparent] dark:border-[#6D6D6D] bg-zinc-800 rounded-[25px]`}
+      }  md:w-[${width}px] h-full z-30 transition-transform text-xs dark:bg-[transparent] rounded-[25px]`}
     >
-      <div className="border-b border-stone-500 px-4">
+      {/* <div className="border-b dark:border-[#484746] border-[#c3c3c3] px-4">
         <div className="mb-2">
-          <button className="mr-2 font-[inter] text-stone-500 dark:text-white capitalize hover:border-b hover:border-green-500 hover:text-green-500">
-            KuCoin
-          </button>
-          <button className="mr-2 font-[inter] capitalize border-b border-green-500 text-green-500">
-            Gate.io
-          </button>
-          <button className="mr-2 font-[inter] text-stone-500 dark:text-white capitalize hover:border-b hover:border-green-500 hover:text-green-500">
-            ByBit
-          </button>
-          <button className="mr-2 font-[inter] text-stone-500 dark:text-white capitalize hover:border-b hover:border-green-500 hover:text-green-500">
-            Binance
-          </button>
+          {tabMenuList.map((ele, index) => {
+            if (selectTab === index) return <button className="mr-2 font-[inter] text-stone-500 capitalize text-[#30b58b] hover:text-[#30b58b]" onClick={() => setSelectedTab(index)} > {ele} </button>
+            return <button className="mr-2 font-[inter] text-stone-500 dark:text-white capitalize hover:text-[#30b58b]" onClick={() => setSelectedTab(index)} > {ele} </button>
+          })}
         </div>
-      </div>
+      </div> */}
 
       <div
-        className="h-[40px] md:h-auto menu mt-2 text-2xl w-full flex justify-start"
+        className="h-[40px] md:h-auto menu text-2xl w-full flex justify-start"
         onClick={() => setShow()}
       >
         <span className="block md:hidden">
@@ -97,7 +92,7 @@ function BotSideBar({ show, setShow, dark, width, setChartShow }) {
       </div>
 
       <div
-        className={`hide-scroll md:pt-7 grid ${
+        className={`hide-scroll grid ${
           screenWidth < 1677 ? "md:grid-cols-2" : "lg:grid-cols-3"
         } w-auto h-[464px] md:h-[500px] overflow-y-auto`}
       >

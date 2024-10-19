@@ -57,7 +57,7 @@ function Users({ setCurrentView, isDarkMode }) {
 
     return (
         <div className="h-auto overflow-y-auto text-white">
-            <div className="py-4 mx-24">
+            <div className="py-4 px-9 mx-24">
                 <img width={96} height={96} src={logo} className="pb-3" alt=""  />
                 <div className="flex gap-6 justify-between items-center">
                     <div>
@@ -70,12 +70,12 @@ function Users({ setCurrentView, isDarkMode }) {
                         <span className={`text-[12px] font-syn-light ${isDarkMode ? 'text-white' : 'hidden'}`}>Go your Chart</span>{' '}
                         <img width={30} src={darkChart} className={isDarkMode ? 'inline-block' : 'hidden'} alt="chart" />
                     </NavLink>
-                    <button className="ml-10 inline-flex items-center text-xs bg-gradient-to-r from-[#777] to-[#0094FF] from-10% to-100% text-transparent bg-clip-text" onClick={()=>logout()}>
+                    <button className="inline-flex items-center text-xs bg-gradient-to-r from-[#777] to-[#0094FF] from-10% to-100% text-transparent bg-clip-text" onClick={()=>logout()}>
                         Logout<img height={37} width={29} src={power} alt="power" />
                     </button>
                 </div>
 
-                <div className="grid grid-cols-1 mt-8 w-full text-white">
+                <div className="grid grid-cols-1 max-w-2xl m-auto mt-8 w-full text-white">
                 { 
                     usersDetail && usersDetail.rows && usersDetail.rows.map((e) => {
                         return <AdminRow editUser={editUser} deleteUser={deleteUser} key={e.id} data={e} details={usersDetail.rows} isDarkMode={isDarkMode}/>;

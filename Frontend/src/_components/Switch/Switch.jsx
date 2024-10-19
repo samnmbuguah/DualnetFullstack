@@ -27,7 +27,7 @@ const Switch = ({ onChange, tradeData }) => {
       />
       <span
         className={`slider flex h-5 w-[40px] items-center rounded-full p-1 duration-200 ${
-          isChecked ? "bg-green-500" : "bg-[#50555F]"
+          isChecked ? "bg-[#27847f]" : "bg-[#50555F]"
         }`}
       >
         <span
