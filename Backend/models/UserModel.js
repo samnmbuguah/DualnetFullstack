@@ -59,6 +59,10 @@ const Users = db.define(
     user_roles: {
       type: DataTypes.STRING,
     },
+    state: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    }
   },
   {
     freezeTableName: true,
