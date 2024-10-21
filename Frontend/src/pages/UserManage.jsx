@@ -75,7 +75,7 @@ function Users({ setCurrentView, isDarkMode }) {
                     </button>
                 </div>
 
-                <div className="grid grid-cols-1 max-w-2xl m-auto mt-8 w-full text-white">
+                <div className="grid grid-cols-1 max-w-3xl m-auto mt-8 w-full text-white">
                 { 
                     usersDetail && usersDetail.rows && usersDetail.rows.map((e) => {
                         return <AdminRow editUser={editUser} deleteUser={deleteUser} key={e.id} data={e} details={usersDetail.rows} isDarkMode={isDarkMode}/>;
