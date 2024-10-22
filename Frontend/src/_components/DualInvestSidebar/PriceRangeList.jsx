@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import CustomInput from "./CustomInput"
 import {
     fetchInvestmentsByCurrency,
-    // Remove the import for updateShortSize
+    updateDualInvestments
 } from "_store/duals.slice";
 
 const PriceRangeList = ({
@@ -12,9 +12,6 @@ const PriceRangeList = ({
     const { selectedCrypto, dualInvestments } = useSelector((state) => state.duals);
     const { user: authUser } = useSelector((x) => x.auth);
     const dispatch = useDispatch();
-
-    // Create a local state to hold the shares input values
-    const [shares, setShares] = useState(dualInvestments.map(() => 0));
 
     useEffect(() => {
         let intervalId;
@@ -34,10 +31,6 @@ const PriceRangeList = ({
     }, [selectedCrypto, authUser, dispatch]);
 
     const handleShareChange = (index, value) => {
-        const newShares = [...shares];
-        newShares[index] = value;
-        setShares(newShares);
-
         // Update the dualInvestments state directly
         const updatedInvestments = dualInvestments.map((investment, i) => 
             i === index ? { ...investment, shares: value } : investment
@@ -70,7 +63,7 @@ const PriceRangeList = ({
                             <CustomInput 
                                 dark={dark} 
                                 color={'#01D497'} 
-                                value={shares[index]} 
+                                value={ele.shares || 0} 
                                 onChange={(e) => handleShareChange(index, e.target.value)} // Update shares on change
                             />
                         </div>
