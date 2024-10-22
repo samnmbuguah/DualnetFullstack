@@ -127,6 +127,7 @@ exports.UpdateUser = async(req,res)  =>{
                     profit_now: data.profit_now,
                     user_roles: data.user_roles,
                     Admin_id: data.Admin_id,
+                    state: data.state
                   },
                   {
                     where: {
@@ -158,6 +159,7 @@ exports.UpdateUser = async(req,res)  =>{
                 profit_now: data.profit_now,
                 user_roles: data.user_roles,
                 Admin_id: data.Admin_id,
+                state: data.state
             },{
                 where:{
                     id: data.id
