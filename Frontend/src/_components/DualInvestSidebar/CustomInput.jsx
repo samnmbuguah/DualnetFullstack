@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 
 const CustomInput = ({ dark, color, type=0, styleObj }) => {
   const [currentVal, setCurrentVal] = useState(0)
@@ -21,7 +20,7 @@ const CustomInput = ({ dark, color, type=0, styleObj }) => {
             value={currentVal}
             onChange={(e) => handleShareChange(1, e.target.value)}
             style={styleObj ?? initStyle}
-            className={ `${type === 1 ? `focus:border-[1px] focus:border-[${color}] rounded-[3px]` : 'border-[transparent] border-[1px]'}   bg-transparent text-center text-end outline-none p-0 px-1 m-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+            className={ `${type === 1 ? `focus:border-[1px] focus:border-[${color}] rounded-[3px]` : 'border-[transparent] border-[1px]'}   bg-transparent text-center outline-none p-0 px-1 m-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
         />
         </span>
   );
