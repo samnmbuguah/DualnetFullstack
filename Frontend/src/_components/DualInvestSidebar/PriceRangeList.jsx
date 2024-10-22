@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomInput from "./CustomInput"
 import {
     fetchInvestmentsByCurrency,
-    // fetchSpotPrice,
-    // fetchSpotBalances,
-    // fetchOpenedDuals,
+    // Remove the import for updateShortSize
 } from "_store/duals.slice";
 
 const PriceRangeList = ({
@@ -15,27 +13,38 @@ const PriceRangeList = ({
     const { user: authUser } = useSelector((x) => x.auth);
     const dispatch = useDispatch();
 
+    // Create a local state to hold the shares input values
+    const [shares, setShares] = useState(dualInvestments.map(() => 0));
+
     useEffect(() => {
         let intervalId;
 
         if (selectedCrypto) {
-            // Set an interval to call fetchInvestmentsByCurrency every second
             if (intervalId) clearInterval(intervalId);
             intervalId = setInterval(() => {
                 dispatch(fetchInvestmentsByCurrency(selectedCrypto));
-            }, 3000); // 1 second interval
+            }, 30000);
         }
 
-        // Cleanup interval on component unmount or when selectedCrypto changes
         return () => {
             if (intervalId) {
-                // console.log('clear------------------')
                 clearInterval(intervalId);
             }
         };
-    }, [selectedCrypto, authUser]);
+    }, [selectedCrypto, authUser, dispatch]);
 
-    console.log(dualInvestments, 'dualInvestments')
+    const handleShareChange = (index, value) => {
+        const newShares = [...shares];
+        newShares[index] = value;
+        setShares(newShares);
+
+        // Update the dualInvestments state directly
+        const updatedInvestments = dualInvestments.map((investment, i) => 
+            i === index ? { ...investment, shares: value } : investment
+        );
+        dispatch(updateDualInvestments(updatedInvestments)); // Dispatch an action to update dualInvestments
+    };
+
     return (
         <div className='flex jutify-end'>
             <div className="grid-container w-[284px]">
@@ -57,7 +66,14 @@ const PriceRangeList = ({
                     <div className="flex grid-row" key={index}>
                         <div className="grid-cell w-[50px] text-right color-[#01D497]">{ele.apyDisplay.toFixed(0) || ''}</div>
                         {index === 15 ? <div className="grid-cell w-[80px] !text-[#1D8EFF] text-center font-medium text-md">{ele.exercisePrice || 0}</div> : <div className="grid-cell w-[80px] text-center font-medium text-md">{ele.exercisePrice || 0}</div>}
-                        <div className="grid-cell w-[48px] text-center"><CustomInput dark={dark} color={'#01D497'} /></div>
+                        <div className="grid-cell w-[48px] text-center">
+                            <CustomInput 
+                                dark={dark} 
+                                color={'#01D497'} 
+                                value={shares[index]} 
+                                onChange={(e) => handleShareChange(index, e.target.value)} // Update shares on change
+                            />
+                        </div>
                         <div className="grid-cell w-[48px] text-center">{ele.term || ''}</div>
                         <div className="grid-cell w-[48px] text-center"><CustomInput dark={dark} color={'#EA5F00'} /></div>
                     </div>

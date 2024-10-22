@@ -20,7 +20,6 @@ const initialState = {
   sellHighPerShare: 156,
   strikePrices: [],
   selectedStrikePrice: "",
-  shortSize: -1,
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
@@ -146,8 +145,8 @@ const dualsSlice = createSlice({
     setStrikePrice: (state, action) => {
       state.selectedStrikePrice = action.payload;
     },
-    updateShortSize: (state, action) => {
-      state.shortSize = action.payload;
+    updateDualInvestments: (state, action) => {
+      state.dualInvestments = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -249,8 +248,8 @@ export const {
   toggleCheckedState,
   updateSelectedCrypto,
   setStrikePrice,
-  updateShortSize,
   updateInvestCurrencyShare,
   updateExerciseCurrencyShare,
+  updateDualInvestments,
 } = dualsSlice.actions;
 export const dualsReducer = dualsSlice.reducer;
