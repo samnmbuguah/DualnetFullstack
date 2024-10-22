@@ -31,7 +31,6 @@ export const fetchInvestmentsByCurrency = createAsyncThunk(
     const response = await fetchWrapper.get(
       baseUrl + `/fetch-investments?currency=${currency}`
     );
-    console.log("response", response);
     return response.investments;
   }
 );
@@ -237,18 +236,6 @@ const dualsSlice = createSlice({
       .addCase(fetchOpenedDuals.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      })
-      .addCase(addShortBot.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(addShortBot.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        Swal.fire("Success", "Short bot opened successfully", "success");
-      })
-      .addCase(addShortBot.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-        Swal.fire("Error", "Failed to open hedge bot", "error");
       });
   },
 });

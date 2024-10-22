@@ -37,7 +37,6 @@ async function fetchInvestmentsByCurrency(currency) {
     for (let i = -15; i <= 14; i++) {
       priceArray.push(convertedSpotPrice + (i * multiple));
     }
-    console.log(priceArray);
 
     // Fetch the most recent plan from DualPlans model with deliveryTime less than 7 days away
     const currentTime = Math.floor(Date.now() / 1000);
