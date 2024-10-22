@@ -4,9 +4,6 @@ import Swal from "sweetalert2";
 
 const initialState = {
   dualInvestments: [],
-  spotPrice: null,
-  usdtBalance: 22.589,
-  cryptoBalance: 0.00,
   buyLowAmount: 100,
   sellHighAmount: 0.00156,
   aprToBuy: localStorage.getItem('aprToBuy') ? Number(localStorage.getItem('aprToBuy')) : 400,
@@ -15,11 +12,6 @@ const initialState = {
   error: null,
   isChecked: false,
   selectedCrypto: "BTC",
-  openedBuyDuals: 0,
-  buyLowPerShare: 156,
-  sellHighPerShare: 156,
-  strikePrices: [],
-  selectedStrikePrice: "",
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
@@ -83,7 +75,6 @@ export const fetchOpenedDuals = createAsyncThunk(
     const response = await fetchWrapper.get(
       `${baseUrl}/fetch-opened-duals?currency=${currency}&userId=${userId}`
     );
-    console.log("response", response);
     return response;
   }
 );
@@ -100,25 +91,6 @@ export const toggleChecked = () => async (dispatch, getState) => {
   }
 };
 
-export const addShortBot = createAsyncThunk(
-  "duals/addShortBot",
-  async (_, { getState }) => {
-    const dualsState = getState().duals;
-    const authState = getState().auth;
-    const userId = authState.user[1].id;
-
-    const payload = {
-      userId,
-      currency: dualsState.selectedCrypto,
-      strikePrice: dualsState.selectedStrikePrice,
-      investAmount: dualsState.shortSize,
-    };
-
-    const response = await fetchWrapper.post(baseUrl + "/add-short-bot", payload);
-    return response;
-  }
-);
-
 const dualsSlice = createSlice({
   name: "duals",
   initialState,
@@ -133,7 +105,7 @@ const dualsSlice = createSlice({
       state.aprToBuy = action.payload;
       localStorage.setItem('aprToBuy', action.payload);
     },
-    updateAprToSell: (state, action) => { // Add this new reducer
+    updateAprToSell: (state, action) => {
       state.aprToSell = action.payload;
     },
     toggleCheckedState: (state, action) => {
@@ -141,9 +113,6 @@ const dualsSlice = createSlice({
     },
     updateSelectedCrypto: (state, action) => {
       state.selectedCrypto = action.payload;
-    },
-    setStrikePrice: (state, action) => {
-      state.selectedStrikePrice = action.payload;
     },
     updateDualInvestments: (state, action) => {
       state.dualInvestments = action.payload;
@@ -215,21 +184,15 @@ const dualsSlice = createSlice({
       .addCase(fetchOpenedDuals.fulfilled, (state, action) => {
         state.status = "succeeded";
         if (Array.isArray(action.payload) && action.payload.length === 0) {
-          // Handle the case when the payload is an empty array
           state.openedDuals = [];
           state.aprToBuy = 450;
-          state.aprToSell = 450; // Add this line
+          state.aprToSell = 450;
           state.isChecked = false;
-          state.openedBuyDuals = 0;
         } else {
-          // Handle the case when the payload contains data
           state.openedDuals = action.payload;
           state.aprToBuy = action.payload.thresholdBuy || 450;
-          state.aprToSell = action.payload.thresholdSell || 450; // Add this line
+          state.aprToSell = action.payload.thresholdSell || 450;
           state.isChecked = action.payload.active || false;
-          state.openedBuyDuals = action.payload.dualCount || 0;
-          state.strikePrices = action.payload.strikePrices || ["64000"];
-          state.selectedStrikePrice = action.payload.strikePrices?.[0] || "64000";
         }
       })
       .addCase(fetchOpenedDuals.rejected, (state, action) => {
@@ -244,12 +207,9 @@ export const {
   updateBuyLowAmount,
   updateSellHighAmount,
   updateAprToBuy,
-  updateAprToSell, // Add this new action
+  updateAprToSell,
   toggleCheckedState,
   updateSelectedCrypto,
-  setStrikePrice,
-  updateInvestCurrencyShare,
-  updateExerciseCurrencyShare,
   updateDualInvestments,
 } = dualsSlice.actions;
 export const dualsReducer = dualsSlice.reducer;
