@@ -7,12 +7,14 @@ const initialState = {
   buyLowAmount: 100,
   sellHighAmount: 0.00156,
   aprToBuy: localStorage.getItem('aprToBuy') ? Number(localStorage.getItem('aprToBuy')) : 400,
-  aprToSell: 400,
   status: "idle",
   error: null,
   isChecked: false,
   selectedCrypto: "BTC",
   balances: [0.00,0.00],
+  aprThreshold: 0, // New state variable for APR >
+  closerStrike: 0,  // New state variable for Closer strike
+  scaleBy: 0,      // New state variable for Scale by +
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
@@ -99,9 +101,6 @@ const dualsSlice = createSlice({
       state.aprToBuy = action.payload;
       localStorage.setItem('aprToBuy', action.payload);
     },
-    updateAprToSell: (state, action) => {
-      state.aprToSell = action.payload;
-    },
     toggleCheckedState: (state, action) => {
       state.isChecked = !action.payload;
     },
@@ -113,6 +112,15 @@ const dualsSlice = createSlice({
     },
     updateBalances: (state, action) => {
       state.balances = action.payload; // Add balances to state
+    },
+    updateAprThreshold: (state, action) => {
+      state.aprThreshold = action.payload;
+    },
+    updateCloserStrike: (state, action) => {
+      state.closerStrike = action.payload;
+    },
+    updateScaleBy: (state, action) => {
+      state.scaleBy = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -184,9 +192,11 @@ const dualsSlice = createSlice({
 // Export actions and reducer
 export const {
   updateAprToBuy,
-  updateAprToSell,
   toggleCheckedState,
   updateSelectedCrypto,
   updateDualInvestments,
+  updateAprThreshold,
+  updateCloserStrike,
+  updateScaleBy,
 } = dualsSlice.actions;
 export const dualsReducer = dualsSlice.reducer;
