@@ -95,12 +95,6 @@ const dualsSlice = createSlice({
   name: "duals",
   initialState,
   reducers: {
-    updateBuyLowAmount: (state, action) => {
-      state.buyLowAmount = action.payload;
-    },
-    updateSellHighAmount: (state, action) => {
-      state.sellHighAmount = action.payload;
-    },
     updateAprToBuy: (state, action) => {
       state.aprToBuy = action.payload;
       localStorage.setItem('aprToBuy', action.payload);
@@ -189,8 +183,6 @@ const dualsSlice = createSlice({
 
 // Export actions and reducer
 export const {
-  updateBuyLowAmount,
-  updateSellHighAmount,
   updateAprToBuy,
   updateAprToSell,
   toggleCheckedState,
