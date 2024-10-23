@@ -20,7 +20,7 @@ const PriceRangeList = ({
             if (intervalId) clearInterval(intervalId);
             intervalId = setInterval(() => {
                 dispatch(fetchInvestmentsByCurrency(selectedCrypto));
-            }, 30000);
+            }, 3000);
         }
 
         return () => {
