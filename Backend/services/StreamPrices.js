@@ -21,7 +21,7 @@ async function fetchTopScans(
       },
     },
     order: [[criteria, order]], // sorts by the given criteria
-    limit: 10,
+    limit: 500,
   });
   console.log("Top scans fetched successfully");
   return topScans;

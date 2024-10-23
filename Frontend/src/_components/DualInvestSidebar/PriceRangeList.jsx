@@ -42,7 +42,7 @@ const PriceRangeList = ({
     // New effect to update AutoDual when dualInvestments change
     useEffect(() => {
         dispatch(updateAutoDual({})); // Pass an empty object
-    }, [dualInvestments, selectedCrypto, dispatch, authUser]);
+    }, [selectedCrypto, dispatch, authUser]);
 
     return (
         <div className='flex jutify-end'>
