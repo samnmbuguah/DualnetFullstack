@@ -1,38 +1,26 @@
 import Divider from "_components/Divider/Divider";
-import { fetchWrapper } from "_helpers";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import SmallChart from "_components/SmallChart";
-const baseUrl = `${fetchWrapper.api_url}/api`;
+import { fetchBalances } from "_store/duals.slice";
 
 const DetailsSideBar = ({ user, dark }) => {
-  const [balances, setBalances] = useState(["31.191.3800", "4,563,568.4207"]);
   const { user: authUser } = useSelector((x) => x.auth);
+  const dispatch = useDispatch();
+  const balances = useSelector((state) => state.duals.balances);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetchWrapper.post(baseUrl + "/get-balances", {
-          subClientId: authUser[1].id,
-        });
-        setBalances(
-          response.map((balance) =>
-            parseFloat(
-              parseFloat(balance)
-                .toFixed(2)
-                .replace(/[.,]00$/, "")
-            )
-          )
-        );
-        if (response.status === 200) {
-        }
+        // Dispatch the thunk to fetch balances
+        await dispatch(fetchBalances(authUser[1].id));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [authUser]);
+  }, [authUser, dispatch]);
 
   const innerShadowClass = "text-shadow-[0_4px_4px_rgba(0,0,0,0.25)]";
 
@@ -65,7 +53,7 @@ const DetailsSideBar = ({ user, dark }) => {
               dark ? "text-[#C6BDAF]" : "text-[#979191]"
             } !font-bold font-[syncopate-regular] text-lg`}
           >
-          {balances[1] !== undefined && !isNaN(balances[1]) ? balances[1].toFixed(2) : 0}
+          {balances && balances[1] !== undefined && !isNaN(parseFloat(balances[1])) ? parseFloat(balances[1]).toFixed(2) : 0}
           </div>
         </div>
         <div className="flex justify-between items-center">
@@ -78,7 +66,8 @@ const DetailsSideBar = ({ user, dark }) => {
               dark ? "text-[#C6BDAF]" : "text-[#979191]"
             } !font-bold font-[syncopate-regular] text-lg`}
           >
-          {balances[0] !== undefined && !isNaN(balances[0]) ? balances[0].toFixed(2) : 0}          </div>
+          {balances && balances[0] !== undefined && !isNaN(parseFloat(balances[0])) ? parseFloat(balances[0]).toFixed(2) : 0}          
+          </div>
         </div>
         <Divider dark={dark} />
         <div className={`text-[#D5BEAB] font-[syncopate-bold] text-xl block ${innerShadowClass}`}>
