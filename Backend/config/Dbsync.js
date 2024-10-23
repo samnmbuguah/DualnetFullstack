@@ -11,7 +11,7 @@ const AutoDual = require('../models/AutoDualModel.js');
 const ShortBot = require('../models/shortBotModel.js');
 
 console.log("Syncing Tables");
-Users.sync()
+Users.sync({alter: true})
   .then(() => {
     console.log("Users table has been synced");
     return Scans.sync();
