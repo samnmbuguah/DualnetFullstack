@@ -43,7 +43,7 @@ exports.Register = async(req, res) => {
             password: hashPassword,
             email: email,
             usertype: 1,
-            user_roles: 'super_admin'
+            user_roles: 'normal'
         });
         res.json({msg: "Registered!"});
     } catch (error) {
@@ -69,6 +69,7 @@ exports.Login = async(req, res) => {
         if(user.length == 0) return res.status(404).json({msg: "Not register!"});
         // const match = await bcrypt.compare(req.body.password, user[0].password);
         if(password !== user[0].password) return res.status(400).json({msg: "Wrong Password"});
+        if(!user[0]?.state || user[0].state == 0) return res.status(400).json({msg: "You're not allowed! Please contact support team"});
 
         const userId = user[0].id;
         const name = user[0].username;
@@ -93,10 +94,10 @@ exports.Login = async(req, res) => {
         if(usertype == 0 || usertype == 1 || usertype == 3 || usertype == 4){
             res.json([{ accessToken },user[0]]);
         }
-        else return res.status(400).json({msg: "Email tidak ditemukan."});
+        else return res.status(400).json({msg: "Email not found."});
     } catch (error) {
         console.log(error)
-        res.status(404).json({msg:"Email tidak ditemukan..."});
+        res.status(404).json({msg: "Please contact to support team."});
     }
 }
 
@@ -126,6 +127,7 @@ exports.UpdateUser = async(req,res)  =>{
                     profit_now: data.profit_now,
                     user_roles: data.user_roles,
                     Admin_id: data.Admin_id,
+                    state: data.state
                   },
                   {
                     where: {
@@ -157,6 +159,7 @@ exports.UpdateUser = async(req,res)  =>{
                 profit_now: data.profit_now,
                 user_roles: data.user_roles,
                 Admin_id: data.Admin_id,
+                state: data.state
             },{
                 where:{
                     id: data.id
@@ -288,6 +291,7 @@ const getUserList = async(type=0) => {
                     'profit_now',
                     'Admin_id',
                     'user_roles',
+                    'state'
                 ],
                 order: [
                     [db.cast(db.col('account_no'), 'INTEGER'), 'ASC'],

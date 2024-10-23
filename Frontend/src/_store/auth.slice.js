@@ -23,8 +23,8 @@ const slice = createSlice({
         localStorage.setItem("user", JSON.stringify(user));
       })
       .addCase(extraActions.login.rejected, (state, action) => {
-        state.error = action.error;
-        Swal.fire("Error", action.error.message ?? "unknown error", "error");
+        state.error = action.payload;  // action.payload will contain the custom error message
+        Swal.fire("Error", action.payload ?? "unknown error", "error");
       })
       .addCase(extraActions.signup.pending, (state) => {
         state.error = null;
@@ -68,7 +68,17 @@ function createExtraActions() {
         try {
           return await fetchWrapper.post(`${baseUrl}/login`, { email, password });
         } catch (error) {
-          return rejectWithValue(error.message || 'Login failed');
+          // Try to extract a message from the response, if available
+          let errorMessage =
+            (error.response && error.response.data && error.response.data.message) ||
+            error.message ||
+            'Login failed';
+          if (typeof error == 'string') errorMessage = error;
+    
+          // Log detailed error (optional)
+    
+          // Pass the message to rejectWithValue
+          return rejectWithValue(errorMessage);
         }
       }
     ),
