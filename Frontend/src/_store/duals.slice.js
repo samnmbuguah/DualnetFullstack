@@ -92,12 +92,13 @@ export const toggleChecked = () => async (dispatch, getState) => {
     console.error("Error toggling auto dual:", error);
   }
 };
-
 export const updateAutoDual = createAsyncThunk(
     "duals/updateAutoDual",
     async (_, { getState }) => {
         const state = getState().duals; // Get the current state
-        const { aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments, selectedCrypto, authUser } = state;
+        const { aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments, selectedCrypto } = state;
+        const authUser = getState().auth.user;
+        console.log("updateAutoDual");
 
         const response = await fetchWrapper.post(baseUrl + "/update-auto-dual", {
             aprToBuy,
@@ -105,8 +106,8 @@ export const updateAutoDual = createAsyncThunk(
             closerStrike,
             scaleBy,
             dualInvestments,
-            subClientId: authUser[1].id, // Assuming authUser is part of the state
-            currency: selectedCrypto, // Use selectedCrypto from state
+            subClientId: authUser[1].id, 
+            currency: selectedCrypto,
         });
         console.log(response);
         return response;
@@ -118,6 +119,7 @@ const dualsSlice = createSlice({
   initialState,
   reducers: {
     updateAprToBuy: (state, action) => {
+      console.log("aprToBuy", action.payload);
       state.aprToBuy = action.payload;
       localStorage.setItem('aprToBuy', action.payload);
     },

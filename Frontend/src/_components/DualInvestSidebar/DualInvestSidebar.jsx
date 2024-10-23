@@ -75,6 +75,7 @@ const DualInvestSidebar = ({ show, dark }) => {
                       color={"#01D497"}
                       styleObj={{ width: "50px" }}
                       type={1}
+                      value={0} // Assuming this is a controlled input, set a default value
                     />{" "}
                     USDT
                   </span>
@@ -92,8 +93,11 @@ const DualInvestSidebar = ({ show, dark }) => {
                       color={"#01D497"}
                       styleObj={{ width: "50px" }}
                       type={1}
-                      value={aprToBuy}
-                      onChange={(e) => dispatch(updateAprToBuy(e.target.value))}
+                      value={aprToBuy || 0} // Fallback to 0 if undefined
+                      onChange={(e) => {
+                        dispatch(updateAprToBuy(e));
+                        dispatch(updateAutoDual()); // Call updateAutoDual after updating aprToBuy
+                      }}
                     />
                     %
                   </span>
@@ -107,7 +111,10 @@ const DualInvestSidebar = ({ show, dark }) => {
                       styleObj={{ width: "50px" }}
                       type={1}
                       value={closerStrike}
-                      onChange={(e) => dispatch(updateCloserStrike(e.target.value))}
+                      onChange={(e) => {
+                        dispatch(updateCloserStrike(e.target.value));
+                        dispatch(updateAutoDual()); // Call updateAutoDual after updating closerStrike
+                      }}
                     />
                     &nbsp;$
                   </span>
@@ -121,7 +128,10 @@ const DualInvestSidebar = ({ show, dark }) => {
                       styleObj={{ width: "50px" }}
                       type={1}
                       value={aprToBuyTwo}
-                      onChange={(e) => dispatch(updateAprToBuyTwo(e.target.value))}
+                      onChange={(e) => {
+                        dispatch(updateAprToBuyTwo(e.target.value));
+                        dispatch(updateAutoDual()); // Call updateAutoDual after updating aprToBuyTwo
+                      }}
                     />
                     %
                   </span>
@@ -135,7 +145,10 @@ const DualInvestSidebar = ({ show, dark }) => {
                       styleObj={{ width: "50px" }}
                       type={1}
                       value={scaleBy}
-                      onChange={(e) => dispatch(updateScaleBy(e.target.value))}
+                      onChange={(e) => {
+                        dispatch(updateScaleBy(e.target.value));
+                        dispatch(updateAutoDual()); // Call updateAutoDual after updating scaleBy
+                      }}
                     />
                     %
                   </span>
