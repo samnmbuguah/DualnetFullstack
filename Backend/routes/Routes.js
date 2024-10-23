@@ -276,7 +276,8 @@ router.get("/fetch-spot-balances", async (req, res) => {
 
 // Route for autoDual
 router.post("/auto-dual", async (req, res) => {
-  const { active, currency, amount, threshold, dualType, subClientId } = req.body;
+  const { active, currency, amount, threshold, dualType, subClientId } =
+    req.body;
 
   if (
     typeof active !== "boolean" ||
@@ -290,7 +291,12 @@ router.post("/auto-dual", async (req, res) => {
   }
 
   if (active && (amount <= 0 || threshold <= 0)) {
-    return res.status(400).send({ error: "amount and threshold must be greater than 0 when active is true" });
+    return res
+      .status(400)
+      .send({
+        error:
+          "amount and threshold must be greater than 0 when active is true",
+      });
   }
 
   try {
@@ -328,7 +334,9 @@ router.post("/hedge-bot-open", async (req, res) => {
   const { currency, strikePrice, size } = req.body;
 
   if (!currency || !strikePrice) {
-    return res.status(400).send({ error: "currency and strikePrice are required" });
+    return res
+      .status(400)
+      .send({ error: "currency and strikePrice are required" });
   }
 
   try {
@@ -349,8 +357,15 @@ router.post("/add-short-bot", async (req, res) => {
   }
 
   try {
-    const newShortBot = await addShortBot(userId, currency, strikePrice, investAmount);
-    res.status(200).send({ message: "Short bot added successfully", data: newShortBot });
+    const newShortBot = await addShortBot(
+      userId,
+      currency,
+      strikePrice,
+      investAmount
+    );
+    res
+      .status(200)
+      .send({ message: "Short bot added successfully", data: newShortBot });
   } catch (error) {
     console.error("Error adding short bot:", error);
     res.status(500).send({ error: "Error adding short bot" });
@@ -359,40 +374,52 @@ router.post("/add-short-bot", async (req, res) => {
 
 // Route for updating AutoDual
 router.post("/update-auto-dual", async (req, res) => {
-    const { aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments, subClientId, currency } = req.body;
+  const {
+    aprToBuy,
+    aprThreshold,
+    closerStrike,
+    scaleBy,
+    dualInvestments,
+    subClientId,
+    currency,
+  } = req.body;
 
-    if (typeof subClientId !== "number" || !currency) {
-        return res.status(400).send({ error: "subClientId and currency are required" });
+  if (typeof subClientId !== "number" || !currency) {
+    return res
+      .status(400)
+      .send({ error: "subClientId and currency are required" });
+  }
+
+  try {
+    // Check if a record exists for the same userId and currency
+    const existingRecord = await AutoDual.findOne({
+      where: { userId: subClientId, currency: currency },
+    });
+
+    if (existingRecord) {
+      // Update the existing record
+      await AutoDual.update(
+        { aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments },
+        { where: { userId: subClientId, currency: currency } }
+      );
+      res.status(200).send({ message: "AutoDual updated successfully" });
+    } else {
+      // Create a new record
+      await AutoDual.create({
+        userId: subClientId,
+        currency,
+        aprToBuy,
+        aprThreshold,
+        closerStrike,
+        scaleBy,
+        dualInvestments,
+      });
+      res.status(200).send({ message: "AutoDual created successfully" });
     }
-
-    try {
-        // Check if a record exists for the same userId and currency
-        const existingRecord = await AutoDual.findOne({ where: { userId: subClientId, currency: currency } });
-
-        if (existingRecord) {
-            // Update the existing record
-            await AutoDual.update(
-                { aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments },
-                { where: { userId: subClientId, currency: currency } }
-            );
-            res.status(200).send({ message: "AutoDual updated successfully" });
-        } else {
-            // Create a new record
-            await AutoDual.create({
-                userId: subClientId,
-                currency,
-                aprToBuy,
-                aprThreshold,
-                closerStrike,
-                scaleBy,
-                dualInvestments
-            });
-            res.status(200).send({ message: "AutoDual created successfully" });
-        }
-    } catch (error) {
-        console.error("Error updating AutoDual:", error);
-        res.status(500).send({ error: "Error updating AutoDual" });
-    }
+  } catch (error) {
+    console.error("Error updating AutoDual:", error);
+    res.status(500).send({ error: "Error updating AutoDual" });
+  }
 });
 
 module.exports = router;
