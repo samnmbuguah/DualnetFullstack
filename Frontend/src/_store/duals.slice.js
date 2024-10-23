@@ -95,15 +95,20 @@ export const toggleChecked = () => async (dispatch, getState) => {
 
 export const updateAutoDual = createAsyncThunk(
     "duals/updateAutoDual",
-    async ({ aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments, subClientId }) => {
+    async (_, { getState }) => {
+        const state = getState().duals; // Get the current state
+        const { aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments, selectedCrypto, authUser } = state;
+
         const response = await fetchWrapper.post(baseUrl + "/update-auto-dual", {
             aprToBuy,
             aprThreshold,
             closerStrike,
             scaleBy,
             dualInvestments,
-            subClientId,
+            subClientId: authUser[1].id, // Assuming authUser is part of the state
+            currency: selectedCrypto, // Use selectedCrypto from state
         });
+        console.log(response);
         return response;
     }
 );
