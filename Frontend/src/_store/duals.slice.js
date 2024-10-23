@@ -12,6 +12,7 @@ const initialState = {
   error: null,
   isChecked: false,
   selectedCrypto: "BTC",
+  balances: [0.00,0.00],
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
@@ -67,14 +68,13 @@ export const toggleAutoDual = createAsyncThunk(
   }
 );
 
-export const fetchOpenedDuals = createAsyncThunk(
-  "duals/fetchOpenedDuals",
-  async (currency, { getState }) => {
-    const state = getState().auth;
-    const userId = state.user[1].id;
-    const response = await fetchWrapper.get(
-      `${baseUrl}/fetch-opened-duals?currency=${currency}&userId=${userId}`
+export const fetchBalances = createAsyncThunk(
+  "duals/fetchBalances",
+  async (subClientId) => {
+    const response = await fetchWrapper.post(
+      baseUrl + "/get-balances", { subClientId }
     );
+    console.log(response);
     return response;
   }
 );
@@ -116,6 +116,9 @@ const dualsSlice = createSlice({
     },
     updateDualInvestments: (state, action) => {
       state.dualInvestments = action.payload;
+    },
+    updateBalances: (state, action) => {
+      state.balances = action.payload; // Add balances to state
     },
   },
   extraReducers: (builder) => {
@@ -178,26 +181,8 @@ const dualsSlice = createSlice({
           text: `Failed to toggle auto dual: ${action.error.message}`,
         });
       })
-      .addCase(fetchOpenedDuals.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchOpenedDuals.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        if (Array.isArray(action.payload) && action.payload.length === 0) {
-          state.openedDuals = [];
-          state.aprToBuy = 450;
-          state.aprToSell = 450;
-          state.isChecked = false;
-        } else {
-          state.openedDuals = action.payload;
-          state.aprToBuy = action.payload.thresholdBuy || 450;
-          state.aprToSell = action.payload.thresholdSell || 450;
-          state.isChecked = action.payload.active || false;
-        }
-      })
-      .addCase(fetchOpenedDuals.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
+      .addCase(fetchBalances.fulfilled, (state, action) => {
+        state.balances = action.payload; // Store fetched balances
       });
   },
 });
