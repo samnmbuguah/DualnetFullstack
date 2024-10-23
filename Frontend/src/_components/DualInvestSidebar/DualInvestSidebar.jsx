@@ -37,14 +37,8 @@ const DualInvestSidebar = ({ show, dark }) => {
   }, [selectedCrypto, dispatch, authUser]);
 
   useEffect(() => {
-    dispatch(updateAutoDual({ 
-      aprToBuy, 
-      aprThreshold: aprToBuyTwo, 
-      closerStrike, 
-      scaleBy, 
-      subClientId: authUser[1].id 
-    }));
-  }, [aprToBuy, aprToBuyTwo, closerStrike, scaleBy, dispatch, authUser]);
+    dispatch(updateAutoDual({})); // Pass an empty object
+  }, [aprToBuy, aprToBuyTwo, closerStrike, scaleBy, selectedCrypto, dispatch, authUser]);
 
   return (
     <div className="text-investment max-w-[1024px] rounded-[25px]">
