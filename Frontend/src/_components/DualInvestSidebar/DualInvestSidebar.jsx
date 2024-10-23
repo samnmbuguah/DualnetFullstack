@@ -9,7 +9,7 @@ import PriceRangeList from "./PriceRangeList";
 const DualInvestSidebar = ({ show, dark }) => {
   const { user: authUser } = useSelector((x) => x.auth);
   const selectedCrypto = useSelector((state) => state.duals.selectedCrypto);
-
+  const balances = useSelector((state) => state.duals.balances);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const DualInvestSidebar = ({ show, dark }) => {
                   Buy low
                 </div>
                 <div className="flex justify-between">
-                  Spot account:&nbsp;&nbsp; <span>19.520 USDT</span>
+                  Spot account:&nbsp;&nbsp; <span>{balances && balances[0] !== undefined && !isNaN(parseFloat(balances[0])) ? parseFloat(balances[0]).toFixed(2) : 0} USDT</span>
                 </div>
                 <div className="flex items-center justify-between">
                   Investment&nbsp;
