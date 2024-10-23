@@ -15,6 +15,9 @@ const AutoDual = db.define("AutoDual", {
         type: Sequelize.STRING,
         allowNull: false
     },
+    investment: {
+        type: Sequelize.INTEGER,
+    },
     amount: {
         type: Sequelize.FLOAT,
     },
@@ -24,6 +27,19 @@ const AutoDual = db.define("AutoDual", {
     active: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
+    },
+    dualInvestments: {
+        type: Sequelize.ARRAY(Sequelize.JSON),
+        defaultValue: []
+    },
+    closerStrike: {
+        type: Sequelize.FLOAT,
+    },
+    thresholdTwo: {
+        type: Sequelize.INTEGER,
+    },
+    scaleBy: {
+        type: Sequelize.INTEGER,
     }
 }, {
     timestamps: true
