@@ -2,7 +2,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DualSwitch from "_components/DualInvestSidebar/DualSwitch";
 import CryptoList from "./CryptoList";
-import { fetchSpotPrice, fetchSpotBalances } from "_store/duals.slice";
+import {
+  fetchSpotPrice,
+  fetchSpotBalances,
+  updateAprToBuy,
+  updateAprThreshold as updateAprToBuyTwo,
+  updateCloserStrike,
+  updateScaleBy,
+} from "_store/duals.slice";
 import CustomInput from "./CustomInput";
 import PriceRangeList from "./PriceRangeList";
 
@@ -11,6 +18,10 @@ const DualInvestSidebar = ({ show, dark }) => {
   const selectedCrypto = useSelector((state) => state.duals.selectedCrypto);
   const balances = useSelector((state) => state.duals.balances);
   const dispatch = useDispatch();
+  const aprToBuy = useSelector((state) => state.duals.aprToBuy);
+  const aprToBuyTwo = useSelector((state) => state.duals.aprThreshold);
+  const closerStrike = useSelector((state) => state.duals.closerStrike);
+  const scaleBy = useSelector((state) => state.duals.scaleBy);
 
   useEffect(() => {
     if (selectedCrypto) {
@@ -76,6 +87,8 @@ const DualInvestSidebar = ({ show, dark }) => {
                       color={"#01D497"}
                       styleObj={{ width: "50px" }}
                       type={1}
+                      value={aprToBuy}
+                      onChange={(e) => dispatch(updateAprToBuy(e.target.value))}
                     />
                     %
                   </span>
@@ -88,6 +101,8 @@ const DualInvestSidebar = ({ show, dark }) => {
                       color={"#01D497"}
                       styleObj={{ width: "50px" }}
                       type={1}
+                      value={closerStrike}
+                      onChange={(e) => dispatch(updateCloserStrike(e.target.value))}
                     />
                     &nbsp;$
                   </span>
@@ -100,6 +115,8 @@ const DualInvestSidebar = ({ show, dark }) => {
                       color={"#01D497"}
                       styleObj={{ width: "50px" }}
                       type={1}
+                      value={aprToBuyTwo}
+                      onChange={(e) => dispatch(updateAprToBuyTwo(e.target.value))}
                     />
                     %
                   </span>
@@ -112,6 +129,8 @@ const DualInvestSidebar = ({ show, dark }) => {
                       color={"#01D497"}
                       styleObj={{ width: "50px" }}
                       type={1}
+                      value={scaleBy}
+                      onChange={(e) => dispatch(updateScaleBy(e.target.value))}
                     />
                     %
                   </span>
