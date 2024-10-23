@@ -31,7 +31,7 @@ const fetchSpotBalances = require("../services/dualinvestment/fetchSpotBalances.
 const fetchInvestmentsByCurrency = require("../services/dualinvestment/fetchInvestments.js");
 const hedgeBotOpen = require("../services/dualinvestment/hedgeBotOpen.js");
 const addShortBot = require("../services/dualinvestment/shortBotActive.js");
-
+const AutoDual = require("../models/AutoDualModel.js");
 const router = express.Router();
 
 router.post("/login", Login);
@@ -355,6 +355,44 @@ router.post("/add-short-bot", async (req, res) => {
     console.error("Error adding short bot:", error);
     res.status(500).send({ error: "Error adding short bot" });
   }
+});
+
+// Route for updating AutoDual
+router.post("/update-auto-dual", async (req, res) => {
+    const { aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments, subClientId, currency } = req.body;
+
+    if (typeof subClientId !== "number" || !currency) {
+        return res.status(400).send({ error: "subClientId and currency are required" });
+    }
+
+    try {
+        // Check if a record exists for the same userId and currency
+        const existingRecord = await AutoDual.findOne({ where: { userId: subClientId, currency: currency } });
+
+        if (existingRecord) {
+            // Update the existing record
+            await AutoDual.update(
+                { aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments },
+                { where: { userId: subClientId, currency: currency } }
+            );
+            res.status(200).send({ message: "AutoDual updated successfully" });
+        } else {
+            // Create a new record
+            await AutoDual.create({
+                userId: subClientId,
+                currency,
+                aprToBuy,
+                aprThreshold,
+                closerStrike,
+                scaleBy,
+                dualInvestments
+            });
+            res.status(200).send({ message: "AutoDual created successfully" });
+        }
+    } catch (error) {
+        console.error("Error updating AutoDual:", error);
+        res.status(500).send({ error: "Error updating AutoDual" });
+    }
 });
 
 module.exports = router;

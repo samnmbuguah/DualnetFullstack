@@ -93,6 +93,21 @@ export const toggleChecked = () => async (dispatch, getState) => {
   }
 };
 
+export const updateAutoDual = createAsyncThunk(
+    "duals/updateAutoDual",
+    async ({ aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments, subClientId }) => {
+        const response = await fetchWrapper.post(baseUrl + "/update-auto-dual", {
+            aprToBuy,
+            aprThreshold,
+            closerStrike,
+            scaleBy,
+            dualInvestments,
+            subClientId,
+        });
+        return response;
+    }
+);
+
 const dualsSlice = createSlice({
   name: "duals",
   initialState,
@@ -185,6 +200,12 @@ const dualsSlice = createSlice({
       })
       .addCase(fetchBalances.fulfilled, (state, action) => {
         state.balances = action.payload; // Store fetched balances
+      })
+      .addCase(updateAutoDual.fulfilled, (state, action) => {
+        // Handle success if needed
+      })
+      .addCase(updateAutoDual.rejected, (state, action) => {
+        // Handle error if needed
       });
   },
 });

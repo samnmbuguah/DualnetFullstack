@@ -9,6 +9,7 @@ import {
   updateAprThreshold as updateAprToBuyTwo,
   updateCloserStrike,
   updateScaleBy,
+  updateAutoDual,
 } from "_store/duals.slice";
 import CustomInput from "./CustomInput";
 import PriceRangeList from "./PriceRangeList";
@@ -34,6 +35,16 @@ const DualInvestSidebar = ({ show, dark }) => {
       );
     }
   }, [selectedCrypto, dispatch, authUser]);
+
+  useEffect(() => {
+    dispatch(updateAutoDual({ 
+      aprToBuy, 
+      aprThreshold: aprToBuyTwo, 
+      closerStrike, 
+      scaleBy, 
+      subClientId: authUser[1].id 
+    }));
+  }, [aprToBuy, aprToBuyTwo, closerStrike, scaleBy, dispatch, authUser]);
 
   return (
     <div className="text-investment max-w-[1024px] rounded-[25px]">

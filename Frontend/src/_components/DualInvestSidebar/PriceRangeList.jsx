@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomInput from "./CustomInput"
 import {
     fetchInvestmentsByCurrency,
-    updateDualInvestments
+    updateDualInvestments,
+    updateAutoDual
 } from "_store/duals.slice";
 
 const PriceRangeList = ({
@@ -37,6 +38,14 @@ const PriceRangeList = ({
         );
         dispatch(updateDualInvestments(updatedInvestments)); // Dispatch an action to update dualInvestments
     };
+
+    // New effect to update AutoDual when dualInvestments change
+    useEffect(() => {
+        dispatch(updateAutoDual({ 
+            dualInvestments, 
+            subClientId: authUser[1].id 
+        }));
+    }, [dualInvestments, dispatch, authUser]);
 
     return (
         <div className='flex jutify-end'>
