@@ -10,7 +10,7 @@ const logActiveRooms = async (io) => {
         userIds.push(room);
       }
     });
-    console.log("Active userIds in rooms:", userIds);
+    // console.log("Active userIds in rooms:", userIds);
 
     if (userIds.length > 0) {
       // Find users with an active room but without any bots where isClose is false

@@ -41,7 +41,7 @@ const PriceRangeList = ({
 
     // New effect to update AutoDual when dualInvestments change
     useEffect(() => {
-        dispatch(updateAutoDual({})); // Pass an empty object
+        // dispatch(updateAutoDual({})); // Pass an empty object
     }, [selectedCrypto, dispatch, authUser]);
 
     return (

@@ -29,13 +29,13 @@ const AutoDual = db.define("AutoDual", {
         defaultValue: false
     },
     dualInvestments: {
-        type: Sequelize.ARRAY(Sequelize.JSON),
-        defaultValue: []
+        type: Sequelize.TEXT,
+        defaultValue: ''
     },
     closerStrike: {
         type: Sequelize.FLOAT,
     },
-    thresholdTwo: {
+    aprThreshold: {
         type: Sequelize.INTEGER,
     },
     scaleBy: {
