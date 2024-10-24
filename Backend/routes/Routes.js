@@ -372,11 +372,11 @@ router.post("/add-short-bot", async (req, res) => {
   }
 });
 
-// Route for updating AutoDual
+// Route for updating AutoDual 
 router.post("/update-auto-dual", async (req, res) => {
   const {
     aprToBuy,
-    aprThreshold,
+    aprToBuyTwo,
     closerStrike,
     scaleBy,
     dualInvestments,
@@ -399,7 +399,13 @@ router.post("/update-auto-dual", async (req, res) => {
     if (existingRecord) {
       // Update the existing record
       await AutoDual.update(
-        { aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments },
+        {
+          threshold: aprToBuy && aprToBuy > 0 ? aprToBuy : 0,
+          aprThreshold: aprToBuyTwo && aprToBuyTwo > 0 ? aprToBuyTwo : 0,
+          closerStrike: closerStrike && closerStrike > 0 ? closerStrike : 0,
+          scaleBy: scaleBy && scaleBy > 0 ? scaleBy : 0,
+          dualInvestments: JSON.stringify(dualInvestments)
+        },
         { where: { userId: subClientId, currency: currency } }
       );
       res.status(200).send({ message: "AutoDual updated successfully" });
@@ -408,11 +414,11 @@ router.post("/update-auto-dual", async (req, res) => {
       await AutoDual.create({
         userId: subClientId,
         currency,
-        aprToBuy,
-        aprThreshold,
-        closerStrike,
-        scaleBy,
-        dualInvestments,
+        threshold: aprToBuy && aprToBuy > 0 ? aprToBuy : 0,
+        aprThreshold: aprToBuyTwo && aprToBuyTwo > 0 ? aprToBuyTwo : 0,
+        closerStrike: closerStrike && closerStrike > 0 ? closerStrike : 0,
+        scaleBy: scaleBy && scaleBy > 0 ? scaleBy : 0,
+        dualInvestments: JSON.stringify(dualInvestments),
       });
       res.status(200).send({ message: "AutoDual created successfully" });
     }
@@ -421,5 +427,33 @@ router.post("/update-auto-dual", async (req, res) => {
     res.status(500).send({ error: "Error updating AutoDual" });
   }
 });
+
+// Route for fetching AutoDual
+router.post("/fetch-auto-dual", async (req, res) => {
+  const {
+    subClientId,
+    currency,
+  } = req.body;
+
+  if (typeof subClientId !== "number" || !currency) {
+    return res
+      .status(400)
+      .send({ error: "subClientId and currency are required" });
+  }
+
+  try {
+    // Check if a record exists for the same userId and currency
+    const existingRecord = await AutoDual.findOne({
+      where: { userId: subClientId, currency: currency },
+    });
+    res.status(200).json(existingRecord || {});
+
+  } catch (error) {
+    console.error("Error updating AutoDual:", error);
+    res.status(500).send({ error: "Error updating AutoDual" });
+  }
+});
+
+
 
 module.exports = router;

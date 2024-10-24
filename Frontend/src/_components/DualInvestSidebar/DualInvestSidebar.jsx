@@ -1,28 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DualSwitch from "_components/DualInvestSidebar/DualSwitch";
 import CryptoList from "./CryptoList";
 import {
   fetchSpotPrice,
   fetchSpotBalances,
-  updateAprToBuy,
-  updateAprThreshold as updateAprToBuyTwo,
-  updateCloserStrike,
-  updateScaleBy,
   updateAutoDual,
+  fetchAutoDual
 } from "_store/duals.slice";
 import CustomInput from "./CustomInput";
 import PriceRangeList from "./PriceRangeList";
 
 const DualInvestSidebar = ({ show, dark }) => {
   const { user: authUser } = useSelector((x) => x.auth);
-  const selectedCrypto = useSelector((state) => state.duals.selectedCrypto);
-  const balances = useSelector((state) => state.duals.balances);
+  const { selectedCrypto, balances, dualInfo } = useSelector((state) => state.duals);
+  const dualInfoRef = useRef({}) 
+
   const dispatch = useDispatch();
-  const aprToBuy = useSelector((state) => state.duals.aprToBuy);
-  const aprToBuyTwo = useSelector((state) => state.duals.aprThreshold);
-  const closerStrike = useSelector((state) => state.duals.closerStrike);
-  const scaleBy = useSelector((state) => state.duals.scaleBy);
 
   useEffect(() => {
     if (selectedCrypto) {
@@ -33,12 +27,42 @@ const DualInvestSidebar = ({ show, dark }) => {
           cryptoCurrency: selectedCrypto,
         })
       );
+      dispatch(fetchAutoDual({
+        subClientId: authUser[1].id,
+        currency: selectedCrypto
+      }));
     }
-  }, [selectedCrypto, dispatch, authUser]);
+  }, [selectedCrypto, authUser]);
 
   useEffect(() => {
-    dispatch(updateAutoDual({})); // Pass an empty object
-  }, [aprToBuy, aprToBuyTwo, closerStrike, scaleBy, selectedCrypto, dispatch, authUser]);
+    dualInfoRef.current = {
+      aprToBuy: dualInfo.threshold || 0,
+      aprToBuyTwo: dualInfo.aprThreshold || 0, // New state variable for APR >
+      closerStrike: dualInfo.closerStrike || 0,  // New state variable for Closer strike
+      scaleBy: dualInfo.scaleBy || 0,   
+    }
+  }, [dualInfo])
+
+  const handleCustomInputVal = (val, key) => {
+    switch (key) {
+      case 1:
+        dualInfoRef.current = {...dualInfoRef.current, aprToBuy: val}
+        break;
+      case 2:
+        dualInfoRef.current = {...dualInfoRef.current, closerStrike: val}
+        break;
+      case 3:
+        dualInfoRef.current = {...dualInfoRef.current, aprToBuyTwo: val}
+        break;
+      case 4:
+        dualInfoRef.current = {...dualInfoRef.current, scaleBy: val}
+        break;
+      default:
+        break;
+    }
+    console.log(dualInfoRef.current, 'handleCustomInputVal');
+    dispatch(updateAutoDual(dualInfoRef.current))
+  }
 
   return (
     <div className="text-investment max-w-[1024px] rounded-[25px]">
@@ -49,9 +73,8 @@ const DualInvestSidebar = ({ show, dark }) => {
           minWidth: "650px",
           maxWidth: "1024px",
         }}
-        className={`${
-          show ? "right-0" : "hidden"
-        } text-xs font-inter text-white flex`}
+        className={`${show ? "right-0" : "hidden"
+          } text-xs font-inter text-white flex`}
       >
         <div className="">
           <div>
@@ -93,11 +116,9 @@ const DualInvestSidebar = ({ show, dark }) => {
                       color={"#01D497"}
                       styleObj={{ width: "50px" }}
                       type={1}
-                      value={aprToBuy || 0} // Fallback to 0 if undefined
-                      onChange={(e) => {
-                        dispatch(updateAprToBuy(e));
-                        dispatch(updateAutoDual()); // Call updateAutoDual after updating aprToBuy
-                      }}
+                      val={dualInfo.threshold || 0} // Fallback to 0 if undefined
+                      handleCustomInputVal={handleCustomInputVal}
+                      index={1}
                     />
                     %
                   </span>
@@ -110,11 +131,9 @@ const DualInvestSidebar = ({ show, dark }) => {
                       color={"#01D497"}
                       styleObj={{ width: "50px" }}
                       type={1}
-                      value={closerStrike}
-                      onChange={(e) => {
-                        dispatch(updateCloserStrike(e.target.value));
-                        dispatch(updateAutoDual()); // Call updateAutoDual after updating closerStrike
-                      }}
+                      val={dualInfo.closerStrike || 0}
+                      handleCustomInputVal={handleCustomInputVal}
+                      index={2}
                     />
                     &nbsp;$
                   </span>
@@ -127,11 +146,9 @@ const DualInvestSidebar = ({ show, dark }) => {
                       color={"#01D497"}
                       styleObj={{ width: "50px" }}
                       type={1}
-                      value={aprToBuyTwo}
-                      onChange={(e) => {
-                        dispatch(updateAprToBuyTwo(e.target.value));
-                        dispatch(updateAutoDual()); // Call updateAutoDual after updating aprToBuyTwo
-                      }}
+                      val={dualInfo.aprThreshold || 0}
+                      handleCustomInputVal={handleCustomInputVal}
+                      index={3}
                     />
                     %
                   </span>
@@ -144,11 +161,9 @@ const DualInvestSidebar = ({ show, dark }) => {
                       color={"#01D497"}
                       styleObj={{ width: "50px" }}
                       type={1}
-                      value={scaleBy}
-                      onChange={(e) => {
-                        dispatch(updateScaleBy(e.target.value));
-                        dispatch(updateAutoDual()); // Call updateAutoDual after updating scaleBy
-                      }}
+                      val={dualInfo.scaleBy || 0}
+                      handleCustomInputVal={handleCustomInputVal}
+                      index={4}
                     />
                     %
                   </span>
