@@ -23,7 +23,7 @@ async function checkTrades() {
       ],
       where: { isClose: false },
     });
-    console.log("Bots fetched successfully", bots.length);
+    // console.log("Bots fetched successfully", bots.length);
 
     for (const bot of bots) {
       let balance = await fetchSpotBalance(bot.matchingPairId, bot.userId);

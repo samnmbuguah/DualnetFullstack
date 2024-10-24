@@ -78,7 +78,7 @@ io.on("connection", (socket) => {
     if (bots.length) {
       try {
         await closeByProfit(io, bots);
-        console.log("Completed the Close By profit loop");
+        // console.log("Completed the Close By profit loop");
       } catch (error) {
         console.error("Error closing trades:", error);
       }
@@ -129,7 +129,7 @@ cron.schedule("* * * * * *", async () => {
   const bots = await Bots.findAll({ where: { isClose: false } });
   try {
     await closeByProfit(io, bots);
-    console.log("Completed the Close By profit loop");
+    // console.log("Completed the Close By profit loop");
   } catch (error) {
     console.error("Error in closeByProfit:", error);
   }

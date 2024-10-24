@@ -6,18 +6,28 @@ const initialState = {
   dualInvestments: [],
   buyLowAmount: 100,
   sellHighAmount: 0.00156,
-  aprToBuy: localStorage.getItem('aprToBuy') ? Number(localStorage.getItem('aprToBuy')) : 400,
   status: "idle",
   error: null,
   isChecked: false,
   selectedCrypto: "BTC",
-  balances: [0.00,0.00],
-  aprThreshold: 0, // New state variable for APR >
-  closerStrike: 0,  // New state variable for Closer strike
-  scaleBy: 0,      // New state variable for Scale by +
+  balances: [0.00, 0.00],
+  dualInfo: {
+    aprToBuy: 0,
+    aprThreshold: 0, // New state variable for APR >
+    closerStrike: 0,  // New state variable for Closer strike
+    scaleBy: 0,      // New state variable for Scale by +
+  }
 };
 
 const baseUrl = `${fetchWrapper.api_url}/api`;
+
+export const fetchAutoDual = createAsyncThunk(
+  "duals/fetchAutoDual",
+  async (data) => {
+    const response = await fetchWrapper.post(baseUrl + "/fetch-auto-dual", data);
+    return response;
+  }
+);
 
 export const fetchInvestmentsByCurrency = createAsyncThunk(
   "duals/fetchInvestmentsByCurrency",
@@ -93,36 +103,27 @@ export const toggleChecked = () => async (dispatch, getState) => {
   }
 };
 export const updateAutoDual = createAsyncThunk(
-    "duals/updateAutoDual",
-    async (_, { getState }) => {
-        const state = getState().duals; // Get the current state
-        const { aprToBuy, aprThreshold, closerStrike, scaleBy, dualInvestments, selectedCrypto } = state;
-        const authUser = getState().auth.user;
-        console.log("updateAutoDual");
+  "duals/updateAutoDual",
+  async (data, { getState }) => {
+    const state = getState().duals; // Get the current state
+    const { selectedCrypto, dualInvestments } = state;
+    const authUser = getState().auth.user;
+    console.log("updateAutoDual");
 
-        const response = await fetchWrapper.post(baseUrl + "/update-auto-dual", {
-            aprToBuy,
-            aprThreshold,
-            closerStrike,
-            scaleBy,
-            dualInvestments,
-            subClientId: authUser[1].id, 
-            currency: selectedCrypto,
-        });
-        console.log(response);
-        return response;
-    }
+    const response = await fetchWrapper.post(baseUrl + "/update-auto-dual", {
+      ...data,
+      dualInvestments,
+      subClientId: authUser[1].id,
+      currency: selectedCrypto,
+    });
+    return response;
+  }
 );
 
 const dualsSlice = createSlice({
   name: "duals",
   initialState,
   reducers: {
-    updateAprToBuy: (state, action) => {
-      console.log("aprToBuy", action.payload);
-      state.aprToBuy = action.payload;
-      localStorage.setItem('aprToBuy', action.payload);
-    },
     toggleCheckedState: (state, action) => {
       state.isChecked = !action.payload;
     },
@@ -134,16 +135,7 @@ const dualsSlice = createSlice({
     },
     updateBalances: (state, action) => {
       state.balances = action.payload; // Add balances to state
-    },
-    updateAprThreshold: (state, action) => {
-      state.aprThreshold = action.payload;
-    },
-    updateCloserStrike: (state, action) => {
-      state.closerStrike = action.payload;
-    },
-    updateScaleBy: (state, action) => {
-      state.scaleBy = action.payload;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -155,6 +147,17 @@ const dualsSlice = createSlice({
         state.dualInvestments = action.payload;
       })
       .addCase(fetchInvestmentsByCurrency.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(fetchAutoDual.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchAutoDual.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.dualInfo = action.payload;
+      })
+      .addCase(fetchAutoDual.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
