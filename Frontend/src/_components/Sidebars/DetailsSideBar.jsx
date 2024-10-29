@@ -66,7 +66,7 @@ const DetailsSideBar = ({ user, dark }) => {
               dark ? "text-[#C6BDAF]" : "text-[#979191]"
             } !font-bold font-[syncopate-regular] text-lg`}
           >
-          {balances && balances[0] !== undefined && !isNaN(parseFloat(balances[0])) ? parseFloat(balances[0]).toFixed(2) : 0}          
+          {balances && balances[0] !== undefined && !isNaN(parseFloat(balances[0])) ? parseFloat(balances[0]).toFixed(0) : 0}          
           </div>
         </div>
         <Divider dark={dark} />

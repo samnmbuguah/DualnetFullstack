@@ -1,0 +1,37 @@
+.table-container {
+    max-width: 100%;
+    max-height: 400px; /* Adjust as needed */
+    overflow: auto;
+    position: relative;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+    min-width: 60px;
+  }
+  
+  thead th {
+    position: sticky;
+    top: 0;
+    background: #f9f9f9;
+    z-index: 2;
+  }
+  
+  .sticky-column {
+    position: sticky;
+    left: 0;
+    background: #f9f9f9;
+    z-index: 1;
+  }
+  
+  .sticky-column + .sticky-column {
+    left: 60px; /* Adjust width if necessary */
+    z-index: 1;
+  }

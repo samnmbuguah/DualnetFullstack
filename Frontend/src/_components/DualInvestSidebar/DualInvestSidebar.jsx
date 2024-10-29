@@ -9,12 +9,12 @@ import {
   fetchAutoDual
 } from "_store/duals.slice";
 import CustomInput from "./CustomInput";
-import PriceRangeList from "./PriceRangeList";
+import PriceRangeTable from "./PriceRangeTable";
 
 const DualInvestSidebar = ({ show, dark }) => {
   const { user: authUser } = useSelector((x) => x.auth);
   const { selectedCrypto, balances, dualInfo } = useSelector((state) => state.duals);
-  const dualInfoRef = useRef({}) 
+  const dualInfoRef = useRef({})
 
   const dispatch = useDispatch();
 
@@ -39,23 +39,23 @@ const DualInvestSidebar = ({ show, dark }) => {
       aprToBuy: dualInfo.threshold || 0,
       aprToBuyTwo: dualInfo.aprThreshold || 0, // New state variable for APR >
       closerStrike: dualInfo.closerStrike || 0,  // New state variable for Closer strike
-      scaleBy: dualInfo.scaleBy || 0,   
+      scaleBy: dualInfo.scaleBy || 0,
     }
   }, [dualInfo])
 
   const handleCustomInputVal = (val, key) => {
     switch (key) {
       case 1:
-        dualInfoRef.current = {...dualInfoRef.current, aprToBuy: val}
+        dualInfoRef.current = { ...dualInfoRef.current, aprToBuy: val }
         break;
       case 2:
-        dualInfoRef.current = {...dualInfoRef.current, closerStrike: val}
+        dualInfoRef.current = { ...dualInfoRef.current, closerStrike: val }
         break;
       case 3:
-        dualInfoRef.current = {...dualInfoRef.current, aprToBuyTwo: val}
+        dualInfoRef.current = { ...dualInfoRef.current, aprToBuyTwo: val }
         break;
       case 4:
-        dualInfoRef.current = {...dualInfoRef.current, scaleBy: val}
+        dualInfoRef.current = { ...dualInfoRef.current, scaleBy: val }
         break;
       default:
         break;
@@ -65,7 +65,7 @@ const DualInvestSidebar = ({ show, dark }) => {
   }
 
   return (
-    <div className="text-investment max-w-[1024px] rounded-[25px]">
+    <div className="text-investment relative max-w-[1024px] rounded-[25px]">
       <div
         style={{
           height: "493px",
@@ -96,7 +96,7 @@ const DualInvestSidebar = ({ show, dark }) => {
                     <CustomInput
                       dark={dark}
                       color={"#01D497"}
-                      styleObj={{ width: "50px" }}
+                      styleObj={{ width: "50px", textAlign: 'right' }}
                       type={1}
                       value={0} // Assuming this is a controlled input, set a default value
                     />{" "}
@@ -106,15 +106,15 @@ const DualInvestSidebar = ({ show, dark }) => {
               </div>
               <div className="mt-4">
                 <div className="!text-[#55A388] font-bold xl:text-lg lg:text-md">
-                  Open
+                  Open Dual-Invest 
                 </div>
                 <div className="flex items-center justify-between">
-                  {`APR >`}{" "}
+                  {`1 day >`}&nbsp;&nbsp;
                   <span className="flex items-center">
                     <CustomInput
                       dark={dark}
                       color={"#01D497"}
-                      styleObj={{ width: "50px" }}
+                      styleObj={{ width: "50px", textAlign: 'right' }}
                       type={1}
                       val={dualInfo.threshold || 0} // Fallback to 0 if undefined
                       handleCustomInputVal={handleCustomInputVal}
@@ -124,27 +124,26 @@ const DualInvestSidebar = ({ show, dark }) => {
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  Closer strike{" "}
+                  {`2 day >`}&nbsp;&nbsp;
                   <span className="flex items-center">
                     <CustomInput
                       dark={dark}
                       color={"#01D497"}
-                      styleObj={{ width: "50px" }}
+                      styleObj={{ width: "50px", textAlign: 'right' }}
                       type={1}
                       val={dualInfo.closerStrike || 0}
                       handleCustomInputVal={handleCustomInputVal}
                       index={2}
-                    />
-                    &nbsp;$
+                    />%
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  {`but APR >`}{" "}
+                  {`4-8 day >`}&nbsp;&nbsp;
                   <span className="flex items-center">
                     <CustomInput
                       dark={dark}
                       color={"#01D497"}
-                      styleObj={{ width: "50px" }}
+                      styleObj={{ width: "50px", textAlign: 'right' }}
                       type={1}
                       val={dualInfo.aprThreshold || 0}
                       handleCustomInputVal={handleCustomInputVal}
@@ -154,12 +153,12 @@ const DualInvestSidebar = ({ show, dark }) => {
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  Scale by +{" "}
+                  {`9-15 day >`}&nbsp;&nbsp;
                   <span className="flex items-center">
                     <CustomInput
                       dark={dark}
                       color={"#01D497"}
-                      styleObj={{ width: "50px" }}
+                      styleObj={{ width: "50px", textAlign: 'right' }}
                       type={1}
                       val={dualInfo.scaleBy || 0}
                       handleCustomInputVal={handleCustomInputVal}
@@ -168,14 +167,29 @@ const DualInvestSidebar = ({ show, dark }) => {
                     %
                   </span>
                 </div>
+                <div className="flex items-center mt-3 justify-between">
+                  {`Closer strike >`}&nbsp;&nbsp;
+                  <span className="flex items-center">
+                    <CustomInput
+                      dark={dark}
+                      color={"#01D497"}
+                      styleObj={{ width: "50px", textAlign: 'right' }}
+                      type={1}
+                      val={dualInfo.aprThreshold || 0}
+                      handleCustomInputVal={handleCustomInputVal}
+                      index={3}
+                    />$
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  {`increase sell order >`}&nbsp;&nbsp;<span>+1&nbsp;</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          className={`flex flex-row w-full items-center justify-end min-h-full`}
-        >
-          <PriceRangeList />
+        <div className={`flex flex-row w-full justify-end min-h-full`} >
+          <PriceRangeTable />
         </div>
       </div>
     </div>
