@@ -4,6 +4,7 @@
   "description": "My full-stack application",
   "scripts": {
     "build": "npm run build --prefix Frontend",
+    "fleetbo": "node cli.js",
     "prestart": "npm run createTables && npm run populateTables",
     "start": "node Backend/index.js",
     "predev-disabled": "npm start --prefix Frontend && npm run createTables && npm run populateTables",
