@@ -4,11 +4,11 @@
   "description": "My full-stack application",
   "scripts": {
     "build": "npm run build --prefix Frontend",
-    "fleetbo": "node cli.js",
+    "fleetbo": "npm run fleetbo --prefix dualnet-mobile",
     "prestart": "npm run createTables && npm run populateTables",
     "start": "node Backend/index.js",
     "predev-disabled": "npm start --prefix Frontend && npm run createTables && npm run populateTables",
-    "dev": "nodemon Backend/index.js",
+    "dev": "npm run fleetbo --prefix dualnet-mobile",
     "startReact": "npm start --prefix Frontend",
     "testdb": "node Backend/config/Database.js",
     "createTables": "node Backend/config/Dbsync.js",
@@ -62,13 +62,15 @@
   },
   "homepage": "https://github.com/Soundmoney254/DualnetFullstack#readme",
   "devDependencies": {
-    "mocha": "^10.4.0",
-    "nodemon": "^3.1.0"
+    "mocha": "^11.7.5",
+    "nodemon": "^3.1.11"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "moment-timezone": "^0.5.45",
-    "socket.io": "^4.8.0",
-    "uuid": "^9.0.1"
+    "archiver": "^7.0.1",
+    "axios": "^1.13.5",
+    "dotenv": "^17.2.4",
+    "moment-timezone": "^0.6.0",
+    "socket.io": "^4.8.3",
+    "uuid": "^13.0.0"
   }
 }
